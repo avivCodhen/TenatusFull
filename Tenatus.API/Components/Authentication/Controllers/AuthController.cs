@@ -107,8 +107,8 @@ namespace Tenatus.API.Components.Authentication.Controllers
                 var key = _configuration["Token:Key"];
 
                 var results = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
-                if (results.Succeeded)
-                {
+                if (!results.Succeeded) return BadRequest($"Not Allowed");
+            
                     var user = await _userManager.FindByEmailAsync(model.Email);
                     var claims = new[]
                     {
@@ -122,7 +122,6 @@ namespace Tenatus.API.Components.Authentication.Controllers
                         expires: DateTime.Now.AddDays(TokenExpiredDays), signingCredentials: creds);
 
                     return Ok(new {token = new JwtSecurityTokenHandler().WriteToken(token)});
-                }
             }
             catch (Exception e)
             {
