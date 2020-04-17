@@ -128,3 +128,10 @@ C:\Stocks\TenatusFull\Tenatus.API\obj\Debug\netcoreapp3.1\Tenatus.API.RazorTarge
 C:\Stocks\TenatusFull\Tenatus.API\obj\Debug\netcoreapp3.1\Tenatus.API.csproj.CopyComplete
 C:\Stocks\TenatusFull\Tenatus.API\obj\Debug\netcoreapp3.1\Tenatus.API.dll
 C:\Stocks\TenatusFull\Tenatus.API\obj\Debug\netcoreapp3.1\Tenatus.API.pdb
+C:\Stocks\TenatusFull\Tenatus.API\bin\Debug\netcoreapp3.1\Alpaca.Markets.dll
+C:\Stocks\TenatusFull\Tenatus.API\bin\Debug\netcoreapp3.1\WebDriver.dll
+C:\Stocks\TenatusFull\Tenatus.API\bin\Debug\netcoreapp3.1\Serilog.dll
+C:\Stocks\TenatusFull\Tenatus.API\bin\Debug\netcoreapp3.1\Serilog.Sinks.Console.dll
+C:\Stocks\TenatusFull\Tenatus.API\bin\Debug\netcoreapp3.1\Serilog.Sinks.File.dll
+C:\Stocks\TenatusFull\Tenatus.API\bin\Debug\netcoreapp3.1\SuperSocket.ClientEngine.dll
+C:\Stocks\TenatusFull\Tenatus.API\bin\Debug\netcoreapp3.1\WebSocket4Net.dll

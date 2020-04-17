@@ -5,7 +5,36 @@
       <e p="appsettings.Development.json" t="Include" />
       <e p="appsettings.json" t="Include" />
       <e p="bin" t="ExcludeRecursive" />
+      <e p="chromedriver.exe" t="Include" />
       <e p="Components" t="Include">
+        <e p="AlgoTrading" t="Include">
+          <e p="Controllers" t="Include">
+            <e p="TraderController.cs" t="Include" />
+          </e>
+          <e p="Models" t="Include">
+            <e p="OrderModel.cs" t="Include" />
+            <e p="PositionModel.cs" t="Include" />
+            <e p="StartTraderRequest.cs" t="Include" />
+            <e p="StockData.cs" t="Include" />
+            <e p="StockDataReaderResource.cs" t="Include" />
+            <e p="TraderResource.cs" t="Include" />
+          </e>
+          <e p="Services" t="Include">
+            <e p="Scrapping" t="Include">
+              <e p="IStockDataReader.cs" t="Include" />
+              <e p="StockDataReaderFactory.cs" t="Include" />
+              <e p="StockDataReaderManager.cs" t="Include" />
+              <e p="YahooStockDataReader.cs" t="Include" />
+            </e>
+            <e p="TradingProviders" t="Include">
+              <e p="AlpacaClient.cs" t="Include" />
+              <e p="ITradingClient.cs" t="Include" />
+              <e p="Trader.cs" t="Include" />
+              <e p="TraderManager.cs" t="Include" />
+              <e p="TradingClientFactory.cs" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="Authentication" t="Include">
           <e p="Controllers" t="Include">
             <e p="AuthController.cs" t="Include" />
@@ -22,6 +51,11 @@
         <e p="Context.cs" t="Include" />
         <e p="Transaction.cs" t="Include" />
       </e>
+      <e p="Extensions" t="Include">
+        <e p="StringExtensions.cs" t="Include" />
+        <e p="UserManagerExtension.cs" t="Include" />
+      </e>
+      <e p="log.txt" t="Include" />
       <e p="Migrations" t="Include">
         <e p="20200415105818_init.cs" t="Include" />
         <e p="20200415105818_init.Designer.cs" t="Include" />
@@ -41,6 +75,9 @@
       </e>
       <e p="Startup.cs" t="Include" />
       <e p="Tenatus.API.csproj" t="IncludeRecursive" />
+      <e p="Util" t="Include">
+        <e p="AppConstants.cs" t="Include" />
+      </e>
     </e>
     <e p="C:\Users\aviv\.Rider2019.3\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\aviv\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_.19.00" t="ExcludeRecursive" />

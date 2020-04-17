@@ -32,7 +32,9 @@ namespace Tenatus.API.Components.Authentication.Controllers
             _signInManager = signInManager;
         }
 
-        public async Task<IActionResult> SignIn(UserLoginModel model)
+        [Route("signin")]
+        [HttpPost]
+        public async Task<IActionResult> SignIn([FromBody] UserLoginModel model)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             try
@@ -49,12 +51,11 @@ namespace Tenatus.API.Components.Authentication.Controllers
             {
                 return BadRequest(e.Message);
             }
-
         }
 
         [Route("signup")]
         [HttpPost]
-        public async Task<IActionResult> SignUp(UserSignInModel model)
+        public async Task<IActionResult> SignUp([FromBody] UserSignInModel model)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             try
@@ -96,32 +97,33 @@ namespace Tenatus.API.Components.Authentication.Controllers
 
 
         [Route("token")]
-        public async Task<IActionResult> Token(UserLoginModel model)
+        [HttpPost]
+        public async Task<IActionResult> Token([FromBody] UserLoginModel model)
         {
             try
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
-                
+
                 var issuer = _configuration["Token:Issuer"];
                 var audience = _configuration["Token:Audience"];
                 var key = _configuration["Token:Key"];
 
                 var results = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
                 if (!results.Succeeded) return BadRequest($"Not Allowed");
-            
-                    var user = await _userManager.FindByEmailAsync(model.Email);
-                    var claims = new[]
-                    {
-                        new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                        new Claim(JwtRegisteredClaimNames.Jti, user.Id),
-                    };
-                    var keyBytes = Encoding.UTF8.GetBytes(key);
-                    var theKey = new SymmetricSecurityKey(keyBytes);
-                    var creds = new SigningCredentials(theKey, SecurityAlgorithms.HmacSha256);
-                    var token = new JwtSecurityToken(issuer, audience, claims,
-                        expires: DateTime.Now.AddDays(TokenExpiredDays), signingCredentials: creds);
 
-                    return Ok(new {token = new JwtSecurityTokenHandler().WriteToken(token)});
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                var claims = new[]
+                {
+                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                    new Claim(JwtRegisteredClaimNames.Jti, user.Id),
+                };
+                var keyBytes = Encoding.UTF8.GetBytes(key);
+                var theKey = new SymmetricSecurityKey(keyBytes);
+                var creds = new SigningCredentials(theKey, SecurityAlgorithms.HmacSha256);
+                var token = new JwtSecurityToken(issuer, audience, claims,
+                    expires: DateTime.Now.AddDays(TokenExpiredDays), signingCredentials: creds);
+
+                return Ok(new {token = new JwtSecurityTokenHandler().WriteToken(token)});
             }
             catch (Exception e)
             {

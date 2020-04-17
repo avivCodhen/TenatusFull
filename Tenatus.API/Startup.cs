@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Tenatus.API.Components.AlgoTrading.Services.Scrapping;
+using Tenatus.API.Components.AlgoTrading.Services.TradingProviders;
 using Tenatus.API.Data;
 
 namespace Tenatus.API
@@ -60,6 +62,9 @@ namespace Tenatus.API
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"]))
                 };
             });
+
+            services.AddSingleton<TraderManager>();
+            services.AddSingleton<StockDataReaderManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
