@@ -34,16 +34,22 @@ namespace Tenatus.API.Components.Authentication.Controllers
 
         public async Task<IActionResult> SignIn(UserLoginModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            try
             {
                 var results = await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, false);
-                if (results.Succeeded)
+                if (!results.Succeeded)
                 {
-                    // success
+                    throw new Exception("Failed to sign in");
                 }
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
             }
 
-            return BadRequest();
         }
 
         [Route("signup")]
@@ -68,9 +74,6 @@ namespace Tenatus.API.Components.Authentication.Controllers
             {
                 return BadRequest(e.Message);
             }
-          
-
-            return BadRequest();
         }
 
         public async Task<IActionResult> SignOut()
@@ -80,7 +83,7 @@ namespace Tenatus.API.Components.Authentication.Controllers
             return Ok();
         }
 
-        
+
         /*
         [HttpPost]
         [Route("test")]
@@ -90,13 +93,15 @@ namespace Tenatus.API.Components.Authentication.Controllers
             return Ok();
         }
         */
-        
+
 
         [Route("token")]
         public async Task<IActionResult> Token(UserLoginModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
+                if (!ModelState.IsValid) return BadRequest(ModelState);
+                
                 var issuer = _configuration["Token:Issuer"];
                 var audience = _configuration["Token:Audience"];
                 var key = _configuration["Token:Key"];
@@ -119,9 +124,10 @@ namespace Tenatus.API.Components.Authentication.Controllers
                     return Ok(new {token = new JwtSecurityTokenHandler().WriteToken(token)});
                 }
             }
-
-
-            return BadRequest();
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
