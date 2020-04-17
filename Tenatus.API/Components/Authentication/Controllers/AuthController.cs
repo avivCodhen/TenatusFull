@@ -3,6 +3,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +22,7 @@ namespace Tenatus.API.Components.Authentication.Controllers
         private readonly IConfiguration _configuration;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private const int TokenExpiredDays = 7;
+        private const int TokenExpiredDays = 30;
 
         public AuthController(IConfiguration configuration, SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager)
@@ -78,8 +80,9 @@ namespace Tenatus.API.Components.Authentication.Controllers
             return Ok();
         }
 
+        
         /*
-        [HttpGet]
+        [HttpPost]
         [Route("test")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Test()
@@ -87,6 +90,7 @@ namespace Tenatus.API.Components.Authentication.Controllers
             return Ok();
         }
         */
+        
 
         [Route("token")]
         public async Task<IActionResult> Token(UserLoginModel model)

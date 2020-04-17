@@ -41,7 +41,6 @@ namespace Tenatus.API
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequiredUniqueChars = 0;
-                options.SignIn.RequireConfirmedEmail = true;
             }).AddEntityFrameworkStores<Context>();
 
             services.ConfigureApplicationCookie(opt =>
