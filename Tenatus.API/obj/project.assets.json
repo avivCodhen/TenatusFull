@@ -6531,11 +6531,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Stocks\\Tenatus.API\\Tenatus.API.csproj",
+      "projectUniqueName": "C:\\Stocks\\TenatusFull\\Tenatus.API\\Tenatus.API.csproj",
       "projectName": "Tenatus.API",
-      "projectPath": "C:\\Stocks\\Tenatus.API\\Tenatus.API.csproj",
+      "projectPath": "C:\\Stocks\\TenatusFull\\Tenatus.API\\Tenatus.API.csproj",
       "packagesPath": "C:\\Users\\aviv\\.nuget\\packages\\",
-      "outputPath": "C:\\Stocks\\Tenatus.API\\obj\\",
+      "outputPath": "C:\\Stocks\\TenatusFull\\Tenatus.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

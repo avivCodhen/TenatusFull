@@ -1,10 +1,10 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "C:\\Stocks\\Tenatus.API\\Tenatus.API.csproj",
+    "projectUniqueName": "C:\\Stocks\\TenatusFull\\Tenatus.API\\Tenatus.API.csproj",
     "projectName": "Tenatus.API",
-    "projectPath": "C:\\Stocks\\Tenatus.API\\Tenatus.API.csproj",
-    "outputPath": "C:\\Stocks\\Tenatus.API\\obj\\",
+    "projectPath": "C:\\Stocks\\TenatusFull\\Tenatus.API\\Tenatus.API.csproj",
+    "outputPath": "C:\\Stocks\\TenatusFull\\Tenatus.API\\obj\\",
     "projectStyle": "PackageReference",
     "fallbackFolders": [
       "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

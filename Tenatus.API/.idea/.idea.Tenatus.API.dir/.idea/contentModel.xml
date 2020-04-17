@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Stocks\Tenatus.API" t="IncludeRecursive">
+    <e p="C:\Stocks\TenatusFull\Tenatus.API" t="IncludeRecursive">
       <e p="appsettings.Development.json" t="Include" />
       <e p="appsettings.json" t="Include" />
       <e p="bin" t="ExcludeRecursive" />
@@ -12,6 +12,7 @@
           </e>
           <e p="Models" t="Include">
             <e p="UserLoginModel.cs" t="Include" />
+            <e p="UserModel.cs" t="Include" />
             <e p="UserSignInModel.cs" t="Include" />
           </e>
         </e>
@@ -19,6 +20,7 @@
       <e p="Data" t="Include">
         <e p="ApplicationUser.cs" t="Include" />
         <e p="Context.cs" t="Include" />
+        <e p="Transaction.cs" t="Include" />
       </e>
       <e p="Migrations" t="Include">
         <e p="20200415105818_init.cs" t="Include" />

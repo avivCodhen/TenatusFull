@@ -44,19 +44,29 @@ namespace Tenatus.API.Components.Authentication.Controllers
             return BadRequest();
         }
 
+        [Route("signup")]
+        [HttpPost]
         public async Task<IActionResult> SignUp(UserSignInModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            try
             {
                 if (await _userManager.FindByEmailAsync(model.Email) != null)
                     return BadRequest("Email exists");
-                var user = new ApplicationUser() {Email = model.Email, UserName = model.Username};
+                var user = new ApplicationUser() {Email = model.Email, UserName = model.Email};
                 var results = await _userManager.CreateAsync(user, model.Password);
-                if (results.Succeeded)
+                if (!results.Succeeded)
                 {
-                    //success
+                    throw new Exception($"Error: {results.Errors}");
                 }
+
+                return Ok();
             }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+          
 
             return BadRequest();
         }
