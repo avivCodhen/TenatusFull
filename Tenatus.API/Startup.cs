@@ -63,6 +63,8 @@ namespace Tenatus.API
                 };
             });
 
+            services.AddCors();
+            
             services.AddSingleton<TraderManager>();
             services.AddSingleton<StockDataReaderManager>();
         }
@@ -79,6 +81,7 @@ namespace Tenatus.API
 
             app.UseRouting();
 
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();
 
             app.UseAuthorization();
