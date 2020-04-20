@@ -9,7 +9,7 @@ using Tenatus.API.Data;
 
 namespace Tenatus.API.Migrations
 {
-    [DbContext(typeof(Context))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20200415105818_init")]
     partial class init
     {

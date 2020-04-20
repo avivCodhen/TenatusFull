@@ -7,6 +7,14 @@
       <e p="bin" t="ExcludeRecursive" />
       <e p="chromedriver.exe" t="Include" />
       <e p="Components" t="Include">
+        <e p="Account" t="Include">
+          <e p="Controllers" t="Include">
+            <e p="AccountSettingsController.cs" t="Include" />
+          </e>
+          <e p="Models" t="Include">
+            <e p="UserAccountSettingsModel.cs" t="Include" />
+          </e>
+        </e>
         <e p="AlgoTrading" t="Include">
           <e p="Controllers" t="Include">
             <e p="TraderController.cs" t="Include" />
@@ -45,10 +53,12 @@
             <e p="UserSignInModel.cs" t="Include" />
           </e>
         </e>
+        <e p="BaseController.cs" t="Include" />
       </e>
       <e p="Data" t="Include">
+        <e p="ApplicationDbContext.cs" t="Include" />
         <e p="ApplicationUser.cs" t="Include" />
-        <e p="Context.cs" t="Include" />
+        <e p="TraderSetting.cs" t="Include" />
         <e p="Transaction.cs" t="Include" />
       </e>
       <e p="Extensions" t="Include">
@@ -59,6 +69,12 @@
       <e p="Migrations" t="Include">
         <e p="20200415105818_init.cs" t="Include" />
         <e p="20200415105818_init.Designer.cs" t="Include" />
+        <e p="20200419075531_AddUserKeys.cs" t="Include" />
+        <e p="20200419075531_AddUserKeys.Designer.cs" t="Include" />
+        <e p="20200419075632_AddUserValues.cs" t="Include" />
+        <e p="20200419075632_AddUserValues.Designer.cs" t="Include" />
+        <e p="20200420060525_AddTraderSettings.cs" t="Include" />
+        <e p="20200420060525_AddTraderSettings.Designer.cs" t="Include" />
         <e p="ContextModelSnapshot.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive">

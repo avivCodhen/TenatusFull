@@ -33,7 +33,7 @@ namespace Tenatus.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<Context>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 // Password settings
@@ -43,7 +43,7 @@ namespace Tenatus.API
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequiredUniqueChars = 0;
-            }).AddEntityFrameworkStores<Context>();
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.ConfigureApplicationCookie(opt =>
             {

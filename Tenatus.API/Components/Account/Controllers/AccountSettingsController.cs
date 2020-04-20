@@ -1,38 +1,39 @@
 ﻿using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Tenatus.API.Components.AlgoTrading.Services.TradingProviders;
+using Microsoft.EntityFrameworkCore;
+using Tenatus.API.Components.Account.Models;
 using Tenatus.API.Data;
 using Tenatus.API.Extensions;
 
-namespace Tenatus.API.Components.AlgoTrading.Controllers
+namespace Tenatus.API.Components.Account.Controllers
 {
-    public class TraderController : BaseController
+    
+    public class AccountSettingsController : BaseController
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly TraderManager _traderManager;
+        private readonly ApplicationDbContext _dbDbContext;
 
-        public TraderController(UserManager<ApplicationUser> userManager, TraderManager traderManager)
+        public AccountSettingsController(UserManager<ApplicationUser> userManager, ApplicationDbContext dbDbContext)
         {
             _userManager = userManager;
-            _traderManager = traderManager;
+            _dbDbContext = dbDbContext;
         }
 
-        [Route("start")]
-        [HttpPost]
-        public async Task<IActionResult> StartTrader([FromBody] StartTraderRequest request)
+        [HttpGet]
+        public async Task<IActionResult> GetAccountSettings()
         {
             try
             {
                 var user = await _userManager.GetApplicationUserAsync(User);
-                await _traderManager.StartTrader(user, request.Stocks);
-
-                return Ok();
+                return Ok(new UserAccountSettingsModel
+                {
+                    ApiKey = user.ApiKey,
+                    ApiSecret = user.ApiSecret,
+                });
             }
             catch (Exception e)
             {
@@ -40,15 +41,15 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
             }
         }
 
-        [Route("stop")]
         [HttpPost]
-        public async Task<IActionResult> StopTrader([FromBody] StartTraderRequest request)
+        public async Task<IActionResult> SaveAccountSettings([FromBody] UserAccountSettingsModel request)
         {
             try
             {
                 var user = await _userManager.GetApplicationUserAsync(User);
-                _traderManager.StopTrader(user, request.Stocks);
-
+                user.ApiKey = request.ApiKey;
+                user.ApiSecret = request.ApiSecret;
+                await _dbDbContext.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception e)

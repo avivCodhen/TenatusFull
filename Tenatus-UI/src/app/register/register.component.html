@@ -1,0 +1,16 @@
+<div class="text-center center">
+  <div class="col-10 col-lg-5">
+
+    <form #registerForm="ngForm" (ngSubmit)="register()" class="">
+      <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">הרשמה</h1>
+
+      <input required placeholder="מייל" name="email" [(ngModel)]="model.email" type="email" id="inputEmail"
+        class="mb-2 form-control" required="" autofocus="">
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required name="password"
+        placeholder="סיסמא" [(ngModel)]="model.password">
+
+      <button class="btn btn-lg  btn-action col-4 m-3" type="submit">הרשם</button>
+    </form>
+  </div>
+</div>

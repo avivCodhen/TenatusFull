@@ -1,2 +1,32 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-@import '../node_modules/font-awesome/css/font-awesome.min.css'
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import '../node_modules/font-awesome/css/font-awesome.min.css';
+
+//color, main, action, secondary, light
+$c-m: #41B3A3;
+$c-a: rgb(197, 48, 95);
+$c-s:rgb(226, 85, 46);
+$c-a-l: #E8A87c;
+$c-m-l: #85DCBA;
+
+.center {
+  @extend .d-flex;
+  @extend .justify-content-center
+}
+
+.btn-action {
+  background-color: $c-a;
+  color: white !important;
+}
+
+nav {
+  background-color: $c-m;
+}
+
+body {
+  direction: rtl;
+}
+
+p {
+  text-align: right !important;
+}

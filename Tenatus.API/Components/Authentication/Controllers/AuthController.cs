@@ -15,7 +15,7 @@ using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegiste
 
 namespace Tenatus.API.Components.Authentication.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AuthController : Controller
     {
@@ -96,7 +96,7 @@ namespace Tenatus.API.Components.Authentication.Controllers
         */
 
 
-        [Route("token")]
+        [Route("tokenSignin")]
         [HttpPost]
         public async Task<IActionResult> Token([FromBody] UserLoginModel model)
         {
