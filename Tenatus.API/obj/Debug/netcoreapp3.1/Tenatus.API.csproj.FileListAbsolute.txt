@@ -135,3 +135,6 @@ C:\Stocks\TenatusFull\Tenatus.API\bin\Debug\netcoreapp3.1\Serilog.Sinks.Console.
 C:\Stocks\TenatusFull\Tenatus.API\bin\Debug\netcoreapp3.1\Serilog.Sinks.File.dll
 C:\Stocks\TenatusFull\Tenatus.API\bin\Debug\netcoreapp3.1\SuperSocket.ClientEngine.dll
 C:\Stocks\TenatusFull\Tenatus.API\bin\Debug\netcoreapp3.1\WebSocket4Net.dll
+C:\Stocks\TenatusFull\Tenatus.API\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Stocks\TenatusFull\Tenatus.API\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Stocks\TenatusFull\Tenatus.API\bin\Debug\netcoreapp3.1\CSharpAPI.dll

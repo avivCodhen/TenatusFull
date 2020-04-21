@@ -7,7 +7,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
     {
         Task<bool> Buy(string stock, int quantity, decimal price);
         Task<bool> Sell(string stock, int quantity, decimal price);
-        Task<Order> LastOrderStatusOrDefault(string stock);
+        Task<OrderModel> LastOrderStatusOrDefault(string stock);
         Task<Position> GetCurrentPositionOrDefault(string stock);
     }
 }

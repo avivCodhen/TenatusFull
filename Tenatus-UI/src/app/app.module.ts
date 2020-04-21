@@ -12,6 +12,8 @@ import { RegisterComponent } from './register/register.component';
 import { RouterModule } from '@angular/router';
 import { SettingsComponent } from './settings/settings.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { ChipsComponent } from './chips/chips.component';
+import { AngularMaterialModule } from './material.module';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -23,8 +25,10 @@ export function tokenGetter() {
     HomeComponent,
     RegisterComponent,
     SettingsComponent,
+    ChipsComponent,
   ],
   imports: [
+    AngularMaterialModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,

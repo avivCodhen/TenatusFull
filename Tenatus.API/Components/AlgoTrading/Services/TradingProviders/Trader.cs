@@ -13,8 +13,8 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
 {
     public class Trader
     {
-        private readonly decimal _buyingValue = new decimal(0.9995);
-        private readonly decimal _sellingValue = new decimal(1.0001);
+        private readonly decimal _buyingValue;
+        private readonly decimal _sellingValue;
         private decimal _buyingPrice = new decimal(0);
 
         private readonly string _stock;
@@ -27,11 +27,15 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
 
         public bool IsOn;
 
-        public Trader(IStockDataReader stockDataReader, ITradingClient tradingClient, string stock)
+        public Trader(IStockDataReader stockDataReader, ITradingClient tradingClient,
+            string stock, decimal buyingValue,
+            decimal sellingValue)
         {
             _stockDataReader = stockDataReader;
             _tradingClient = tradingClient;
             _stock = stock;
+            _buyingValue = buyingValue;
+            _sellingValue = sellingValue;
 
             try
             {

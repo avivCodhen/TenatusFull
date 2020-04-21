@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Alpaca.Markets;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Util;
+using static Alpaca.Markets.Environments;
 
 namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
 {
@@ -15,11 +16,18 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
 
         public AlpacaClient()
         {
-            _alpacaTradingClient = Alpaca.Markets.Environments.Paper
+            _alpacaTradingClient = Paper
                 .GetAlpacaTradingClient(new SecretKey("PKCD5HTGM3YXOSDKK9IQ",
                     "t79OEYnzAqQixSYrWyWXGwMCGo5jmOWQzFSGOeP8"));
-            _alpacaDataClient = Environments.Paper.GetAlpacaDataClient(new SecretKey("PKCD5HTGM3YXOSDKK9IQ",
+            _alpacaDataClient = Paper.GetAlpacaDataClient(new SecretKey("PKCD5HTGM3YXOSDKK9IQ",
                 "t79OEYnzAqQixSYrWyWXGwMCGo5jmOWQzFSGOeP8"));
+        }
+
+        public AlpacaClient(string apiKey, string apiSecret)
+        {
+            _alpacaTradingClient = Paper
+                .GetAlpacaTradingClient(new SecretKey(apiKey,
+                    apiSecret));
         }
 
         public async Task<bool> Buy(string stock, int quantity, decimal price)
@@ -34,7 +42,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
             return await OrderCompletedOrDefault(stock) != null;
         }
 
-        public async Task<Order> LastOrderStatusOrDefault(string stock)
+        public async Task<OrderModel> LastOrderStatusOrDefault(string stock)
         {
             return await OrderCompletedOrDefault(stock);
         }
@@ -91,7 +99,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
                 _lastTradeId.ToString());
         }
 
-        private async Task<Order> OrderCompletedOrDefault(string stock)
+        private async Task<OrderModel> OrderCompletedOrDefault(string stock)
         {
             try
             {
@@ -106,7 +114,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
                     switch (order.OrderStatus)
                     {
                         case OrderStatus.Filled:
-                            return new Order() {Buy = order.OrderSide == OrderSide.Buy, Price = order.LimitPrice.Value};
+                            return new OrderModel() {Buy = order.OrderSide == OrderSide.Buy, Price = order.LimitPrice.Value};
                         case OrderStatus.Suspended:
                         case OrderStatus.Canceled:
                         case OrderStatus.Expired:

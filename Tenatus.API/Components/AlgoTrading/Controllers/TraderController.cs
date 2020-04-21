@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,11 +17,14 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly TraderManager _traderManager;
+        private readonly ApplicationDbContext _dbContext;
 
-        public TraderController(UserManager<ApplicationUser> userManager, TraderManager traderManager)
+        public TraderController(UserManager<ApplicationUser> userManager, TraderManager traderManager,
+            ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _traderManager = traderManager;
+            _dbContext = dbContext;
         }
 
         [Route("start")]
@@ -30,8 +34,13 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
             try
             {
                 var user = await _userManager.GetApplicationUserAsync(User);
-                await _traderManager.StartTrader(user, request.Stocks);
-
+                user.TraderSetting.Stocks = request.Stocks.Select(x=>new Stock{Name = x}).ToList();
+                user.TraderSetting.BuyingValue = request.BuyingValue;
+                user.TraderSetting.SellingValue = request.SellingValue;
+                
+                await _traderManager.StartTrader(user);
+                await _dbContext.SaveChangesAsync();
+                
                 return Ok();
             }
             catch (Exception e)
@@ -41,13 +50,13 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
         }
 
         [Route("stop")]
-        [HttpPost]
-        public async Task<IActionResult> StopTrader([FromBody] StartTraderRequest request)
+        [HttpPut]
+        public async Task<IActionResult> StopTrader()
         {
             try
             {
                 var user = await _userManager.GetApplicationUserAsync(User);
-                _traderManager.StopTrader(user, request.Stocks);
+                _traderManager.StopTrader(user);
 
                 return Ok();
             }

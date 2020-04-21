@@ -1,0 +1,15 @@
+ <div class="row no-gutters">
+   <mat-form-field class="example-chip-list">
+     <mat-chip-list #chipList aria-label="Fruit selection">
+       <mat-chip *ngFor="let stock of stocks" [selectable]="selectable" [removable]="removable"
+         (removed)="remove(stock)">
+         {{stock}}
+         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+       </mat-chip>
+       <p>הוסף מניות</p>
+       <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+         [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+     </mat-chip-list>
+   </mat-form-field>
+
+ </div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IBApi;
 using Microsoft.Extensions.Configuration;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Components.AlgoTrading.Services.Scrapping;
@@ -23,15 +24,18 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
         }
 
 
-        public async Task StartTrader(ApplicationUser user, List<string> stocks)
+        public async Task StartTrader(ApplicationUser user)
         {
             try
             {
+                var traderClient = TradingClientFactory.GetTradingClient(_configuration["TradingClient"],
+                    user.ApiKey, user.ApiSecret);
                 var tasks = new List<Task>();
-                foreach (var stock in stocks)
+                foreach (var stock in user.TraderSetting.Stocks)
                 {
                     var trader =
-                        _traderResources.SingleOrDefault(x => x.Stock.EqualsIgnoreCase(stock) && x.UserId == user.Id);
+                        _traderResources.SingleOrDefault(x =>
+                            x.Stock.EqualsIgnoreCase(stock.Name) && x.UserId == user.Id);
 
                     if (trader != null)
                     {
@@ -43,12 +47,13 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
                     else
                     {
                         var stockDataReader =
-                            _stockDataReaderManager.GetStockDataReader(user.Id, stock);
-                        var traderClient = TradingClientFactory.GetTradingClient(_configuration["TradingClient"]);
-                        var newTrader = new Trader(stockDataReader, traderClient, stock);
+                            _stockDataReaderManager.GetStockDataReader(user.Id, stock.Name);
+
+                        var newTrader = new Trader(stockDataReader, traderClient, stock.Name,
+                            user.TraderSetting.BuyingValue, user.TraderSetting.SellingValue);
                         _traderResources.Add(new TraderResource()
                         {
-                            Stock = stock,
+                            Stock = stock.Name,
                             Trader = newTrader,
                             UserId = user.Id
                         });
@@ -60,24 +65,22 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
             }
             catch (Exception e)
             {
-                foreach (var stock in stocks)
+                foreach (var stock in user.TraderSetting.Stocks)
                 {
-                    _stockDataReaderManager.RemoveStockDataReader(user.Id, stock);
+                    _stockDataReaderManager.RemoveStockDataReader(user.Id, stock.Name);
                 }
 
-                StopTrader(user, stocks);
+                StopTrader(user);
                 throw;
             }
-
-          
         }
 
-        public void StopTrader(ApplicationUser user, List<string> stocks)
+        public void StopTrader(ApplicationUser user)
         {
-            foreach (var stock in stocks)
+            foreach (var stock in user.TraderSetting.Stocks)
             {
                 var trader =
-                    _traderResources.SingleOrDefault(x => x.Stock.EqualsIgnoreCase(stock) && x.UserId == user.Id);
+                    _traderResources.SingleOrDefault(x => x.Stock.EqualsIgnoreCase(stock.Name) && x.UserId == user.Id);
 
                 if (trader == null) return;
 

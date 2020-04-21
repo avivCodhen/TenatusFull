@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -64,7 +65,7 @@ namespace Tenatus.API
             });
 
             services.AddCors();
-            
+            services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<TraderManager>();
             services.AddSingleton<StockDataReaderManager>();
         }

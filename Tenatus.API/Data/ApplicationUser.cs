@@ -8,7 +8,7 @@ namespace Tenatus.API.Data
     {
         public string ApiKey { get; set; }
         public string ApiSecret { get; set; }
-        public TraderSetting TraderSetting { get; set; }
+        public virtual TraderSetting TraderSetting { get; set; } = new TraderSetting();
        
     }
 }
