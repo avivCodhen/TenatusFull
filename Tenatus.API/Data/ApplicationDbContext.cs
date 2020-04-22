@@ -8,15 +8,21 @@ namespace Tenatus.API.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
     {
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<UserOrder> UserOrders { get; set; }
+
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
 
         public DbSet<TraderSetting> TraderSettings { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ApplicationUser>().HasOne<TraderSetting>(x => x.TraderSetting).WithOne(x => x.User)
                 .HasForeignKey<TraderSetting>(x => x.UserId);
+
+            builder.Entity<ApplicationUser>().HasMany<UserOrder>(x => x.UserOrders).WithOne(x => x.ApplicationUser);
+
             base.OnModelCreating(builder);
         }
     }
