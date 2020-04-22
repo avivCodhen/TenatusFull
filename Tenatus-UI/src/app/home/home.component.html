@@ -5,7 +5,6 @@
 <div class="row">
   <div class="col-10 col-5">
     <form #traderSettingForm="ngForm" (ngSubmit)="start()">
-
       <div class="form-group w-50">
         <p for="exampleInputPassword1">סכום קניה (%)</p>
         <input name="buyingValue" [(ngModel)]="tradingSetting.buyingValue" type="number" class="form-control">

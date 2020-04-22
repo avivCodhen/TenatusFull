@@ -11,7 +11,6 @@ using Tenatus.API.Extensions;
 
 namespace Tenatus.API.Components.Account.Controllers
 {
-    
     public class AccountSettingsController : BaseController
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -33,6 +32,8 @@ namespace Tenatus.API.Components.Account.Controllers
                 {
                     ApiKey = user.ApiKey,
                     ApiSecret = user.ApiSecret,
+                    TradingClientType = user.TradingClientType,
+                    AccountName = user.AccountName
                 });
             }
             catch (Exception e)
@@ -49,6 +50,8 @@ namespace Tenatus.API.Components.Account.Controllers
                 var user = await _userManager.GetApplicationUserAsync(User);
                 user.ApiKey = request.ApiKey;
                 user.ApiSecret = request.ApiSecret;
+                user.AccountName = request.AccountName;
+                user.TradingClientType = request.TradingClientType;
                 await _dbDbContext.SaveChangesAsync();
                 return Ok();
             }

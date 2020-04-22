@@ -6,7 +6,7 @@ using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Util;
 using static Alpaca.Markets.Environments;
 
-namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
+namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Alpaca
 {
     public class AlpacaClient : ITradingClient
     {

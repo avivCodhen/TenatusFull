@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IBApi;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Components.AlgoTrading.Services.Scrapping;
@@ -28,8 +29,9 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
         {
             try
             {
-                var traderClient = TradingClientFactory.GetTradingClient(_configuration["TradingClient"],
-                    user.ApiKey, user.ApiSecret);
+                CheckAlreadyStarted(user);
+                var traderClient = TradingClientFactory.GetTradingClient(user.TradingClientType,
+                    user.ApiKey, user.ApiSecret, user.AccountName);
                 var tasks = new List<Task>();
                 foreach (var stock in user.TraderSetting.Stocks)
                 {
@@ -72,6 +74,18 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
 
                 StopTrader(user);
                 throw;
+            }
+        }
+
+        private void CheckAlreadyStarted(ApplicationUser user)
+        {
+            var ts = user.TraderSetting;
+            var traders =
+                _traderResources.Where(x => ts.Stocks.Select(s => s.Name).Contains(x.Stock) && x.UserId == user.Id)
+                    .ToList();
+            if (_traderResources.Any() && !traders.Any())
+            {
+                throw new Exception("Trader already started");
             }
         }
 

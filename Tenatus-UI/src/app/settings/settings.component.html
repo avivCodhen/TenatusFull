@@ -7,14 +7,36 @@
   <div class="col-10 col-5">
     <form #settingsForm="ngForm" (ngSubmit)="submit()">
       <div class="form-group">
-        <p for="exampleInputEmail1">מפתח API</p>
+        <p>מפתח API</p>
         <input name="apiKey" [(ngModel)]="model.apiKey" type="text" class="form-control">
       </div>
       <div class="form-group">
-        <p for="exampleInputPassword1">מפתח API סודי</p>
+        <p>מפתח API סודי</p>
         <input name="apiSecret" [(ngModel)]="model.apiSecret" type="text" class="form-control">
       </div>
+      <div class="form-group">
+        <p>שם חשבון</p>
+        <input name="accountName" [(ngModel)]="model.accountName" type="text" class="form-control">
+      </div>
+      <div class="row no-gutters">
+        <div class="form-group">
+          <div class="row no-gutters">
+            <p class="m-0">טרייד קליינט</p>
 
+
+          </div>
+          <div class="row no-gutters">
+            <mat-form-field>
+              <mat-select name="tradingClientType" [(ngModel)]="model.tradingClientType">
+                <mat-option *ngFor="let client of tradingClients" [value]="client">
+                  {{client}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
       <div class="form-check">
       </div>
       <button type="submit" class="btn btn-action center">שמור</button>

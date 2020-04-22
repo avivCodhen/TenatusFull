@@ -6,7 +6,7 @@ namespace Tenatus.API.Util
         public const string TraderSettings = "traderSettings";
 
         public const string StockDataReaderTypeYahoo = "Yahoo";
-        public const string Alpaca = "Alpaca";
-        public const string Interactive = "Interactive";
+        public const string Alpaca = "alpaca";
+        public const string Interactive = "interactive";
     }
 }

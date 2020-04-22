@@ -5,42 +5,42 @@
       <change beforePath="$PROJECT_DIR$/../Tenatus-UI/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Tenatus-UI/angular.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Tenatus-UI/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Tenatus-UI/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Tenatus-UI/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Tenatus-UI/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tenatus-UI/src/app/_services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Tenatus-UI/src/app/_services/user.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tenatus-UI/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Tenatus-UI/src/app/app.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Tenatus-UI/src/app/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Tenatus-UI/src/app/home/home.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Tenatus-UI/src/app/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Tenatus-UI/src/app/home/home.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tenatus-UI/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Tenatus-UI/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tenatus-UI/src/app/home/traderSetting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Tenatus-UI/src/app/home/traderSetting.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tenatus-UI/src/app/settings/settings.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Tenatus-UI/src/app/settings/settings.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tenatus-UI/src/app/settings/settings.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Tenatus-UI/src/app/settings/settings.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Tenatus-UI/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../Tenatus-UI/src/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tenatus-UI/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Tenatus-UI/tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Tenatus.API.dir/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tenatus.API.dir/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Tenatus.API.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Tenatus.API.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Components/Account/Controllers/AccountSettingsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Components/Account/Controllers/AccountSettingsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Components/Account/Models/UserAccountSettingsModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Components/Account/Models/UserAccountSettingsModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Components/AlgoTrading/Controllers/TraderController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Components/AlgoTrading/Controllers/TraderController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Components/AlgoTrading/Models/OrderModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Components/AlgoTrading/Models/OrderModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/AlpacaClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/Alpaca/AlpacaClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/ITradingClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/ITradingClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/Trader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/Trader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Components/AlgoTrading/Models/PositionModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Components/AlgoTrading/Models/Position.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Components/AlgoTrading/Models/StartTraderRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Components/AlgoTrading/Models/StartTraderRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/Alpaca/AlpacaClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/Alpaca/AlpacaClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/InteractiveBroker/EWrapperImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/InteractiveBroker/EWrapperImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/InteractiveBroker/InteractiveBrookerTradingClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/InteractiveBroker/InteractiveBrookerTradingClient.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/TraderManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/TraderManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/TradingClientFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/TradingClientFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Components/MappingProfiles/MappingProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MappingProfiles/MappingProfile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ApplicationDbContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/ApplicationUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ApplicationUser.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/TraderSetting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/TraderSetting.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/20200415105818_init.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/init.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/20200419075531_AddUserKeys.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/AddUserKeys.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/20200419075632_AddUserValues.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/AddUserValues.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/20200420060525_AddTraderSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/AddTraderSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/20200420130253_AddTradingSettingChange.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/AddTradingSettingChange.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Migrations/ContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/ContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tenatus.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Tenatus.API.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Util/AppConstants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Util/AppConstants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/Tenatus.API.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/Tenatus.API.deps.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/Tenatus.API.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/Tenatus.API.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/Tenatus.API.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/Tenatus.API.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/appsettings.Development.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/Tenatus.API.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/Tenatus.API.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/Tenatus.API.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/Tenatus.API.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/Tenatus.API.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/Tenatus.API.csprojAssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/Tenatus.API.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/Tenatus.API.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/Tenatus.API.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/Tenatus.API.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Tenatus.API.csproj.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Tenatus.API.csproj.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Tenatus.API.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Tenatus.API.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profit.txt" beforeDir="false" afterPath="$PROJECT_DIR$/profit.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,46 +55,58 @@
     <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Models/StockDataReaderResource.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Controllers/TraderController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Services/Scrapping/StockDataReaderManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/TWS API/source/CSharpClient/client/EClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/Trader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Services/Scrapping/YahooStockDataReader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/obj/Debug/netcoreapp3.1/Tenatus.API.AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Services/Scrapping/StockDataReaderFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Migrations/20200420060525_AddTraderSettings.Designer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/TradingClientFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/ITradingClient.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Migrations/20200420060525_AddTraderSettings.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Migrations/AddTraderSettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/ApplicationDbContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/Alpaca/AlpacaClient.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Models/OrderModel.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Models/PositionModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Models/Position.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Util/AppConstants.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Models/StockData.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Migrations/20200419075531_AddUserKeys.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Migrations/20200419075632_AddUserValues.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Migrations/AddUserKeys.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Migrations/AddUserValues.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E6EC461D-9E89-4B21-9C82-ED3603BE3EC9/2/IdentityDbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://C:/TWS API/source/CSharpClient/client/EClientSocket.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/Account/Controllers/AccountSettingsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/F0D1540B-15CA-4134-8C3F-BBB7BE64E9EA/1/IdentityRole.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/Account/Models/UserAccountSettingsModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/InteractiveBroker/EWrapperImpl.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/InteractiveBroker/InteractiveBrookerTradingClient.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/obj/project.assets.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0B1BFBE6-A845-4387-BF01-704114C244AC/85/2f983565/EWrapper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E9CBB3A0-56DA-43CC-A595-83524D7CDDD0/F/JwtBearerDefaults.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0B1BFBE6-A845-4387-BF01-704114C244AC/b1/a84507f3/EClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0B1BFBE6-A845-4387-BF01-704114C244AC/fd/3b450700/Order.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/371AB15C-4F7C-4E5C-9530-5D2970CFB640/18/7deec74b/ConfigurationRoot.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0B1BFBE6-A845-4387-BF01-704114C244AC/1c/8c620618/OrderState.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/ApplicationUser.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/Stock.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/AlgoTrading/Models/TraderSettingModel.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Components/MappingProfiles/MappingProfile.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MappingProfiles/MappingProfile.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/BBB3B884-123D-47EA-9CD1-5BED540D02AE/d3/3ce8b375/String.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/Authentication/Models/UserLoginModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/Authentication/Controllers/AuthController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Migrations/20200420130253_AddTradingSettingChange.Designer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/Authentication/Models/UserSignInModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Components/BaseController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Migrations/20200420130253_AddTradingSettingChange.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Migrations/20200415105818_init.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Migrations/AddTradingSettingChange.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Migrations/20200421065333_AddTradeClient.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Migrations/init.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Migrations/20200421071049_ChangeTradingClientType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0B1BFBE6-A845-4387-BF01-704114C244AC/cb/a8a63f54/EReader.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Migrations/20200415105818_init.Designer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Data/UserOrder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/EnumTypes/UserOrderActionType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/F3325C05-7891-45B4-AC78-327FC18BDC7C/19F/ApiControllerAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Properties/launchSettings.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/EnumTypes/UserOrderType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Startup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/appsettings.Development.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/appsettings.json" root0="FORCE_HIGHLIGHTING" />
@@ -111,15 +123,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Tenatus.API.csproj" />
-        <option value="$PROJECT_DIR$/Controllers/AuthController.cs" />
-        <option value="$PROJECT_DIR$/Components/Authentication/Models/UserRegisterModel.cs" />
-        <option value="$PROJECT_DIR$/Components/Authentication/Models/UserLoginModel.cs" />
-        <option value="$PROJECT_DIR$/Data/Context.cs" />
-        <option value="$PROJECT_DIR$/Data/Transaction.cs" />
-        <option value="$PROJECT_DIR$/Properties/launchSettings.json" />
-        <option value="$PROJECT_DIR$/Components/Authentication/Models/UserSignInModel.cs" />
-        <option value="$PROJECT_DIR$/Components/Authentication/Models/UserModel.cs" />
         <option value="$PROJECT_DIR$/Components/Trader/TradingProviders/TradingClientFactory.cs" />
         <option value="$PROJECT_DIR$/Components/Trader/Scrapping/StockDataReaderFactory.cs" />
         <option value="$PROJECT_DIR$/Components/Trader/Services/Trader.cs" />
@@ -139,29 +142,38 @@
         <option value="$PROJECT_DIR$/Components/AlgoTrading/Models/StockDataReaderResource.cs" />
         <option value="$PROJECT_DIR$/Components/Authentication/Controllers/AuthController.cs" />
         <option value="$PROJECT_DIR$/Data/TraderSettings.cs" />
-        <option value="$PROJECT_DIR$/Data/ApplicationDbContext.cs" />
-        <option value="$PROJECT_DIR$/Components/Account/Models/UserAccountSettingsModel.cs" />
-        <option value="$PROJECT_DIR$/Components/Account/Controllers/AccountSettingsController.cs" />
-        <option value="$PROJECT_DIR$/Components/AlgoTrading/Models/StartTraderRequest.cs" />
         <option value="$PROJECT_DIR$/Components/BaseController.cs" />
         <option value="$PROJECT_DIR$/Data/Stock.cs" />
-        <option value="$PROJECT_DIR$/Data/TraderSetting.cs" />
-        <option value="$PROJECT_DIR$/Components/AlgoTrading/Controllers/TraderController.cs" />
         <option value="$PROJECT_DIR$/Startup.cs" />
-        <option value="$PROJECT_DIR$/Components/AlgoTrading/Models/TraderSettingModel.cs" />
         <option value="$PROJECT_DIR$/Components/MappingProfiles/MappingProfile.cs" />
         <option value="$PROJECT_DIR$/Components/AlgoTrading/Controllers/TraderSettingsController.cs" />
         <option value="$PROJECT_DIR$/Components/AlgoTrading/Controllers/TraderSettingController.cs" />
-        <option value="$PROJECT_DIR$/Data/ApplicationUser.cs" />
         <option value="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/AlpacaClient.cs" />
         <option value="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/InteractiveBroker/IteractiveBrookerTradingClient.cs" />
         <option value="$PROJECT_DIR$/Components/AlgoTrading/Models/OrderModel.cs" />
         <option value="$PROJECT_DIR$/appsettings.Development.json" />
+        <option value="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/Trader.cs" />
+        <option value="$PROJECT_DIR$/MappingProfiles/MappingProfile.cs" />
         <option value="$PROJECT_DIR$/Util/AppConstants.cs" />
+        <option value="$PROJECT_DIR$/Data/TraderSetting.cs" />
+        <option value="$PROJECT_DIR$/Components/AlgoTrading/Models/TraderSettingModel.cs" />
+        <option value="$PROJECT_DIR$/Components/AlgoTrading/Models/StartTraderRequest.cs" />
+        <option value="$PROJECT_DIR$/Components/AlgoTrading/Controllers/TraderController.cs" />
+        <option value="$PROJECT_DIR$/EnumTypes/OrderType.cs" />
+        <option value="$PROJECT_DIR$/EnumTypes/OrderAction.cs" />
+        <option value="$PROJECT_DIR$/EnumTypes/OrderActionType.cs" />
+        <option value="$PROJECT_DIR$/EnumTypes/UserOrderType.cs" />
+        <option value="$PROJECT_DIR$/EnumTypes/UserOrderActionType.cs" />
+        <option value="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/InteractiveBroker/EWrapperImpl.cs" />
+        <option value="$PROJECT_DIR$/Data/ApplicationDbContext.cs" />
+        <option value="$PROJECT_DIR$/Data/UserOrder.cs" />
+        <option value="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/InteractiveBroker/InteractiveBrookerTradingClient.cs" />
+        <option value="$PROJECT_DIR$/Data/ApplicationUser.cs" />
+        <option value="$PROJECT_DIR$/Components/Account/Models/UserAccountSettingsModel.cs" />
+        <option value="$PROJECT_DIR$/Components/Account/Controllers/AccountSettingsController.cs" />
         <option value="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/TradingClientFactory.cs" />
         <option value="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/TraderManager.cs" />
-        <option value="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/Trader.cs" />
-        <option value="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/InteractiveBroker/InteractiveBrookerTradingClient.cs" />
+        <option value="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/ITradingClient.cs" />
       </list>
     </option>
   </component>
@@ -237,7 +249,7 @@
       <workItem from="1586867806322" duration="9536000" />
       <workItem from="1586945901628" duration="9504000" />
       <workItem from="1587109998833" duration="16888000" />
-      <workItem from="1587361163302" duration="17331000" />
+      <workItem from="1587361163302" duration="38357000" />
     </task>
     <servers />
   </component>
@@ -264,191 +276,167 @@
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state x="2635" y="229" key="#xdebugger.evaluate/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587129345469" />
-    <state width="504" height="298" key="DebuggerActiveHint" timestamp="1587411345919">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="456" height="453" key="DebuggerActiveHint" timestamp="1587453261759">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="456" height="453" key="DebuggerActiveHint/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303759022" />
+    <state width="456" height="453" key="DebuggerActiveHint/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587453261759" />
     <state width="504" height="298" key="DebuggerActiveHint/0.0.1280.689@0.0.1280.689" timestamp="1587411345919" />
-    <state width="1237" height="155" key="GridCell.Tab.0.bottom" timestamp="1587412730431">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1877" height="337" key="GridCell.Tab.0.bottom" timestamp="1587542468158">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.0.bottom/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485516" />
-    <state width="1877" height="369" key="GridCell.Tab.0.bottom/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1587412730431" />
-    <state width="1237" height="155" key="GridCell.Tab.0.center" timestamp="1587412730431">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.0.bottom/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700352" />
+    <state width="1877" height="337" key="GridCell.Tab.0.bottom/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542468158" />
+    <state width="1237" height="227" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1587498537401" />
+    <state width="1877" height="337" key="GridCell.Tab.0.center" timestamp="1587542468158">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.0.center/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485515" />
-    <state width="1877" height="369" key="GridCell.Tab.0.center/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1587412730431" />
-    <state width="1237" height="155" key="GridCell.Tab.0.left" timestamp="1587412730431">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.0.center/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700352" />
+    <state width="1877" height="337" key="GridCell.Tab.0.center/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542468158" />
+    <state width="1237" height="227" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1587498537401" />
+    <state width="1877" height="337" key="GridCell.Tab.0.left" timestamp="1587542468158">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.0.left/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485515" />
-    <state width="1877" height="369" key="GridCell.Tab.0.left/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1587412730431" />
-    <state width="1237" height="155" key="GridCell.Tab.0.right" timestamp="1587412730431">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.0.left/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700352" />
+    <state width="1877" height="337" key="GridCell.Tab.0.left/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542468158" />
+    <state width="1237" height="227" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1587498537401" />
+    <state width="1877" height="337" key="GridCell.Tab.0.right" timestamp="1587542468158">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.0.right/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485516" />
-    <state width="1877" height="369" key="GridCell.Tab.0.right/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1587412730431" />
-    <state width="1237" height="155" key="GridCell.Tab.1.bottom" timestamp="1587412651721">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.0.right/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700352" />
+    <state width="1877" height="337" key="GridCell.Tab.0.right/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542468158" />
+    <state width="1237" height="227" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1587498537401" />
+    <state width="1877" height="337" key="GridCell.Tab.1.bottom" timestamp="1587542467937">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.1.bottom/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302562170" />
-    <state width="1877" height="369" key="GridCell.Tab.1.bottom/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.1.bottom/0.0.1280.689@0.0.1280.689" timestamp="1587412651721" />
-    <state width="1237" height="155" key="GridCell.Tab.1.center" timestamp="1587412651721">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.1.bottom/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700057" />
+    <state width="1877" height="337" key="GridCell.Tab.1.bottom/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542467937" />
+    <state width="1237" height="227" key="GridCell.Tab.1.bottom/0.0.1280.689@0.0.1280.689" timestamp="1587498537243" />
+    <state width="1877" height="337" key="GridCell.Tab.1.center" timestamp="1587542467937">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.1.center/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302562170" />
-    <state width="1877" height="369" key="GridCell.Tab.1.center/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.1.center/0.0.1280.689@0.0.1280.689" timestamp="1587412651721" />
-    <state width="1237" height="155" key="GridCell.Tab.1.left" timestamp="1587412651721">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.1.center/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700057" />
+    <state width="1877" height="337" key="GridCell.Tab.1.center/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542467937" />
+    <state width="1237" height="227" key="GridCell.Tab.1.center/0.0.1280.689@0.0.1280.689" timestamp="1587498537243" />
+    <state width="1877" height="337" key="GridCell.Tab.1.left" timestamp="1587542467937">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.1.left/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302562170" />
-    <state width="1877" height="369" key="GridCell.Tab.1.left/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.1.left/0.0.1280.689@0.0.1280.689" timestamp="1587412651721" />
-    <state width="1237" height="155" key="GridCell.Tab.1.right" timestamp="1587412651721">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.1.left/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700057" />
+    <state width="1877" height="337" key="GridCell.Tab.1.left/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542467937" />
+    <state width="1237" height="227" key="GridCell.Tab.1.left/0.0.1280.689@0.0.1280.689" timestamp="1587498537243" />
+    <state width="1877" height="337" key="GridCell.Tab.1.right" timestamp="1587542467937">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.1.right/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302562170" />
-    <state width="1877" height="369" key="GridCell.Tab.1.right/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.1.right/0.0.1280.689@0.0.1280.689" timestamp="1587412651721" />
-    <state width="1237" height="155" key="GridCell.Tab.2.bottom" timestamp="1587412577287">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.1.right/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700057" />
+    <state width="1877" height="337" key="GridCell.Tab.1.right/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542467937" />
+    <state width="1237" height="227" key="GridCell.Tab.1.right/0.0.1280.689@0.0.1280.689" timestamp="1587498537243" />
+    <state width="1877" height="337" key="GridCell.Tab.2.bottom" timestamp="1587542467938">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.2.bottom/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485426" />
-    <state width="1877" height="369" key="GridCell.Tab.2.bottom/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.2.bottom/0.0.1280.689@0.0.1280.689" timestamp="1587412577287" />
-    <state width="1237" height="155" key="GridCell.Tab.2.center" timestamp="1587412577287">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.2.bottom/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700057" />
+    <state width="1877" height="337" key="GridCell.Tab.2.bottom/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542467938" />
+    <state width="1237" height="227" key="GridCell.Tab.2.bottom/0.0.1280.689@0.0.1280.689" timestamp="1587498537244" />
+    <state width="1877" height="337" key="GridCell.Tab.2.center" timestamp="1587542467937">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.2.center/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485426" />
-    <state width="1877" height="369" key="GridCell.Tab.2.center/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.2.center/0.0.1280.689@0.0.1280.689" timestamp="1587412577287" />
-    <state width="1237" height="155" key="GridCell.Tab.2.left" timestamp="1587412577287">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.2.center/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700057" />
+    <state width="1877" height="337" key="GridCell.Tab.2.center/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542467937" />
+    <state width="1237" height="227" key="GridCell.Tab.2.center/0.0.1280.689@0.0.1280.689" timestamp="1587498537244" />
+    <state width="1877" height="337" key="GridCell.Tab.2.left" timestamp="1587542467937">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.2.left/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485426" />
-    <state width="1877" height="369" key="GridCell.Tab.2.left/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.2.left/0.0.1280.689@0.0.1280.689" timestamp="1587412577287" />
-    <state width="1237" height="155" key="GridCell.Tab.2.right" timestamp="1587412577287">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.2.left/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700057" />
+    <state width="1877" height="337" key="GridCell.Tab.2.left/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542467937" />
+    <state width="1237" height="227" key="GridCell.Tab.2.left/0.0.1280.689@0.0.1280.689" timestamp="1587498537243" />
+    <state width="1877" height="337" key="GridCell.Tab.2.right" timestamp="1587542467938">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.2.right/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485426" />
-    <state width="1877" height="369" key="GridCell.Tab.2.right/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.2.right/0.0.1280.689@0.0.1280.689" timestamp="1587412577287" />
-    <state width="1237" height="155" key="GridCell.Tab.3.bottom" timestamp="1587412577287">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.2.right/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700057" />
+    <state width="1877" height="337" key="GridCell.Tab.2.right/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542467938" />
+    <state width="1237" height="227" key="GridCell.Tab.2.right/0.0.1280.689@0.0.1280.689" timestamp="1587498537244" />
+    <state width="1877" height="337" key="GridCell.Tab.3.bottom" timestamp="1587542467938">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.3.bottom/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485426" />
-    <state width="1877" height="369" key="GridCell.Tab.3.bottom/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.3.bottom/0.0.1280.689@0.0.1280.689" timestamp="1587412577287" />
-    <state width="1237" height="155" key="GridCell.Tab.3.center" timestamp="1587412577287">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.3.bottom/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700058" />
+    <state width="1877" height="337" key="GridCell.Tab.3.bottom/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542467938" />
+    <state width="1237" height="227" key="GridCell.Tab.3.bottom/0.0.1280.689@0.0.1280.689" timestamp="1587498537244" />
+    <state width="1877" height="337" key="GridCell.Tab.3.center" timestamp="1587542467938">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.3.center/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485426" />
-    <state width="1877" height="369" key="GridCell.Tab.3.center/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.3.center/0.0.1280.689@0.0.1280.689" timestamp="1587412577287" />
-    <state width="1237" height="155" key="GridCell.Tab.3.left" timestamp="1587412577287">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.3.center/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700057" />
+    <state width="1877" height="337" key="GridCell.Tab.3.center/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542467938" />
+    <state width="1237" height="227" key="GridCell.Tab.3.center/0.0.1280.689@0.0.1280.689" timestamp="1587498537244" />
+    <state width="1877" height="337" key="GridCell.Tab.3.left" timestamp="1587542467938">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.3.left/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485426" />
-    <state width="1877" height="369" key="GridCell.Tab.3.left/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.3.left/0.0.1280.689@0.0.1280.689" timestamp="1587412577287" />
-    <state width="1237" height="155" key="GridCell.Tab.3.right" timestamp="1587412577287">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.3.left/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700057" />
+    <state width="1877" height="337" key="GridCell.Tab.3.left/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542467938" />
+    <state width="1237" height="227" key="GridCell.Tab.3.left/0.0.1280.689@0.0.1280.689" timestamp="1587498537244" />
+    <state width="1877" height="337" key="GridCell.Tab.3.right" timestamp="1587542467938">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.3.right/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485426" />
-    <state width="1877" height="369" key="GridCell.Tab.3.right/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.3.right/0.0.1280.689@0.0.1280.689" timestamp="1587412577287" />
-    <state width="1237" height="155" key="GridCell.Tab.4.bottom" timestamp="1587412577287">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.3.right/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700057" />
+    <state width="1877" height="337" key="GridCell.Tab.3.right/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542467938" />
+    <state width="1237" height="227" key="GridCell.Tab.3.right/0.0.1280.689@0.0.1280.689" timestamp="1587498537244" />
+    <state width="1877" height="337" key="GridCell.Tab.4.bottom" timestamp="1587542442105">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.4.bottom/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485426" />
-    <state width="1877" height="369" key="GridCell.Tab.4.bottom/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.4.bottom/0.0.1280.689@0.0.1280.689" timestamp="1587412577287" />
-    <state width="1237" height="155" key="GridCell.Tab.4.center" timestamp="1587412577287">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.4.bottom/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700058" />
+    <state width="1877" height="337" key="GridCell.Tab.4.bottom/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542442105" />
+    <state width="1237" height="227" key="GridCell.Tab.4.bottom/0.0.1280.689@0.0.1280.689" timestamp="1587498537244" />
+    <state width="1877" height="337" key="GridCell.Tab.4.center" timestamp="1587542442105">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.4.center/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485426" />
-    <state width="1877" height="369" key="GridCell.Tab.4.center/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.4.center/0.0.1280.689@0.0.1280.689" timestamp="1587412577287" />
-    <state width="1237" height="155" key="GridCell.Tab.4.left" timestamp="1587412577287">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.4.center/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700058" />
+    <state width="1877" height="337" key="GridCell.Tab.4.center/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542442105" />
+    <state width="1237" height="227" key="GridCell.Tab.4.center/0.0.1280.689@0.0.1280.689" timestamp="1587498537244" />
+    <state width="1877" height="337" key="GridCell.Tab.4.left" timestamp="1587542442105">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.4.left/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485426" />
-    <state width="1877" height="369" key="GridCell.Tab.4.left/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.4.left/0.0.1280.689@0.0.1280.689" timestamp="1587412577287" />
-    <state width="1237" height="155" key="GridCell.Tab.4.right" timestamp="1587412577287">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="278" key="GridCell.Tab.4.left/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700058" />
+    <state width="1877" height="337" key="GridCell.Tab.4.left/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542442105" />
+    <state width="1237" height="227" key="GridCell.Tab.4.left/0.0.1280.689@0.0.1280.689" timestamp="1587498537244" />
+    <state width="1877" height="337" key="GridCell.Tab.4.right" timestamp="1587542442105">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state width="1237" height="186" key="GridCell.Tab.4.right/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587302485426" />
-    <state width="1877" height="369" key="GridCell.Tab.4.right/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587303761154" />
-    <state width="1237" height="155" key="GridCell.Tab.4.right/0.0.1280.689@0.0.1280.689" timestamp="1587412577287" />
+    <state width="1237" height="278" key="GridCell.Tab.4.right/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538700058" />
+    <state width="1877" height="337" key="GridCell.Tab.4.right/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587542442105" />
+    <state width="1237" height="227" key="GridCell.Tab.4.right/0.0.1280.689@0.0.1280.689" timestamp="1587498537244" />
     <state x="425" y="37" key="RiderGenerateDialog" timestamp="1587407563668">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
     <state x="425" y="37" key="RiderGenerateDialog/0.0.1280.689@0.0.1280.689" timestamp="1587407563668" />
-    <state x="319" y="77" width="642" height="536" key="find.popup" timestamp="1587409531354">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="2399" y="117" width="963" height="817" key="find.popup" timestamp="1587539038065">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state x="319" y="77" width="642" height="536" key="find.popup/0.0.1280.689@0.0.1280.689" timestamp="1587409531354" />
+    <state x="319" y="77" width="642" height="536" key="find.popup/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587538423834" />
+    <state x="2399" y="117" width="963" height="817" key="find.popup/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587539038065" />
+    <state x="319" y="77" width="642" height="536" key="find.popup/0.0.1280.689@0.0.1280.689" timestamp="1587498624669" />
     <state x="297" y="153" key="run.anything.popup" timestamp="1587392997755">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
     <state x="297" y="153" key="run.anything.popup/0.0.1280.689@0.0.1280.689" timestamp="1587392997755" />
-    <state x="415" y="149" width="672" height="445" key="search.everywhere.popup" timestamp="1587409971192">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="2543" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1587543034491">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state x="415" y="149" width="672" height="445" key="search.everywhere.popup/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587303076895" />
-    <state x="2543" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587129467787" />
-    <state x="415" y="149" width="672" height="445" key="search.everywhere.popup/0.0.1280.689@0.0.1280.689" timestamp="1587409971192" />
+    <state x="415" y="149" width="672" height="445" key="search.everywhere.popup/0.0.1280.689/1920.0.1920.1050@0.0.1280.689" timestamp="1587450562447" />
+    <state x="2543" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1280.689/1920.0.1920.1050@1920.0.1920.1050" timestamp="1587543034491" />
+    <state x="415" y="149" width="672" height="445" key="search.everywhere.popup/0.0.1280.689@0.0.1280.689" timestamp="1587497205537" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Components/AlgoTrading/Controllers/TraderController.cs</url>
-          <line>35</line>
-          <properties documentPath="$PROJECT_DIR$/Components/AlgoTrading/Controllers/TraderController.cs" initialLine="35">
-            <startOffsets>
-              <option value="1194" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1254" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/TraderManager.cs</url>
-          <line>67</line>
-          <properties documentPath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/TraderManager.cs" initialLine="67">
-            <startOffsets>
-              <option value="2574" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2622" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/InteractiveBroker/InteractiveBrookerTradingClient.cs</url>
-          <line>23</line>
-          <properties documentPath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/InteractiveBroker/InteractiveBrookerTradingClient.cs" initialLine="23">
+          <line>33</line>
+          <properties documentPath="$PROJECT_DIR$/Components/AlgoTrading/Services/TradingProviders/InteractiveBroker/InteractiveBrookerTradingClient.cs" initialLine="33">
             <startOffsets>
-              <option value="664" />
+              <option value="1232" />
             </startOffsets>
             <endOffsets>
-              <option value="699" />
+              <option value="1233" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="28" />
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

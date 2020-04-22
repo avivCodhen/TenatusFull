@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tenatus.API.Data;
 
 namespace Tenatus.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20200421071049_ChangeTradingClientType")]
+    partial class ChangeTradingClientType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,9 +160,6 @@ namespace Tenatus.API.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("AccountName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ApiKey")
                         .HasColumnType("nvarchar(max)");
 
@@ -272,35 +271,6 @@ namespace Tenatus.API.Migrations
                     b.ToTable("TraderSettings");
                 });
 
-            modelBuilder.Entity("Tenatus.API.Data.UserOrder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("Buy")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset>("Created")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserOrderActionType")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("UserOrders");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -364,13 +334,6 @@ namespace Tenatus.API.Migrations
                     b.HasOne("Tenatus.API.Data.ApplicationUser", "User")
                         .WithOne("TraderSetting")
                         .HasForeignKey("Tenatus.API.Data.TraderSetting", "UserId");
-                });
-
-            modelBuilder.Entity("Tenatus.API.Data.UserOrder", b =>
-                {
-                    b.HasOne("Tenatus.API.Data.ApplicationUser", "ApplicationUser")
-                        .WithMany("UserOrders")
-                        .HasForeignKey("ApplicationUserId");
                 });
 #pragma warning restore 612, 618
         }

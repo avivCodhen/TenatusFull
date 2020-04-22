@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Tenatus.API.Data;
 
-namespace Tenatus.API.Components.AlgoTrading.Controllers
+namespace Tenatus.API.Components.AlgoTrading.Models
 {
     public class StartTraderRequest
     {

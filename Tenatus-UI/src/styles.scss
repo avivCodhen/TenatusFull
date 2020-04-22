@@ -1,7 +1,8 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import '../node_modules/font-awesome/css/font-awesome.min.css';
-
+@import '../node_modules/alertifyjs/build/css/alertify.min.css';
+@import '../node_modules/alertifyjs/build/css/themes/bootstrap.min.css';
 //color, main, action, secondary, light
 $c-m: #41B3A3;
 $c-a: rgb(197, 48, 95);
@@ -31,5 +32,12 @@ p {
   text-align: right !important;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

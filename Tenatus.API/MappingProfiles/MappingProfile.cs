@@ -3,7 +3,7 @@ using AutoMapper;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Data;
 
-namespace Tenatus.API.Components.MappingProfiles
+namespace Tenatus.API.MappingProfiles
 {
     public class MappingProfile : Profile
     {

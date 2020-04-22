@@ -9,6 +9,7 @@ namespace Tenatus.API.Data
         public ApplicationUser User { get; set; }
         public decimal BuyingValue { get; set; } = new decimal(0.9995);
         public decimal SellingValue { get; set; } = new decimal(1.0001);
-        public List<Stock> Stocks { get; set; }
+        public virtual List<Stock> Stocks { get; set; }
+
     }
 }
