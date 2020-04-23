@@ -1,3 +1,4 @@
+import { AlertService } from './../_services/alert.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../_services/Auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -9,7 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
   model: any = {};
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertService: AlertService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -17,9 +22,9 @@ export class NavComponent implements OnInit {
     this.authService.login(this.model).subscribe(
       (next) => {
         console.log('success');
-        this.router.navigate(['/home']);
       },
       (err) => {
+        this.alertService.error(err);
         console.log('failed');
       }
     );

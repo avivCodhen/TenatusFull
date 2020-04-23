@@ -2,6 +2,6 @@
 {
     public enum UserOrderType
     {
-        Limit, StopLimit, Short
+        Limit, StopLimit, Stop, Market
     }
 }

@@ -7,6 +7,8 @@ using Serilog;
 using Serilog.Core;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Components.AlgoTrading.Services.Scrapping;
+using Tenatus.API.Data;
+using Tenatus.API.EnumTypes;
 using Tenatus.API.Util;
 
 namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
@@ -20,6 +22,8 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
         private readonly string _stock;
         private readonly IStockDataReader _stockDataReader;
         private readonly ITradingClient _tradingClient;
+        private readonly ApplicationDbContext _dbContext;
+        private readonly ApplicationUser _user;
 
         private readonly Logger _log;
         private int _quantity = 1;
@@ -27,15 +31,16 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
 
         public bool IsOn;
 
-        public Trader(IStockDataReader stockDataReader, ITradingClient tradingClient,
-            string stock, decimal buyingValue,
-            decimal sellingValue)
+        public Trader(IStockDataReader stockDataReader, ITradingClient tradingClient, ApplicationDbContext dbContext,
+            ApplicationUser user, string stock)
         {
             _stockDataReader = stockDataReader;
             _tradingClient = tradingClient;
+            _dbContext = dbContext;
+            _user = user;
             _stock = stock;
-            _buyingValue = buyingValue;
-            _sellingValue = sellingValue;
+            _buyingValue = user.TraderSetting.BuyingValue;
+            _sellingValue = user.TraderSetting.SellingValue;
 
             try
             {
@@ -60,8 +65,8 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
             var index = 0;
 
             var order = await _tradingClient.LastOrderStatusOrDefault(_stock);
-            if (order != null && order.Buy)
-                _buyingPrice = order.Price;
+            if (order != null && order.UserOrderActionType == UserOrderActionType.Buy)
+                _buyingPrice = order.BuyingPrice;
 
             var position = await _tradingClient.GetCurrentPositionOrDefault(_stock);
             if (position != null)
@@ -86,26 +91,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
                         temp = 0;
                         if (_buyingPrice != 0 && value / _buyingPrice >= _sellingValue)
                         {
-                            _log.Information($"Selling {_quantity} {_stock} share(s). Price: {value}...");
-                            var results = await _tradingClient.Sell(_stock, _quantity, value);
-                            if (results)
-                                _log.Information($"SOLD {_quantity} {_stock} share(s). Price: {value}");
-                            else
-                                _log.Information(
-                                    $"FAILED TO SELL {_quantity} {_stock} share(s). Price: {value}");
-
-                            _profit = _profit * (value / _buyingPrice);
-                            try
-                            {
-                                System.IO.File.WriteAllText($"{AppConstants.FilePath}profit.txt",
-                                    _profit.ToString(CultureInfo.InvariantCulture));
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                            }
-
-                            _buyingPrice = 0;
+                            await Sell(value);
                         }
                     }
                     else
@@ -113,15 +99,8 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
                         temp = new[] {temp, value, prevValue}.Max();
                         if (_buyingPrice == 0 && value / temp <= _buyingValue)
                         {
-                            _log.Information($"Buying {_quantity} {_stock} share(s). Price: {_buyingPrice}.");
+                            await Buy(_buyingPrice);
                             _buyingPrice = value;
-                            var results = await _tradingClient.Buy(_stock, _quantity, _buyingPrice);
-                            if (results)
-                                _log.Information(
-                                    $"BOUGHT {_quantity} {_stock} share(s). Price: {_buyingPrice}. results is {results}.");
-                            else
-                                _log.Information(
-                                    $"FAILED TO BUY {_quantity} {_stock} share(s). Price: {_buyingPrice}.");
                         }
                     }
                 }
@@ -129,6 +108,63 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
                 stocks.Add(stockData);
                 index++;
             }
+        }
+
+        private async Task Buy(decimal value)
+        {
+            var lastBuyOrder = GetLastOrder(UserOrderActionType.Buy);
+            var newOrderId = Convert.ToInt16(lastBuyOrder.ExternalId);
+            newOrderId++;
+            _log.Information($"Buying {_quantity} {_stock} share(s). Price: {_buyingPrice}.");
+            var orderModel = await _tradingClient.Buy(newOrderId.ToString(), _stock, _quantity, _buyingPrice);
+            if (orderModel != null)
+            {
+                _log.Information(
+                    $"BOUGHT {_quantity} {_stock} share(s). Price: {_buyingPrice}.");
+                _buyingPrice = value;
+                await SaveUserOrder(orderModel);
+            }
+            else
+                _log.Information(
+                    $"FAILED TO BUY {_quantity} {_stock} share(s). Price: {_buyingPrice}.");
+        }
+
+        private async Task SaveUserOrder(OrderModel orderModel)
+        {
+            _dbContext.UserOrders.Add(new UserOrder
+            {
+                UserId = _user.Id,
+                BuyingPrice = orderModel.BuyingPrice,
+                ExternalId = orderModel.ExternalId,
+                UserOrderActionType = orderModel.UserOrderActionType,
+                TradingClient = "Interactive",
+                UserOrderType = orderModel.UserOrderType
+            });
+            await _dbContext.SaveChangesAsync();
+        }
+
+        private async Task Sell(decimal value)
+        {
+            var lastBuyOrder = GetLastOrder(UserOrderActionType.Buy);
+            _log.Information($"Selling {_quantity} {_stock} share(s). Price: {value}...");
+            var orderModel = await _tradingClient.Sell(lastBuyOrder.ExternalId, _stock, _quantity, value);
+            if (orderModel != null)
+            {
+                _log.Information($"SOLD {_quantity} {_stock} share(s). Price: {value}");
+                _buyingPrice = 0;
+                await SaveUserOrder(orderModel);
+            }
+            else
+                _log.Information(
+                    $"FAILED TO SELL {_quantity} {_stock} share(s). Price: {value}");
+        }
+
+        private UserOrder GetLastOrder(UserOrderActionType orderActionType)
+        {
+            return _dbContext.UserOrders
+                .Where(x => x.ApplicationUser.Id == _user.Id && x.UserOrderActionType == orderActionType &&
+                            x.TradingClient == "Interactive")
+                .OrderByDescending(x => x.Created).First();
         }
     }
 }

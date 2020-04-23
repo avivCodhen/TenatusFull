@@ -62,7 +62,8 @@ namespace Tenatus.API.Components.Authentication.Controllers
             {
                 if (await _userManager.FindByEmailAsync(model.Email) != null)
                     return BadRequest("Email exists");
-                var user = new ApplicationUser() {Email = model.Email, UserName = model.Email};
+                var user = new ApplicationUser()
+                    {Email = model.Email, UserName = model.Email, TraderSetting = new TraderSetting()};
                 var results = await _userManager.CreateAsync(user, model.Password);
                 if (!results.Succeeded)
                 {
@@ -83,18 +84,6 @@ namespace Tenatus.API.Components.Authentication.Controllers
 
             return Ok();
         }
-
-
-        /*
-        [HttpPost]
-        [Route("test")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public IActionResult Test()
-        {
-            return Ok();
-        }
-        */
-
 
         [Route("tokenSignin")]
         [HttpPost]

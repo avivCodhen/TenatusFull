@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using IBApi;
@@ -15,29 +16,38 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         {
             ibClient = new EWrapperImpl();
             ibClient.ClientSocket.eConnect("127.0.0.1", 7497, 0);
-            ibClient.NextOrderId++;
             var reader = new EReader(ibClient.ClientSocket, ibClient.Signal);
             reader.Start();
-            new Thread(() => {
+            new Thread(() =>
+            {
                 while (ibClient.ClientSocket.IsConnected())
                 {
                     ibClient.Signal.waitForSignal();
                     reader.processMsgs();
-                } }) { IsBackground = true }.Start();
+                }
+            }) {IsBackground = true}.Start();
+            var contract = new Contract()
+            {
+               ConId = 0, Symbol = "MSFT", SecType = "STK",
+                Exchange = "SMART", Currency = "USD", LocalSymbol = "MSFT"
+            };
+            
+            List<TagValue> mktDataOptions = new List<TagValue>();
+            
 
-            ibClient.AccountValue += OnIbClientOnAccountValue; 
-            ibClient.ClientSocket.reqAccountUpdates(true, "DU2020349");
-            ibClient.ClientSocket.reqAccountUpdates(false, "DU2020349");
+            ibClient.ClientSocket.reqMktData(10, contract, "", false, false, mktDataOptions);
+            ibClient.AccountValue += OnIbClientOnAccountValue;
+            //ibClient.ClientSocket.reqAccountUpdates(true, accountName);
+            //ibClient.ClientSocket.reqAccountUpdates(false, accountName);
         }
 
         private void OnIbClientOnAccountValue(string s)
         {
         }
 
-        public Task<bool> Buy(string stock, int quantity, decimal price)
+        public Task<OrderModel> Buy(string orderId, string stock, int quantity, decimal price)
         {
-            var orderId = ibClient.NextOrderId++;
-            Contract contract = new Contract();
+            /*Contract contract = new Contract();
             contract.Symbol = stock.ToUpper();
             contract.SecType = "STK";
             contract.Exchange = "SMART";
@@ -52,10 +62,11 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
             orderInfo.Tif = "DAY";
             ibClient.ClientSocket.placeOrder(orderId, contract, orderInfo);
 
-            return Task.FromResult(true);
+            return Task.FromResult(true);*/
+            return null;
         }
 
-        public Task<bool> Sell(string stock, int quantity, decimal price)
+        public Task<OrderModel> Sell(string orderId, string stock, int quantity, decimal price)
         {
             /*var iOrderId = orderId;
             Contract contract = new Contract();
@@ -72,7 +83,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
             orderInfo.LmtPrice = Convert.ToDouble(price);
             orderInfo.Tif = "DAY";
             ibClient.ClientSocket.placeOrder(iOrderId, contract, orderInfo);*/
-            return Task.FromResult(true);
+            return null;
         }
 
         public Task<OrderModel> LastOrderStatusOrDefault(string stock)

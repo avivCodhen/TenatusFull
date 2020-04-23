@@ -28,7 +28,8 @@ namespace Tenatus.API.Components.AlgoTrading.Services.Scrapping
 
             var newStockDataReader = new StockDataReaderResource()
             {
-                Reader = StockDataReaderFactory.GetStockDataReader(_configuration["StockDataReader"], stock)
+                Reader = StockDataReaderFactory.GetStockDataReader(_configuration["StockDataReader"], stock),
+                Stock = stock
             };
             newStockDataReader.Users.Add(userId);
             _readerResources.Add(newStockDataReader);

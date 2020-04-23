@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Tenatus.API.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +39,11 @@ namespace Tenatus.API.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    AccountName = table.Column<string>(nullable: true),
+                    ApiKey = table.Column<string>(nullable: true),
+                    ApiSecret = table.Column<string>(nullable: true),
+                    TradingClientType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -152,6 +156,74 @@ namespace Tenatus.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TraderSettings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(nullable: true),
+                    BuyingValue = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    SellingValue = table.Column<decimal>(type: "decimal(18,6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TraderSettings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TraderSettings_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserOrders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TradingClient = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTimeOffset>(nullable: false),
+                    ExternalId = table.Column<string>(nullable: true),
+                    UserOrderType = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    BuyingPrice = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    UserOrderActionType = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserOrders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserOrders_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Stock",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    TradeSettingId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stock", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Stock_TraderSettings_TradeSettingId",
+                        column: x => x.TradeSettingId,
+                        principalTable: "TraderSettings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -190,6 +262,23 @@ namespace Tenatus.API.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Stock_TradeSettingId",
+                table: "Stock",
+                column: "TradeSettingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TraderSettings_UserId",
+                table: "TraderSettings",
+                column: "UserId",
+                unique: true,
+                filter: "[UserId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserOrders_ApplicationUserId",
+                table: "UserOrders",
+                column: "ApplicationUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -210,7 +299,16 @@ namespace Tenatus.API.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Stock");
+
+            migrationBuilder.DropTable(
+                name: "UserOrders");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "TraderSettings");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

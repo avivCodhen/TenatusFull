@@ -5,11 +5,15 @@ namespace Tenatus.API.Data
 {
     public class UserOrder
     {
-        public int Id { get; set; }
-        public bool Buy { get; set; }
-        public UserOrderActionType UserOrderActionType { get; set; }
+        public string TradingClient { get; set; }
         public DateTimeOffset Created { get; set; } = DateTimeOffset.Now;
-        public ApplicationUser ApplicationUser { get; set; }
+        public int Id { get; set; }
+        public string ExternalId { get; set; }
+        public UserOrderType UserOrderType { get; set; }
+        public int Quantity { get; set; }
+        public decimal BuyingPrice { get; set; }
+        public UserOrderActionType UserOrderActionType { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
         public string UserId { get; set; }
     }
 }

@@ -11,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   tradingSetting: TraderSetting;
-
+  processing: boolean;
   constructor(
     private userService: UserService,
     private traderService: TraderService,
@@ -19,22 +19,45 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userService.getTraderSetting().subscribe(
+    this.getTraderSetting();
+  }
+
+  start() {
+    this.processing = true;
+    this.traderService.startTrader(this.tradingSetting).subscribe(
       (res) => {
-        this.tradingSetting = res;
+        this.processing = false;
         console.log(res);
+        this.alertService.success('Trader started successfully');
+        this.getTraderSetting();
       },
       (err) => {
+        this.processing = false;
+        this.alertService.error('Error: ' + err);
         console.log(err);
       }
     );
   }
 
-  start() {
-    this.traderService.startTrader(this.tradingSetting).subscribe(
+  stop() {
+    this.traderService.stopTrader().subscribe(
       (res) => {
         console.log(res);
-        this.alertService.success('Trader started successfully');
+        this.alertService.success('Trader stopped successfully');
+        this.getTraderSetting();
+      },
+      (err) => {
+        this.alertService.error('Error: ' + err);
+        console.log(err);
+      }
+    );
+  }
+
+  getTraderSetting() {
+    this.userService.getTraderSetting().subscribe(
+      (res) => {
+        this.tradingSetting = res;
+        console.log(res);
       },
       (err) => {
         console.log(err);

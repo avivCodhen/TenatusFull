@@ -25,11 +25,13 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
         }
 
 
-        public async Task StartTrader(ApplicationUser user)
+        public async Task StartTrader(ApplicationUser user, ApplicationDbContext dbContext)
         {
             try
             {
-                CheckAlreadyStarted(user);
+                if (IsOnForUser(user))
+                    throw new Exception("Trader has already started");
+
                 var traderClient = TradingClientFactory.GetTradingClient(user.TradingClientType,
                     user.ApiKey, user.ApiSecret, user.AccountName);
                 var tasks = new List<Task>();
@@ -51,8 +53,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
                         var stockDataReader =
                             _stockDataReaderManager.GetStockDataReader(user.Id, stock.Name);
 
-                        var newTrader = new Trader(stockDataReader, traderClient, stock.Name,
-                            user.TraderSetting.BuyingValue, user.TraderSetting.SellingValue);
+                        var newTrader = new Trader(stockDataReader, traderClient, dbContext, user, stock.Name);
                         _traderResources.Add(new TraderResource()
                         {
                             Stock = stock.Name,
@@ -77,18 +78,6 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
             }
         }
 
-        private void CheckAlreadyStarted(ApplicationUser user)
-        {
-            var ts = user.TraderSetting;
-            var traders =
-                _traderResources.Where(x => ts.Stocks.Select(s => s.Name).Contains(x.Stock) && x.UserId == user.Id)
-                    .ToList();
-            if (_traderResources.Any() && !traders.Any())
-            {
-                throw new Exception("Trader already started");
-            }
-        }
-
         public void StopTrader(ApplicationUser user)
         {
             foreach (var stock in user.TraderSetting.Stocks)
@@ -100,7 +89,17 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
 
                 trader.Trader.IsOn = false;
                 _traderResources.Remove(trader);
+                _stockDataReaderManager.RemoveStockDataReader(user.Id, stock.Name);
             }
+        }
+
+        public bool IsOnForUser(ApplicationUser user)
+        {
+            var ts = user.TraderSetting;
+            var traders =
+                _traderResources.Where(x => ts.Stocks.Select(s => s.Name).Contains(x.Stock) && x.UserId == user.Id)
+                    .ToList();
+            return _traderResources.Any() && traders.Any();
         }
     }
 }

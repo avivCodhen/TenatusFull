@@ -87,25 +87,9 @@
         <e p="MappingProfile.cs" t="Include" />
       </e>
       <e p="Migrations" t="Include">
-        <e p="20200415105818_init.Designer.cs" t="Include" />
-        <e p="20200419075531_AddUserKeys.Designer.cs" t="Include" />
-        <e p="20200419075632_AddUserValues.Designer.cs" t="Include" />
-        <e p="20200420060525_AddTraderSettings.Designer.cs" t="Include" />
-        <e p="20200420130253_AddTradingSettingChange.Designer.cs" t="Include" />
-        <e p="20200421065333_AddTradeClient.cs" t="Include" />
-        <e p="20200421065333_AddTradeClient.Designer.cs" t="Include" />
-        <e p="20200421071049_ChangeTradingClientType.cs" t="Include" />
-        <e p="20200421071049_ChangeTradingClientType.Designer.cs" t="Include" />
-        <e p="20200422075054_AddUserORders.cs" t="Include" />
-        <e p="20200422075054_AddUserORders.Designer.cs" t="Include" />
-        <e p="20200422075903_AddUserAccountName.cs" t="Include" />
-        <e p="20200422075903_AddUserAccountName.Designer.cs" t="Include" />
-        <e p="AddTraderSettings.cs" t="Include" />
-        <e p="AddTradingSettingChange.cs" t="Include" />
-        <e p="AddUserKeys.cs" t="Include" />
-        <e p="AddUserValues.cs" t="Include" />
-        <e p="ContextModelSnapshot.cs" t="Include" />
-        <e p="init.cs" t="Include" />
+        <e p="20200423080155_Init.cs" t="Include" />
+        <e p="20200423080155_Init.Designer.cs" t="Include" />
+        <e p="ApplicationDbContextModelSnapshot.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive">
         <e p="Debug" t="Include">

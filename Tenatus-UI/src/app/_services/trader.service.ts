@@ -12,6 +12,9 @@ export class TraderService {
   url = environment.apiUrl + 'trader';
 
   startTrader(model: TraderSetting) {
-    return this.http.post(this.url + '/start', model).pipe();
+    return this.http.post(this.url + '/start', model);
+  }
+  stopTrader() {
+    return this.http.delete(this.url + '/stop');
   }
 }

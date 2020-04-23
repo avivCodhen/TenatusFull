@@ -35,10 +35,11 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
             try
             {
                 var user = await _userManager.GetApplicationUserAsync(User);
+                user.TraderSetting.Stocks.Clear();
                 user.TraderSetting.Stocks = request.Stocks.Select(x=>new Stock{Name = x}).ToList();
                 user.TraderSetting.BuyingValue = request.BuyingValue;
                 user.TraderSetting.SellingValue = request.SellingValue;
-                await _traderManager.StartTrader(user);
+                await _traderManager.StartTrader(user, _dbContext);
                 await _dbContext.SaveChangesAsync();
                 
                 return Ok();
@@ -50,7 +51,7 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
         }
 
         [Route("stop")]
-        [HttpPut]
+        [HttpDelete]
         public async Task<IActionResult> StopTrader()
         {
             try

@@ -1,6 +1,5 @@
 <div class="row">
   <h2>אלגו-טריידר</h2>
-
 </div>
 <div class="row">
   <div class="col-10 col-5">
@@ -18,7 +17,14 @@
       </div>
       <div class="form-check">
       </div>
-      <button type="submit" class="btn btn-action center">התחל</button>
+      <button [disabled]="processing" *ngIf="!tradingSetting.isOn" type="submit"
+        class="btn center btn-action">התחל</button>
     </form>
+
+    <form *ngIf="tradingSetting.isOn" #traderSettingForm="ngForm" (ngSubmit)="stop()">
+      <button type="submit" class="btn center btn-second">הפסק</button>
+    </form>
+
+
   </div>
 </div>

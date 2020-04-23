@@ -3,4 +3,5 @@ export interface TraderSetting {
   sellingValue: number;
   stocks: string[];
   tradingClientType: string;
+  isOn: boolean;
 }

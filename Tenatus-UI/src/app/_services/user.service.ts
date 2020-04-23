@@ -16,10 +16,10 @@ export class UserService {
   }
 
   saveAccountSettings(model: any) {
-    return this.http.post(this.accountUrl, model).pipe();
+    return this.http.post(this.accountUrl, model);
   }
 
   getTraderSetting() {
-    return this.http.get<TraderSetting>(this.traderSettingUrl).pipe();
+    return this.http.get<TraderSetting>(this.traderSettingUrl);
   }
 }
