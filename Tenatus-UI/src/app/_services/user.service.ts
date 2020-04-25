@@ -1,7 +1,8 @@
-import { TraderSetting } from './../home/traderSetting';
+import { TraderSetting } from '../_models/traderSetting';
 import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Dashboard } from '../_models/dashboard';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ import { Injectable } from '@angular/core';
 export class UserService {
   constructor(private http: HttpClient) {}
   accountUrl = environment.apiUrl + 'accountSettings';
+  dashboardUrl = environment.apiUrl + 'dashboard';
   traderSettingUrl = environment.apiUrl + 'traderSetting';
 
   getAccountSettings() {
@@ -21,5 +23,9 @@ export class UserService {
 
   getTraderSetting() {
     return this.http.get<TraderSetting>(this.traderSettingUrl);
+  }
+
+  getDashBoardSetting() {
+    return this.http.get<Dashboard>(this.dashboardUrl);
   }
 }

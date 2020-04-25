@@ -1,16 +1,27 @@
 <div class="text-center center">
   <div class="col-10 col-lg-5">
 
-    <form #registerForm="ngForm" (ngSubmit)="register()" class="">
+    <form #registerForm="ngForm" class="">
       <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-      <h1 class="h3 mb-3 font-weight-normal">הרשמה</h1>
+      <h1 class="h3 mb-3 font-weight-normal">כניסה \ הרשמה</h1>
+      <hr class="my-4 bg-main" />
+      <div class="my-3">
+        <input required placeholder="מייל" name="email" [(ngModel)]="model.email" type="email" id="inputEmail"
+          class="mb-2 form-control" required="" autofocus="">
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required name="password"
+          placeholder="סיסמא" [(ngModel)]="model.password">
 
-      <input required placeholder="מייל" name="email" [(ngModel)]="model.email" type="email" id="inputEmail"
-        class="mb-2 form-control" required="" autofocus="">
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required name="password"
-        placeholder="סיסמא" [(ngModel)]="model.password">
+      </div>
+      <div class="row center">
+        <button mat-raised-button [disabled]="!registerForm.valid" (click)="login()"
+          class="btn-action col-4 m-3">היכנס</button>
 
-      <button class="btn btn-lg  btn-action col-4 m-3" type="submit">הרשם</button>
+      </div>
+      <div class="row center">
+        <button mat-button [disabled]="!registerForm.valid" (click)="register()"
+          class="color-action col-4 m-3">הירשם</button>
+
+      </div>
     </form>
   </div>
 </div>

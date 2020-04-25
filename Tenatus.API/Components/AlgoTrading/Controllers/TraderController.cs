@@ -39,7 +39,7 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
                 user.TraderSetting.Stocks = request.Stocks.Select(x=>new Stock{Name = x}).ToList();
                 user.TraderSetting.BuyingValue = request.BuyingValue;
                 user.TraderSetting.SellingValue = request.SellingValue;
-                await _traderManager.StartTrader(user, _dbContext);
+                await _traderManager.StartTrader(user);
                 await _dbContext.SaveChangesAsync();
                 
                 return Ok();

@@ -1,30 +1,99 @@
-<div class="row">
-  <h2>אלגו-טריידר</h2>
-</div>
-<div class="row">
-  <div class="col-10 col-5">
-    <form #traderSettingForm="ngForm" (ngSubmit)="start()">
-      <div class="form-group w-50">
-        <p for="exampleInputPassword1">סכום קניה (%)</p>
-        <input name="buyingValue" [(ngModel)]="tradingSetting.buyingValue" type="number" class="form-control">
-      </div>
-      <div class="form-group w-50">
-        <p for="exampleInputPassword1">סכום מכירה (%)</p>
-        <input name="sellingValue" [(ngModel)]="tradingSetting.sellingValue" type="number" class="form-control">
-      </div>
-      <div class="form-group">
-        <app-chips [stocks]="tradingSetting.stocks"></app-chips>
-      </div>
-      <div class="form-check">
-      </div>
-      <button [disabled]="processing" *ngIf="!tradingSetting.isOn" type="submit"
-        class="btn center btn-action">התחל</button>
-    </form>
+<div class="m-4 py-3">
+  <div class="row">
+    <div class="col-2 dash-card">
+      <mat-card>
+        <form #traderSettingForm="ngForm" (ngSubmit)="start()">
+          <div class="form-group">
+            <app-chips [stocks]="tradingSetting.stocks"></app-chips>
+          </div>
+          <button [disabled]="processing" *ngIf="!tradingSetting.isOn" type="submit" mat-raised-button
+            class=" center btn-action w-100">התחל טריידר</button>
+        </form>
 
-    <form *ngIf="tradingSetting.isOn" #traderSettingForm="ngForm" (ngSubmit)="stop()">
-      <button type="submit" class="btn center btn-second">הפסק</button>
-    </form>
+        <form *ngIf="tradingSetting.isOn" #traderSettingForm="ngForm" (ngSubmit)="stop()">
+          <button type="submit" mat-raised-button class="w-100 center btn-second">הפסק</button>
+        </form>
+      </mat-card>
 
+    </div>
+    <div class="col-3 dash-card">
+      <mat-card>
+        <div class="dash-box bg-main" style="position: absolute;">
+          סה"כ {{userOrders.length}} פוזיציות</div>
+        <p>פוזיציות</p>
+        <hr class="mb-3" />
+      </mat-card>
+
+    </div>
+    <div class="dash-card col-7">
+      <mat-card>
+        <div class="dash-box bg-second" style="position: absolute;">
+          סה"כ {{userOrders.length}} טרנזקציות</div>
+        <p>טרנזקציות</p>
+        <hr class="mb-3" />
+        <p *ngIf="userOrders == null || userOrders.length == 0">לא נמצאו טרנזקציות.</p>
+
+        <table style="width: 100%;" mat-table [dataSource]="userOrders">
+
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="Id">
+            <th mat-header-cell *matHeaderCellDef> מזהה חיצוני </th>
+            <td mat-cell *matCellDef="let element"> {{element.externalId}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="Date">
+            <th mat-header-cell *matHeaderCellDef> תאריך </th>
+            <td mat-cell *matCellDef="let element"> {{element.created}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="Quantity">
+            <th mat-header-cell *matHeaderCellDef> כמות </th>
+            <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="Price">
+            <th mat-header-cell *matHeaderCellDef> מחיר </th>
+            <td mat-cell *matCellDef="let element"> ${{element.price}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="Transaction Type">
+            <th mat-header-cell *matHeaderCellDef> סוג עסקה </th>
+            <td mat-cell *matCellDef="let element"> {{element.orderAction}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="Buy/Sell">
+            <th mat-header-cell *matHeaderCellDef>קניה\מכירה </th>
+            <td mat-cell *matCellDef="let element"> {{element.isBuy ? "מכירה" : "קניה"}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Stock">
+            <th mat-header-cell *matHeaderCellDef>מניה</th>
+            <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+        <div dir="ltr">
+          <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+
+        </div>
+
+      </mat-card>
+    </div>
+
+  </div>
+
+  <div class="row p-2">
 
   </div>
 </div>

@@ -3,12 +3,16 @@
 @import '../node_modules/font-awesome/css/font-awesome.min.css';
 @import '../node_modules/alertifyjs/build/css/alertify.min.css';
 @import '../node_modules/alertifyjs/build/css/themes/bootstrap.min.css';
+@import '~@angular/material/theming';
+
 //color, main, action, secondary, light
 $c-m: #41B3A3;
 $c-a: rgb(197, 48, 95);
 $c-s:rgb(226, 85, 46);
 $c-a-l: #E8A87c;
 $c-m-l: #85DCBA;
+
+$main-bg: #EBEEF2;
 
 .center {
   @extend .d-flex;
@@ -19,11 +23,26 @@ $c-m-l: #85DCBA;
   background-color: $c-a !important;
 }
 
+.bg-main {
+  background-color: $c-m;
+}
+
+.bg-second {
+  background-color: $c-s;
+}
+
+.bg-second-l {
+  background-color: $c-a-l;
+}
+
+.color-action {
+  color: $c-a;
+}
+
 .btn-action {
   background-color: $c-a;
   color: white !important;
 }
-
 
 .btn-second {
   background-color: $c-s;
@@ -36,6 +55,8 @@ nav {
 
 body {
   direction: rtl;
+  font-family: 'Rubik', sans-serif;
+  margin: 0;
 }
 
 p {
@@ -45,9 +66,49 @@ p {
 html,
 body {
   height: 100%;
+  background-color: $main-bg;
 }
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+button {
+  font-size: 16px !important;
+  padding: 0px 25px !important;
 }
+
+.navbar {
+  padding: 0px;
+}
+
+hr {
+  @extend .m-0;
+  background-color: $c-m;
+}
+
+/* CSS for main component */
+.dash-card {
+  @extend .p-2;
+}
+
+.dash-card p {
+  color: #999;
+}
+
+.dash-box {
+  @include mat-elevation(5);
+  color: white;
+  position: absolute;
+  @extend .p-4;
+  border-radius: 2px;
+  top: -28px;
+  left: 28px;
+}
+
+table {
+  direction: ltr;
+}
+
+.mat-header-cell {
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* end */

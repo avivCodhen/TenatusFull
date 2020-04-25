@@ -40,8 +40,12 @@
               <e p="Alpaca" t="Include">
                 <e p="AlpacaClient.cs" t="Include" />
               </e>
+              <e p="HFTTrader.cs" t="Include" />
               <e p="InteractiveBroker" t="Include">
                 <e p="EWrapperImpl.cs" t="Include" />
+                <e p="IbOpenORder.cs" t="Include" />
+                <e p="IbOrderStatus.cs" t="Include" />
+                <e p="IbPosition.cs" t="Include" />
                 <e p="InteractiveBrookerTradingClient.cs" t="Include" />
               </e>
               <e p="ITradingClient.cs" t="Include" />
@@ -71,10 +75,6 @@
         <e p="Transaction.cs" t="Include" />
         <e p="UserOrder.cs" t="Include" />
       </e>
-      <e p="EnumTypes" t="Include">
-        <e p="UserOrderActionType.cs" t="Include" />
-        <e p="UserOrderType.cs" t="Include" />
-      </e>
       <e p="Extensions" t="Include">
         <e p="StringExtensions.cs" t="Include" />
         <e p="UserManagerExtension.cs" t="Include" />
@@ -84,6 +84,10 @@
       </e>
       <e p="log.txt" t="Include" />
       <e p="MappingProfiles" t="Include">
+        <e p="EnumTypes" t="Include">
+          <e p="UserOrderActionType.cs" t="Include" />
+          <e p="UserOrderType.cs" t="Include" />
+        </e>
         <e p="MappingProfile.cs" t="Include" />
       </e>
       <e p="Migrations" t="Include">

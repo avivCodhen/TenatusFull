@@ -27,7 +27,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Alpaca
                     apiSecret));
         }
 
-        public async Task<OrderModel> Buy(string orderId, string stock, int quantity, decimal price)
+        public async Task<OrderModel> Buy(string stock, int quantity, decimal price)
         {
             var newOrderId = await SubmitOrder(stock, quantity, price, OrderSide.Buy);
             return await OrderCompletedOrDefault(newOrderId.ToString());
@@ -39,7 +39,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Alpaca
             return await OrderCompletedOrDefault(newOrderId);
         }
 
-        public async Task<OrderModel> LastOrderStatusOrDefault(string lastOrderId)
+        public async Task<OrderModel> LastOrderOrDefault(string lastOrderId)
         {
             return await OrderCompletedOrDefault(lastOrderId);
         }

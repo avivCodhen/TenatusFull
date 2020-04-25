@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Tenatus.API.Util;
 
 namespace Tenatus.API
 {
@@ -13,6 +15,10 @@ namespace Tenatus.API
     {
         public static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .WriteTo.File($"{AppConstants.FilePath}log.txt")
+                .CreateLogger();
             CreateHostBuilder(args).Build().Run();
         }
 

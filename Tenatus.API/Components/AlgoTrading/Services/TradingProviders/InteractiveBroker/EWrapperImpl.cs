@@ -188,16 +188,22 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         //! [accountdownloadend]
 
         //! [orderstatus]
+        public event Action<IbOrderStatus> IbOrderStatus;
         public virtual void orderStatus(int orderId, string status, double filled, double remaining, double avgFillPrice, int permId, int parentId, double lastFillPrice, int clientId, string whyHeld, double mktCapPrice)
         {
-            Console.WriteLine("OrderStatus. Id: " + orderId + ", Status: " + status + ", Filled: " + filled + ", Remaining: " + remaining
-                + ", AvgFillPrice: " + avgFillPrice + ", PermId: " + permId + ", ParentId: " + parentId + ", LastFillPrice: " + lastFillPrice + ", ClientId: " + clientId + ", WhyHeld: " + whyHeld + ", MktCapPrice: " + mktCapPrice);
+            IbOrderStatus?.Invoke(new IbOrderStatus{OrderId = orderId, Remaining = remaining, BuyingPrice = avgFillPrice});
+            
+            /*Console.WriteLine("OrderStatus. Id: " + orderId + ", Status: " + status + ", Filled: " + filled + ", Remaining: " + remaining
+                + ", AvgFillPrice: " + avgFillPrice + ", PermId: " + permId + ", ParentId: " + parentId + ", LastFillPrice: " + lastFillPrice + ", ClientId: " + clientId + ", WhyHeld: " + whyHeld + ", MktCapPrice: " + mktCapPrice);*/
         }
         //! [orderstatus]
 
         //! [openorder]
+        public event Action<IbOpenOrder> IbOpenOrder;
+
         public virtual void openOrder(int orderId, Contract contract, Order order, OrderState orderState)
         {
+            IbOpenOrder?.Invoke(new IbOpenOrder{Contract = contract, Order = order, OrderId = orderId});
             Console.WriteLine("OpenOrder. PermID: " + order.PermId + ", ClientId: " + order.ClientId + ", OrderId: " + orderId + ", Account: " + order.Account + 
                 ", Symbol: " + contract.Symbol + ", SecType: " + contract.SecType + " , Exchange: " + contract.Exchange + ", Action: " + order.Action + ", OrderType: " + order.OrderType + 
                 ", TotalQty: " + order.TotalQuantity + ", CashQty: " + order.CashQty + ", LmtPrice: " + order.LmtPrice + ", AuxPrice: " + order.AuxPrice + ", Status: " + orderState.Status);
@@ -205,8 +211,10 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         //! [openorder]
 
         //! [openorderend]
+        public event Action IbOpenOrderEnd;
         public virtual void openOrderEnd()
         {
+            IbOpenOrderEnd?.Invoke();
             Console.WriteLine("OpenOrderEnd");
         }
         //! [openorderend]
@@ -386,10 +394,12 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         }
         //! [updatenewsbulletin]
 
+        public event Action<IbPosition> IbPositions;
+
         //! [position]
         public virtual void position(string account, Contract contract, double pos, double avgCost)
         {
-            Console.WriteLine("Position. "+account+" - Symbol: "+contract.Symbol+", SecType: "+contract.SecType+", Currency: "+contract.Currency+", Position: "+pos+", Avg cost: "+avgCost);
+            IbPositions?.Invoke(new IbPosition{Position = pos, Symbol = contract.Symbol, BuyingPrice = avgCost});
         }
         //! [position]
 

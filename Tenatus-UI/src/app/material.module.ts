@@ -72,6 +72,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatPaginatorModule,
   ],
   exports: [
+    MatCardModule,
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
