@@ -40,13 +40,12 @@
               <e p="Alpaca" t="Include">
                 <e p="AlpacaClient.cs" t="Include" />
               </e>
-              <e p="HFTTrader.cs" t="Include" />
               <e p="InteractiveBroker" t="Include">
                 <e p="EWrapperImpl.cs" t="Include" />
                 <e p="IbOpenORder.cs" t="Include" />
                 <e p="IbOrderStatus.cs" t="Include" />
                 <e p="IbPosition.cs" t="Include" />
-                <e p="InteractiveBrookerTradingClient.cs" t="Include" />
+                <e p="InteractiveBrokerTradingClient.cs" t="Include" />
               </e>
               <e p="ITradingClient.cs" t="Include" />
               <e p="Trader.cs" t="Include" />

@@ -33,7 +33,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Alpaca
             return await OrderCompletedOrDefault(newOrderId.ToString());
         }
 
-        public async Task<OrderModel> Sell(string orderId, string stock, int quantity, decimal price)
+        public async Task<OrderModel> Sell(string stock, int quantity, decimal price)
         {
             var newOrderId = await SubmitOrder(stock, quantity, price, OrderSide.Sell);
             return await OrderCompletedOrDefault(newOrderId);

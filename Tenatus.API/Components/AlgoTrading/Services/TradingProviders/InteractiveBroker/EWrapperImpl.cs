@@ -111,10 +111,12 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         //! [ticksnapshotend]
 
         //! [nextvalidid]
+        public event Action<int> NextValidId;
         public virtual void nextValidId(int orderId) 
         {
             Console.WriteLine("Next Valid Id: "+orderId);
             NextOrderId = orderId;
+            NextValidId?.Invoke(orderId);
         }
         //! [nextvalidid]
 

@@ -146,9 +146,8 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
 
         private async Task Sell(decimal value, ApplicationDbContext dbContext)
         {
-            var lastBuyOrder = GetLastOrder(UserOrderActionType.Buy, dbContext);
             _log.LogInformation($"Selling {_quantity} {_stock} share(s). Price: {value}...");
-            var orderModel = await _tradingClient.Sell(lastBuyOrder.ExternalId, _stock, _quantity, value);
+            var orderModel = await _tradingClient.Sell(_stock, _quantity, value);
             if (orderModel != null)
             {
                 _log.LogInformation($"SOLD {_quantity} {_stock} share(s). Price: {value}");

@@ -11,14 +11,13 @@ using Order = IBApi.Order;
 
 namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.InteractiveBroker
 {
-    public class InteractiveBrookerTradingClient : ITradingClient
+    public class InteractiveBrokerTradingClient : ITradingClient
     {
         private EWrapperImpl ibClient;
 
-        public InteractiveBrookerTradingClient(string accountName, string lastOrderId)
+        public InteractiveBrokerTradingClient(string accountName)
         {
             ibClient = new EWrapperImpl();
-            ibClient.NextOrderId = Convert.ToInt16(lastOrderId);
             ibClient.ClientSocket.eConnect("127.0.0.1", 7497, 0);
             var reader = new EReader(ibClient.ClientSocket, ibClient.Signal);
             reader.Start();
@@ -30,6 +29,8 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
                     reader.processMsgs();
                 }
             }) {IsBackground = true}.Start();
+
+            ibClient.ClientSocket.reqIds(-1);
             /*
             var contract = new Contract()
             {
@@ -50,11 +51,12 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         public async Task<OrderModel> Buy(string stock, int quantity, decimal price)
         {
             var contract = GetDefaultContract(stock);
-            var id = ibClient.NextOrderId++;
+            var id = ibClient.NextOrderId;
             var orderInfo = GetOrder(quantity, price, id, true);
             ibClient.ClientSocket.placeOrder(id, contract, orderInfo);
 
             WaitForOrderComplete(id);
+            ibClient.NextOrderId++;
             return new OrderModel
             {
                 Quantity = quantity, BuyingPrice = price, ExternalId = id.ToString(),
@@ -79,16 +81,16 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         }
 
 
-        public async Task<OrderModel> Sell(string orderId, string stock, int quantity, decimal price)
+        public async Task<OrderModel> Sell(string stock, int quantity, decimal price)
         {
             var contract = GetDefaultContract(stock);
-            var id = Convert.ToInt16(orderId);
-
+            var id = ibClient.NextOrderId;
             var orderInfo = GetOrder(quantity, price, id, false);
 
             ibClient.ClientSocket.placeOrder(id, contract, orderInfo);
 
             WaitForOrderComplete(id);
+            ibClient.NextOrderId++;
             return new OrderModel
             {
                 Quantity = quantity, BuyingPrice = price, ExternalId = id.ToString(),
@@ -105,7 +107,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
             ibClient.IbOpenOrderEnd += () => { success = true; };
 
             var waitTime = DateTime.Now.AddMinutes(1);
-            while (!success && DateTime.Now < waitTime )
+            while (!success && DateTime.Now < waitTime)
             {
             }
 
