@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AutoMapper;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Data;
+using Tenatus.API.Util;
 
 namespace Tenatus.API.MappingProfiles
 {
@@ -9,8 +11,16 @@ namespace Tenatus.API.MappingProfiles
     {
         public MappingProfile()
         {
-            CreateMap<TraderSetting, TraderSettingModel>().ForMember(dest => dest.Stocks,
-                src => src.MapFrom(x => x.Stocks.Select(s => s.Name)));
+            CreateMap<Strategy, StrategyModel>()
+                .Include<PercentStrategy, StrategyModel>()
+                .Include<RangeStrategy, StrategyModel>();
+
+            CreateMap<PercentStrategy, StrategyModel>()
+                .ForMember(dest => dest.Type,
+                    src=> src.MapFrom(x=> AppConstants.StrategyTypePercent));
+            CreateMap<RangeStrategy, StrategyModel>()
+                .ForMember(dest => dest.Type,
+                    src=> src.MapFrom(x=> AppConstants.StrategyTypeRange));
         }
     }
 }

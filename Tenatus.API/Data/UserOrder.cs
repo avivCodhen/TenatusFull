@@ -1,5 +1,5 @@
 ﻿using System;
-using Tenatus.API.EnumTypes;
+using Tenatus.API.Types;
 
 namespace Tenatus.API.Data
 {
@@ -15,5 +15,7 @@ namespace Tenatus.API.Data
         public UserOrderActionType UserOrderActionType { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
         public string UserId { get; set; }
+        public bool Filled { get; set; }
+        public string Stock { get; set; }
     }
 }

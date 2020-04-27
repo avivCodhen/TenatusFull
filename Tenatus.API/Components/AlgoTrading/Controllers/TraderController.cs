@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Components.AlgoTrading.Services.TradingProviders;
+using Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders;
 using Tenatus.API.Data;
 using Tenatus.API.Extensions;
 
@@ -35,10 +36,7 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
             try
             {
                 var user = await _userManager.GetApplicationUserAsync(User);
-                user.TraderSetting.Stocks.Clear();
-                user.TraderSetting.Stocks = request.Stocks.Select(x=>new Stock{Name = x}).ToList();
-                user.TraderSetting.BuyingValue = request.BuyingValue;
-                user.TraderSetting.SellingValue = request.SellingValue;
+               
                 await _traderManager.StartTrader(user);
                 await _dbContext.SaveChangesAsync();
                 

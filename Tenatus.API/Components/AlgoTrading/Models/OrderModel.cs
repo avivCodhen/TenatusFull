@@ -1,4 +1,6 @@
-using Tenatus.API.EnumTypes;
+
+
+using Tenatus.API.Types;
 
 namespace Tenatus.API.Components.AlgoTrading.Models
 {
@@ -9,6 +11,7 @@ namespace Tenatus.API.Components.AlgoTrading.Models
         public decimal BuyingPrice { get; set; }
         public UserOrderActionType UserOrderActionType { get; set; }
         public UserOrderType UserOrderType { get; set; }
+        public bool Filled { get; set; }
 
     }
 }

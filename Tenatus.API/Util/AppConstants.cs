@@ -8,5 +8,8 @@ namespace Tenatus.API.Util
         public const string StockDataReaderTypeYahoo = "Yahoo";
         public const string TradingClientAlpaca = "alpaca";
         public const string TradingClientInteractive = "interactive";
+        public const string StrategyTypeRange = "Range";
+        public const string StrategyTypePercent = "Percent";
+        
     }
 }

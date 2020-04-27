@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Tenatus.API.Components.AlgoTrading.Services.Scrapping;
 using Tenatus.API.Components.AlgoTrading.Services.TradingProviders;
+using Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders;
 using Tenatus.API.Data;
 
 namespace Tenatus.API

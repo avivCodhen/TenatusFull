@@ -31,7 +31,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.Scrapping
                 var stockVal = _driver.FindElementById("quote-header-info")
                     .FindElement(By.CssSelector("span[data-reactid='32']")).Text;
 
-                stocksData.Add(new StockData() {Time = DateTime.Now, Value = stockVal});
+                stocksData.Add(new StockData() {Time = DateTime.Now, CurrentPrice = Convert.ToDecimal(stockVal)});
                 Console.WriteLine(stockVal);
                 Thread.Sleep(1000);
             }
@@ -43,9 +43,17 @@ namespace Tenatus.API.Components.AlgoTrading.Services.Scrapping
 
         public StockData ReadStockValue()
         {
-            var stockVal = _driver.FindElementById("quote-header-info")
-                .FindElement(By.CssSelector("span[data-reactid='32']")).Text;
-            return new StockData() {Time = DateTime.Now, Value = stockVal};
+            try
+            {
+                var stockVal = _driver.FindElementById("quote-header-info")
+                    .FindElement(By.CssSelector("span[data-reactid='32']")).Text;
+                return new StockData() {Time = DateTime.Now, CurrentPrice = Convert.ToDecimal(stockVal)};
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
         }
 
         public void Dispose()

@@ -17,8 +17,8 @@
         </e>
         <e p="AlgoTrading" t="Include">
           <e p="Controllers" t="Include">
+            <e p="StrategyController.cs" t="Include" />
             <e p="TraderController.cs" t="Include" />
-            <e p="TraderSettingController.cs" t="Include" />
           </e>
           <e p="Models" t="Include">
             <e p="OrderModel.cs" t="Include" />
@@ -26,6 +26,7 @@
             <e p="StartTraderRequest.cs" t="Include" />
             <e p="StockData.cs" t="Include" />
             <e p="StockDataReaderResource.cs" t="Include" />
+            <e p="StrategyModel.cs" t="Include" />
             <e p="TraderResource.cs" t="Include" />
             <e p="TraderSettingModel.cs" t="Include" />
           </e>
@@ -48,8 +49,13 @@
                 <e p="InteractiveBrokerTradingClient.cs" t="Include" />
               </e>
               <e p="ITradingClient.cs" t="Include" />
-              <e p="Trader.cs" t="Include" />
-              <e p="TraderManager.cs" t="Include" />
+              <e p="Traders" t="Include">
+                <e p="HFTTrader.cs" t="Include" />
+                <e p="PercentTrader.cs" t="Include" />
+                <e p="RangeTrader.cs" t="Include" />
+                <e p="Trader.cs" t="Include" />
+                <e p="TraderManager.cs" t="Include" />
+              </e>
               <e p="TradingClientFactory.cs" t="Include" />
             </e>
           </e>
@@ -69,7 +75,10 @@
       <e p="Data" t="Include">
         <e p="ApplicationDbContext.cs" t="Include" />
         <e p="ApplicationUser.cs" t="Include" />
+        <e p="PercentStrategy.cs" t="Include" />
+        <e p="RangeStrategy.cs" t="Include" />
         <e p="Stock.cs" t="Include" />
+        <e p="Strategy.cs" t="Include" />
         <e p="TraderSetting.cs" t="Include" />
         <e p="Transaction.cs" t="Include" />
         <e p="UserOrder.cs" t="Include" />
@@ -83,15 +92,17 @@
       </e>
       <e p="log.txt" t="Include" />
       <e p="MappingProfiles" t="Include">
-        <e p="EnumTypes" t="Include">
-          <e p="UserOrderActionType.cs" t="Include" />
-          <e p="UserOrderType.cs" t="Include" />
-        </e>
         <e p="MappingProfile.cs" t="Include" />
       </e>
       <e p="Migrations" t="Include">
         <e p="20200423080155_Init.cs" t="Include" />
         <e p="20200423080155_Init.Designer.cs" t="Include" />
+        <e p="20200427063551_AddStockData.cs" t="Include" />
+        <e p="20200427063551_AddStockData.Designer.cs" t="Include" />
+        <e p="20200427063738_AddDecimal.cs" t="Include" />
+        <e p="20200427063738_AddDecimal.Designer.cs" t="Include" />
+        <e p="20200427121532_AddUserFees.cs" t="Include" />
+        <e p="20200427121532_AddUserFees.Designer.cs" t="Include" />
         <e p="ApplicationDbContextModelSnapshot.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive">
@@ -109,6 +120,10 @@
       </e>
       <e p="Startup.cs" t="Include" />
       <e p="Tenatus.API.csproj" t="IncludeRecursive" />
+      <e p="Types" t="Include">
+        <e p="UserOrderActionType.cs" t="Include" />
+        <e p="UserOrderType.cs" t="Include" />
+      </e>
       <e p="Util" t="Include">
         <e p="AppConstants.cs" t="Include" />
       </e>

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tenatus.API.Data;
 
 namespace Tenatus.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200427063551_AddStockData")]
+    partial class AddStockData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -217,9 +219,6 @@ namespace Tenatus.API.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<decimal>("MinimumFee")
-                        .HasColumnType("decimal(18,6)");
-
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -271,7 +270,7 @@ namespace Tenatus.API.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Budget")
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -290,7 +289,7 @@ namespace Tenatus.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Strategies");
+                    b.ToTable("Strategy");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Strategy");
                 });
@@ -347,7 +346,7 @@ namespace Tenatus.API.Migrations
                     b.HasBaseType("Tenatus.API.Data.Strategy");
 
                     b.Property<decimal>("Percent")
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasDiscriminator().HasValue("PercentStrategy");
                 });
@@ -357,10 +356,10 @@ namespace Tenatus.API.Migrations
                     b.HasBaseType("Tenatus.API.Data.Strategy");
 
                     b.Property<decimal>("Maximum")
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Minimum")
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasDiscriminator().HasValue("RangeStrategy");
                 });

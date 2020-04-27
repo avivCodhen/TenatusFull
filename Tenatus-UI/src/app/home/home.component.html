@@ -3,14 +3,11 @@
     <div class="col-2 dash-card">
       <mat-card>
         <form #traderSettingForm="ngForm" (ngSubmit)="start()">
-          <div class="form-group">
-            <app-chips [stocks]="tradingSetting.stocks"></app-chips>
-          </div>
-          <button [disabled]="processing" *ngIf="!tradingSetting.isOn" type="submit" mat-raised-button
+          <button [disabled]="processing" *ngIf="!dashboard.isOn" type="submit" mat-raised-button
             class=" center btn-action w-100">התחל טריידר</button>
         </form>
 
-        <form *ngIf="tradingSetting.isOn" #traderSettingForm="ngForm" (ngSubmit)="stop()">
+        <form *ngIf="dashboard.isOn" #traderSettingForm="ngForm" (ngSubmit)="stop()">
           <button type="submit" mat-raised-button class="w-100 center btn-second">הפסק</button>
         </form>
       </mat-card>
@@ -19,7 +16,7 @@
     <div class="col-3 dash-card">
       <mat-card>
         <div class="dash-box bg-main" style="position: absolute;">
-          סה"כ {{userOrders.length}} פוזיציות</div>
+          סה"כ {{dashboard.userOrders.length}} פוזיציות</div>
         <p>פוזיציות</p>
         <hr class="mb-3" />
       </mat-card>
@@ -28,12 +25,12 @@
     <div class="dash-card col-7">
       <mat-card>
         <div class="dash-box bg-second" style="position: absolute;">
-          סה"כ {{userOrders.length}} טרנזקציות</div>
+          סה"כ {{dashboard.userOrders.length}} טרנזקציות</div>
         <p>טרנזקציות</p>
         <hr class="mb-3" />
-        <p *ngIf="userOrders == null || userOrders.length == 0">לא נמצאו טרנזקציות.</p>
+        <p *ngIf="dashboard.userOrders == null || dashboard.userOrders.length == 0">לא נמצאו טרנזקציות.</p>
 
-        <table style="width: 100%;" mat-table [dataSource]="userOrders">
+        <table style="width: 100%;" mat-table [dataSource]="dashboard.userOrders">
 
           <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->

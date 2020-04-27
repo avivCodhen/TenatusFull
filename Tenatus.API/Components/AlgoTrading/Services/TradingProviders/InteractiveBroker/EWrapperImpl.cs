@@ -6,16 +6,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using IBApi;
+using Tenatus.API.Extensions;
 
 namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.InteractiveBroker
 {
     //! [ewrapperimpl]
-    public class EWrapperImpl : EWrapper 
+    public class EWrapperImpl : EWrapper
     {
-    //! [ewrapperimpl]
+        //! [ewrapperimpl]
         private int nextOrderId;
+
         //! [socket_declare]
         EClientSocket clientSocket;
+
         public readonly EReaderSignal Signal;
         //! [socket_declare]
 
@@ -43,15 +46,15 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
 
         public virtual void error(Exception e)
         {
-            Console.WriteLine("Exception thrown: "+e);
+            Console.WriteLine("Exception thrown: " + e);
             throw e;
         }
-        
+
         public virtual void error(string str)
         {
-            Console.WriteLine("Error: "+str+"\n");
+            Console.WriteLine("Error: " + str + "\n");
         }
-        
+
         //! [error]
         public virtual void error(int id, int errorCode, string errorMsg)
         {
@@ -63,27 +66,28 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         {
             Console.WriteLine("Connection closed.\n");
         }
-        
-        public virtual void currentTime(long time) 
+
+        public virtual void currentTime(long time)
         {
-            Console.WriteLine("Current Time: "+time+"\n");
+            Console.WriteLine("Current Time: " + time + "\n");
         }
 
         //! [tickprice]
-        public virtual void tickPrice(int tickerId, int field, double price, TickAttrib attribs) 
+        public virtual void tickPrice(int tickerId, int field, double price, TickAttrib attribs)
         {
-            Console.WriteLine("Tick Price. Ticker Id:"+tickerId+", Field: "+field+", Price: "+price+", CanAutoExecute: "+attribs.CanAutoExecute + 
-                ", PastLimit: " + attribs.PastLimit + ", PreOpen: " + attribs.PreOpen);
+            Console.WriteLine("Tick Price. Ticker Id:" + tickerId + ", Field: " + field + ", Price: " + price +
+                              ", CanAutoExecute: " + attribs.CanAutoExecute +
+                              ", PastLimit: " + attribs.PastLimit + ", PreOpen: " + attribs.PreOpen);
         }
         //! [tickprice]
-        
+
         //! [ticksize]
         public virtual void tickSize(int tickerId, int field, int size)
         {
             Console.WriteLine("Tick Size. Ticker Id:" + tickerId + ", Field: " + field + ", Size: " + size);
         }
         //! [ticksize]
-        
+
         //! [tickstring]
         public virtual void tickString(int tickerId, int tickType, string value)
         {
@@ -98,23 +102,30 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         }
         //! [tickgeneric]
 
-        public virtual void tickEFP(int tickerId, int tickType, double basisPoints, string formattedBasisPoints, double impliedFuture, int holdDays, string futureLastTradeDate, double dividendImpact, double dividendsToLastTradeDate)
+        public virtual void tickEFP(int tickerId, int tickType, double basisPoints, string formattedBasisPoints,
+            double impliedFuture, int holdDays, string futureLastTradeDate, double dividendImpact,
+            double dividendsToLastTradeDate)
         {
-            Console.WriteLine("TickEFP. "+tickerId+", Type: "+tickType+", BasisPoints: "+basisPoints+", FormattedBasisPoints: "+formattedBasisPoints+", ImpliedFuture: "+impliedFuture+", HoldDays: "+holdDays+", FutureLastTradeDate: "+futureLastTradeDate+", DividendImpact: "+dividendImpact+", DividendsToLastTradeDate: "+dividendsToLastTradeDate);
+            Console.WriteLine("TickEFP. " + tickerId + ", Type: " + tickType + ", BasisPoints: " + basisPoints +
+                              ", FormattedBasisPoints: " + formattedBasisPoints + ", ImpliedFuture: " + impliedFuture +
+                              ", HoldDays: " + holdDays + ", FutureLastTradeDate: " + futureLastTradeDate +
+                              ", DividendImpact: " + dividendImpact + ", DividendsToLastTradeDate: " +
+                              dividendsToLastTradeDate);
         }
-        
+
         //! [ticksnapshotend]
         public virtual void tickSnapshotEnd(int tickerId)
         {
-            Console.WriteLine("TickSnapshotEnd: "+tickerId);
+            Console.WriteLine("TickSnapshotEnd: " + tickerId);
         }
         //! [ticksnapshotend]
 
         //! [nextvalidid]
         public event Action<int> NextValidId;
-        public virtual void nextValidId(int orderId) 
+
+        public virtual void nextValidId(int orderId)
         {
-            Console.WriteLine("Next Valid Id: "+orderId);
+            Console.WriteLine("Next Valid Id: " + orderId);
             NextOrderId = orderId;
             NextValidId?.Invoke(orderId);
         }
@@ -123,78 +134,94 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         //! [deltaneutralvalidation]
         public virtual void deltaNeutralValidation(int reqId, DeltaNeutralContract deltaNeutralContract)
         {
-            Console.WriteLine("DeltaNeutralValidation. " + reqId + ", ConId: " + deltaNeutralContract.ConId + ", Delta: " + deltaNeutralContract.Delta + ", Price: " + deltaNeutralContract.Price);
+            Console.WriteLine("DeltaNeutralValidation. " + reqId + ", ConId: " + deltaNeutralContract.ConId +
+                              ", Delta: " + deltaNeutralContract.Delta + ", Price: " + deltaNeutralContract.Price);
         }
         //! [deltaneutralvalidation]
 
         //! [managedaccounts]
-        public virtual void managedAccounts(string accountsList) 
+        public virtual void managedAccounts(string accountsList)
         {
-            Console.WriteLine("Account list: "+accountsList);
+            Console.WriteLine("Account list: " + accountsList);
         }
         //! [managedaccounts]
 
         //! [tickoptioncomputation]
-        public virtual void tickOptionComputation(int tickerId, int field, double impliedVolatility, double delta, double optPrice, double pvDividend, double gamma, double vega, double theta, double undPrice)
+        public virtual void tickOptionComputation(int tickerId, int field, double impliedVolatility, double delta,
+            double optPrice, double pvDividend, double gamma, double vega, double theta, double undPrice)
         {
-            Console.WriteLine("TickOptionComputation. TickerId: "+tickerId+", field: "+field+", ImpliedVolatility: "+impliedVolatility+", Delta: "+delta
-                +", OptionPrice: "+optPrice+", pvDividend: "+pvDividend+", Gamma: "+gamma+", Vega: "+vega+", Theta: "+theta+", UnderlyingPrice: "+undPrice);
+            Console.WriteLine("TickOptionComputation. TickerId: " + tickerId + ", field: " + field +
+                              ", ImpliedVolatility: " + impliedVolatility + ", Delta: " + delta
+                              + ", OptionPrice: " + optPrice + ", pvDividend: " + pvDividend + ", Gamma: " + gamma +
+                              ", Vega: " + vega + ", Theta: " + theta + ", UnderlyingPrice: " + undPrice);
         }
         //! [tickoptioncomputation]
 
         //! [accountsummary]
         public virtual void accountSummary(int reqId, string account, string tag, string value, string currency)
         {
-            Console.WriteLine("Acct Summary. ReqId: " + reqId + ", Acct: " + account + ", Tag: " + tag + ", Value: " + value + ", Currency: " + currency);
+            Console.WriteLine("Acct Summary. ReqId: " + reqId + ", Acct: " + account + ", Tag: " + tag + ", Value: " +
+                              value + ", Currency: " + currency);
         }
         //! [accountsummary]
 
         //! [accountsummaryend]
         public virtual void accountSummaryEnd(int reqId)
         {
-            Console.WriteLine("AccountSummaryEnd. Req Id: "+reqId+"\n");
+            Console.WriteLine("AccountSummaryEnd. Req Id: " + reqId + "\n");
         }
         //! [accountsummaryend]
 
         //! [updateaccountvalue]
         public event Action<string> AccountValue;
+
         public virtual void updateAccountValue(string key, string value, string currency, string accountName)
         {
-            var tmp = AccountValue;
-            tmp(key);
-            Console.WriteLine("UpdateAccountValue. Key: " + key + ", Value: " + value + ", Currency: " + currency + ", AccountName: " + accountName);
+            if (key.EqualsIgnoreCase("AvailableFunds"))
+                AccountValue?.Invoke(value);
+
+            Console.WriteLine("UpdateAccountValue. Key: " + key + ", Value: " + value + ", Currency: " + currency +
+                              ", AccountName: " + accountName);
         }
         //! [updateaccountvalue]
 
         //! [updateportfolio]
-        public virtual void updatePortfolio(Contract contract, double position, double marketPrice, double marketValue, double averageCost, double unrealizedPNL, double realizedPNL, string accountName)
+        public virtual void updatePortfolio(Contract contract, double position, double marketPrice, double marketValue,
+            double averageCost, double unrealizedPNL, double realizedPNL, string accountName)
         {
-            Console.WriteLine("UpdatePortfolio. "+contract.Symbol+", "+contract.SecType+" @ "+contract.Exchange
-                +": Position: "+position+", MarketPrice: "+marketPrice+", MarketValue: "+marketValue+", AverageCost: "+averageCost
-                +", UnrealizedPNL: "+unrealizedPNL+", RealizedPNL: "+realizedPNL+", AccountName: "+accountName);
+            Console.WriteLine("UpdatePortfolio. " + contract.Symbol + ", " + contract.SecType + " @ " +
+                              contract.Exchange
+                              + ": Position: " + position + ", MarketPrice: " + marketPrice + ", MarketValue: " +
+                              marketValue + ", AverageCost: " + averageCost
+                              + ", UnrealizedPNL: " + unrealizedPNL + ", RealizedPNL: " + realizedPNL +
+                              ", AccountName: " + accountName);
         }
         //! [updateportfolio]
 
         //! [updateaccounttime]
         public virtual void updateAccountTime(string timestamp)
         {
-            Console.WriteLine("UpdateAccountTime. Time: " + timestamp+"\n");
+            Console.WriteLine("UpdateAccountTime. Time: " + timestamp + "\n");
         }
         //! [updateaccounttime]
 
         //! [accountdownloadend]
         public virtual void accountDownloadEnd(string account)
         {
-            Console.WriteLine("Account download finished: "+account+"\n");
+            Console.WriteLine("Account download finished: " + account + "\n");
         }
         //! [accountdownloadend]
 
         //! [orderstatus]
         public event Action<IbOrderStatus> IbOrderStatus;
-        public virtual void orderStatus(int orderId, string status, double filled, double remaining, double avgFillPrice, int permId, int parentId, double lastFillPrice, int clientId, string whyHeld, double mktCapPrice)
+
+        public virtual void orderStatus(int orderId, string status, double filled, double remaining,
+            double avgFillPrice, int permId, int parentId, double lastFillPrice, int clientId, string whyHeld,
+            double mktCapPrice)
         {
-            IbOrderStatus?.Invoke(new IbOrderStatus{OrderId = orderId, Remaining = remaining, BuyingPrice = avgFillPrice});
-            
+            IbOrderStatus?.Invoke(new IbOrderStatus
+                {OrderId = orderId, Remaining = remaining, BuyingPrice = avgFillPrice});
+
             /*Console.WriteLine("OrderStatus. Id: " + orderId + ", Status: " + status + ", Filled: " + filled + ", Remaining: " + remaining
                 + ", AvgFillPrice: " + avgFillPrice + ", PermId: " + permId + ", ParentId: " + parentId + ", LastFillPrice: " + lastFillPrice + ", ClientId: " + clientId + ", WhyHeld: " + whyHeld + ", MktCapPrice: " + mktCapPrice);*/
         }
@@ -205,15 +232,19 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
 
         public virtual void openOrder(int orderId, Contract contract, Order order, OrderState orderState)
         {
-            IbOpenOrder?.Invoke(new IbOpenOrder{Contract = contract, Order = order, OrderId = orderId});
-            Console.WriteLine("OpenOrder. PermID: " + order.PermId + ", ClientId: " + order.ClientId + ", OrderId: " + orderId + ", Account: " + order.Account + 
-                ", Symbol: " + contract.Symbol + ", SecType: " + contract.SecType + " , Exchange: " + contract.Exchange + ", Action: " + order.Action + ", OrderType: " + order.OrderType + 
-                ", TotalQty: " + order.TotalQuantity + ", CashQty: " + order.CashQty + ", LmtPrice: " + order.LmtPrice + ", AuxPrice: " + order.AuxPrice + ", Status: " + orderState.Status);
+            IbOpenOrder?.Invoke(new IbOpenOrder {Contract = contract, Order = order, OrderId = orderId});
+            Console.WriteLine("OpenOrder. PermID: " + order.PermId + ", ClientId: " + order.ClientId + ", OrderId: " +
+                              orderId + ", Account: " + order.Account +
+                              ", Symbol: " + contract.Symbol + ", SecType: " + contract.SecType + " , Exchange: " +
+                              contract.Exchange + ", Action: " + order.Action + ", OrderType: " + order.OrderType +
+                              ", TotalQty: " + order.TotalQuantity + ", CashQty: " + order.CashQty + ", LmtPrice: " +
+                              order.LmtPrice + ", AuxPrice: " + order.AuxPrice + ", Status: " + orderState.Status);
         }
         //! [openorder]
 
         //! [openorderend]
         public event Action IbOpenOrderEnd;
+
         public virtual void openOrderEnd()
         {
             IbOpenOrderEnd?.Invoke();
@@ -277,12 +308,14 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
 
         public void printContractDetailsSecIdList(List<TagValue> secIdList)
         {
-            if (secIdList != null && secIdList.Count > 0) {
+            if (secIdList != null && secIdList.Count > 0)
+            {
                 Console.Write("\tSecIdList: {");
                 foreach (TagValue tagValue in secIdList)
                 {
                     Console.Write(tagValue.Tag + "=" + tagValue.Value + ";");
                 }
+
                 Console.WriteLine("}");
             }
         }
@@ -329,70 +362,80 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         //! [contractdetailsend]
         public virtual void contractDetailsEnd(int reqId)
         {
-            Console.WriteLine("ContractDetailsEnd. "+reqId+"\n");
+            Console.WriteLine("ContractDetailsEnd. " + reqId + "\n");
         }
         //! [contractdetailsend]
 
         //! [execdetails]
         public virtual void execDetails(int reqId, Contract contract, Execution execution)
         {
-            Console.WriteLine("ExecDetails. "+reqId+" - "+contract.Symbol+", "+contract.SecType+", "+contract.Currency+" - "+execution.ExecId+", "+execution.OrderId+", "+execution.Shares + ", " + execution.LastLiquidity);
+            Console.WriteLine("ExecDetails. " + reqId + " - " + contract.Symbol + ", " + contract.SecType + ", " +
+                              contract.Currency + " - " + execution.ExecId + ", " + execution.OrderId + ", " +
+                              execution.Shares + ", " + execution.LastLiquidity);
         }
         //! [execdetails]
 
         //! [execdetailsend]
         public virtual void execDetailsEnd(int reqId)
         {
-            Console.WriteLine("ExecDetailsEnd. "+reqId+"\n");
+            Console.WriteLine("ExecDetailsEnd. " + reqId + "\n");
         }
         //! [execdetailsend]
 
         //! [commissionreport]
         public virtual void commissionReport(CommissionReport commissionReport)
         {
-            Console.WriteLine("CommissionReport. "+commissionReport.ExecId+" - "+commissionReport.Commission+" "+commissionReport.Currency+" RPNL "+commissionReport.RealizedPNL);
+            Console.WriteLine("CommissionReport. " + commissionReport.ExecId + " - " + commissionReport.Commission +
+                              " " + commissionReport.Currency + " RPNL " + commissionReport.RealizedPNL);
         }
         //! [commissionreport]
 
         //! [fundamentaldata]
         public virtual void fundamentalData(int reqId, string data)
         {
-            Console.WriteLine("FundamentalData. " + reqId + "" + data+"\n");
+            Console.WriteLine("FundamentalData. " + reqId + "" + data + "\n");
         }
         //! [fundamentaldata]
 
         //! [historicaldata]
         public virtual void historicalData(int reqId, Bar bar)
         {
-            Console.WriteLine("HistoricalData. " + reqId + " - Time: " + bar.Time + ", Open: " + bar.Open + ", High: " + bar.High + ", Low: " + bar.Low + ", Close: " + bar.Close + ", Volume: " + bar.Volume + ", Count: " + bar.Count + ", WAP: " + bar.WAP);
+            Console.WriteLine("HistoricalData. " + reqId + " - Time: " + bar.Time + ", Open: " + bar.Open + ", High: " +
+                              bar.High + ", Low: " + bar.Low + ", Close: " + bar.Close + ", Volume: " + bar.Volume +
+                              ", Count: " + bar.Count + ", WAP: " + bar.WAP);
         }
         //! [historicaldata]
 
         //! [marketdatatype]
         public virtual void marketDataType(int reqId, int marketDataType)
         {
-            Console.WriteLine("MarketDataType. "+reqId+", Type: "+marketDataType+"\n");
+            Console.WriteLine("MarketDataType. " + reqId + ", Type: " + marketDataType + "\n");
         }
         //! [marketdatatype]
 
         //! [updatemktdepth]
         public virtual void updateMktDepth(int tickerId, int position, int operation, int side, double price, int size)
         {
-            Console.WriteLine("UpdateMarketDepth. " + tickerId + " - Position: " + position + ", Operation: " + operation + ", Side: " + side + ", Price: " + price + ", Size: " + size);
+            Console.WriteLine("UpdateMarketDepth. " + tickerId + " - Position: " + position + ", Operation: " +
+                              operation + ", Side: " + side + ", Price: " + price + ", Size: " + size);
         }
         //! [updatemktdepth]
 
         //! [updatemktdepthl2]
-        public virtual void updateMktDepthL2(int tickerId, int position, string marketMaker, int operation, int side, double price, int size, bool isSmartDepth)
+        public virtual void updateMktDepthL2(int tickerId, int position, string marketMaker, int operation, int side,
+            double price, int size, bool isSmartDepth)
         {
-            Console.WriteLine("UpdateMarketDepthL2. " + tickerId + " - Position: " + position + ", Operation: " + operation + ", Side: " + side + ", Price: " + price + ", Size: " + size + ", isSmartDepth: " + isSmartDepth);
+            Console.WriteLine("UpdateMarketDepthL2. " + tickerId + " - Position: " + position + ", Operation: " +
+                              operation + ", Side: " + side + ", Price: " + price + ", Size: " + size +
+                              ", isSmartDepth: " + isSmartDepth);
         }
         //! [updatemktdepthl2]
 
         //! [updatenewsbulletin]
         public virtual void updateNewsBulletin(int msgId, int msgType, String message, String origExchange)
         {
-            Console.WriteLine("News Bulletins. "+msgId+" - Type: "+msgType+", Message: "+message+", Exchange of Origin: "+origExchange+"\n");
+            Console.WriteLine("News Bulletins. " + msgId + " - Type: " + msgType + ", Message: " + message +
+                              ", Exchange of Origin: " + origExchange + "\n");
         }
         //! [updatenewsbulletin]
 
@@ -401,7 +444,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         //! [position]
         public virtual void position(string account, Contract contract, double pos, double avgCost)
         {
-            IbPositions?.Invoke(new IbPosition{Position = pos, Symbol = contract.Symbol, BuyingPrice = avgCost});
+            IbPositions?.Invoke(new IbPosition {Position = pos, Symbol = contract.Symbol, BuyingPrice = avgCost});
         }
         //! [position]
 
@@ -413,38 +456,45 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         //! [positionend]
 
         //! [realtimebar]
-        public virtual void realtimeBar(int reqId, long time, double open, double high, double low, double close, long volume, double WAP, int count)
+        public virtual void realtimeBar(int reqId, long time, double open, double high, double low, double close,
+            long volume, double WAP, int count)
         {
-            Console.WriteLine("RealTimeBars. " + reqId + " - Time: " + time + ", Open: " + open + ", High: " + high + ", Low: " + low + ", Close: " + close + ", Volume: " + volume + ", Count: " + count + ", WAP: " + WAP);
+            Console.WriteLine("RealTimeBars. " + reqId + " - Time: " + time + ", Open: " + open + ", High: " + high +
+                              ", Low: " + low + ", Close: " + close + ", Volume: " + volume + ", Count: " + count +
+                              ", WAP: " + WAP);
         }
         //! [realtimebar]
 
         //! [scannerparameters]
         public virtual void scannerParameters(string xml)
         {
-            Console.WriteLine("ScannerParameters. "+xml+"\n");
+            Console.WriteLine("ScannerParameters. " + xml + "\n");
         }
         //! [scannerparameters]
 
         //! [scannerdata]
-        public virtual void scannerData(int reqId, int rank, ContractDetails contractDetails, string distance, string benchmark, string projection, string legsStr)
+        public virtual void scannerData(int reqId, int rank, ContractDetails contractDetails, string distance,
+            string benchmark, string projection, string legsStr)
         {
-            Console.WriteLine("ScannerData. "+reqId+" - Rank: "+rank+", Symbol: "+contractDetails.Contract.Symbol+", SecType: "+contractDetails.Contract.SecType+", Currency: "+contractDetails.Contract.Currency
-                +", Distance: "+distance+", Benchmark: "+benchmark+", Projection: "+projection+", Legs String: "+legsStr);
+            Console.WriteLine("ScannerData. " + reqId + " - Rank: " + rank + ", Symbol: " +
+                              contractDetails.Contract.Symbol + ", SecType: " + contractDetails.Contract.SecType +
+                              ", Currency: " + contractDetails.Contract.Currency
+                              + ", Distance: " + distance + ", Benchmark: " + benchmark + ", Projection: " +
+                              projection + ", Legs String: " + legsStr);
         }
         //! [scannerdata]
 
         //! [scannerdataend]
         public virtual void scannerDataEnd(int reqId)
         {
-            Console.WriteLine("ScannerDataEnd. "+reqId);
+            Console.WriteLine("ScannerDataEnd. " + reqId);
         }
         //! [scannerdataend]
 
         //! [receivefa]
         public virtual void receiveFA(int faDataType, string faXmlData)
         {
-            Console.WriteLine("Receing FA: "+faDataType+" - "+faXmlData);
+            Console.WriteLine("Receing FA: " + faDataType + " - " + faXmlData);
         }
         //! [receivefa]
 
@@ -458,7 +508,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         //! [historicaldataend]
         public virtual void historicalDataEnd(int reqId, string startDate, string endDate)
         {
-            Console.WriteLine("HistoricalDataEnd - "+reqId+" from "+startDate+" to "+endDate);
+            Console.WriteLine("HistoricalDataEnd - " + reqId + " from " + startDate + " to " + endDate);
         }
         //! [historicaldataend]
 
@@ -466,18 +516,22 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         {
             Console.WriteLine("verifyMessageAPI: " + apiData);
         }
+
         public virtual void verifyCompleted(bool isSuccessful, string errorText)
         {
             Console.WriteLine("verifyCompleted. IsSuccessfule: " + isSuccessful + " - Error: " + errorText);
         }
+
         public virtual void verifyAndAuthMessageAPI(string apiData, string xyzChallenge)
         {
             Console.WriteLine("verifyAndAuthMessageAPI: " + apiData + " " + xyzChallenge);
         }
+
         public virtual void verifyAndAuthCompleted(bool isSuccessful, string errorText)
         {
             Console.WriteLine("verifyAndAuthCompleted. IsSuccessful: " + isSuccessful + " - Error: " + errorText);
         }
+
         //! [displaygrouplist]
         public virtual void displayGroupList(int reqId, string groups)
         {
@@ -493,9 +547,13 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         //! [displaygroupupdated]
 
         //! [positionmulti]
-        public virtual void positionMulti(int reqId, string account, string modelCode, Contract contract, double pos, double avgCost)
+        public virtual void positionMulti(int reqId, string account, string modelCode, Contract contract, double pos,
+            double avgCost)
         {
-            Console.WriteLine("Position Multi. Request: " + reqId + ", Account: " + account + ", ModelCode: " + modelCode + ", Symbol: " + contract.Symbol + ", SecType: " + contract.SecType + ", Currency: " + contract.Currency + ", Position: " + pos + ", Avg cost: " + avgCost + "\n");
+            Console.WriteLine("Position Multi. Request: " + reqId + ", Account: " + account + ", ModelCode: " +
+                              modelCode + ", Symbol: " + contract.Symbol + ", SecType: " + contract.SecType +
+                              ", Currency: " + contract.Currency + ", Position: " + pos + ", Avg cost: " + avgCost +
+                              "\n");
         }
         //! [positionmulti]
 
@@ -507,9 +565,11 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         //! [positionmultiend]
 
         //! [accountupdatemulti]
-        public virtual void accountUpdateMulti(int reqId, string account, string modelCode, string key, string value, string currency)
+        public virtual void accountUpdateMulti(int reqId, string account, string modelCode, string key, string value,
+            string currency)
         {
-            Console.WriteLine("Account Update Multi. Request: " + reqId + ", Account: " + account + ", ModelCode: " + modelCode + ", Key: " + key + ", Value: " + value + ", Currency: " + currency + "\n");
+            Console.WriteLine("Account Update Multi. Request: " + reqId + ", Account: " + account + ", ModelCode: " +
+                              modelCode + ", Key: " + key + ", Value: " + value + ", Currency: " + currency + "\n");
         }
         //! [accountupdatemulti]
 
@@ -521,10 +581,13 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         //! [accountupdatemultiend]
 
         //! [securityDefinitionOptionParameter]
-        public void securityDefinitionOptionParameter(int reqId, string exchange, int underlyingConId, string tradingClass, string multiplier, HashSet<string> expirations, HashSet<double> strikes)
+        public void securityDefinitionOptionParameter(int reqId, string exchange, int underlyingConId,
+            string tradingClass, string multiplier, HashSet<string> expirations, HashSet<double> strikes)
         {
-            Console.WriteLine("Security Definition Option Parameter. Reqest: {0}, Exchange: {1}, Undrelying contract id: {2}, Trading class: {3}, Multiplier: {4}, Expirations: {5}, Strikes: {6}",
-                              reqId, exchange, underlyingConId, tradingClass, multiplier, string.Join(", ", expirations), string.Join(", ", strikes));
+            Console.WriteLine(
+                "Security Definition Option Parameter. Reqest: {0}, Exchange: {1}, Undrelying contract id: {2}, Trading class: {3}, Multiplier: {4}, Expirations: {5}, Strikes: {6}",
+                reqId, exchange, underlyingConId, tradingClass, multiplier, string.Join(", ", expirations),
+                string.Join(", ", strikes));
         }
         //! [securityDefinitionOptionParameter]
 
@@ -562,13 +625,14 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
 
             foreach (var familyCode in familyCodes)
             {
-                Console.WriteLine("Account ID: {0}, Family Code Str: {1}", familyCode.AccountID, familyCode.FamilyCodeStr);
+                Console.WriteLine("Account ID: {0}, Family Code Str: {1}", familyCode.AccountID,
+                    familyCode.FamilyCodeStr);
             }
         }
         //! [familyCodes]
 
         //! [symbolSamples]
-        public void symbolSamples(int reqId, ContractDescription[] contractDescriptions) 
+        public void symbolSamples(int reqId, ContractDescription[] contractDescriptions)
         {
             string derivSecTypes;
             Console.WriteLine("Symbol Samples. Request Id: {0}", reqId);
@@ -581,8 +645,11 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
                     derivSecTypes += derivSecType;
                     derivSecTypes += " ";
                 }
-                Console.WriteLine("Contract: conId - {0}, symbol - {1}, secType - {2}, primExchange - {3}, currency - {4}, derivativeSecTypes - {5}", 
-                    contractDescription.Contract.ConId, contractDescription.Contract.Symbol, contractDescription.Contract.SecType, 
+
+                Console.WriteLine(
+                    "Contract: conId - {0}, symbol - {1}, secType - {2}, primExchange - {3}, currency - {4}, derivativeSecTypes - {5}",
+                    contractDescription.Contract.ConId, contractDescription.Contract.Symbol,
+                    contractDescription.Contract.SecType,
                     contractDescription.Contract.PrimaryExch, contractDescription.Contract.Currency, derivSecTypes);
             }
         }
@@ -595,19 +662,25 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
 
             foreach (var depthMktDataDescription in depthMktDataDescriptions)
             {
-                Console.WriteLine("Depth Market Data Description: Exchange: {0}, Security Type: {1}, Listing Exch: {2}, Service Data Type: {3}, Agg Group: {4}", 
-                    depthMktDataDescription.Exchange, depthMktDataDescription.SecType, 
+                Console.WriteLine(
+                    "Depth Market Data Description: Exchange: {0}, Security Type: {1}, Listing Exch: {2}, Service Data Type: {3}, Agg Group: {4}",
+                    depthMktDataDescription.Exchange, depthMktDataDescription.SecType,
                     depthMktDataDescription.ListingExch, depthMktDataDescription.ServiceDataType,
-                    depthMktDataDescription.AggGroup != Int32.MaxValue ? depthMktDataDescription.AggGroup.ToString() : ""
-                    );
+                    depthMktDataDescription.AggGroup != Int32.MaxValue
+                        ? depthMktDataDescription.AggGroup.ToString()
+                        : ""
+                );
             }
         }
         //! [mktDepthExchanges]
 
         //! [tickNews]
-        public void tickNews(int tickerId, long timeStamp, string providerCode, string articleId, string headline, string extraData)
+        public void tickNews(int tickerId, long timeStamp, string providerCode, string articleId, string headline,
+            string extraData)
         {
-            Console.WriteLine("Tick News. Ticker Id: {0}, Time Stamp: {1}, Provider Code: {2}, Article Id: {3}, headline: {4}, extraData: {5}", tickerId, timeStamp, providerCode, articleId, headline, extraData);
+            Console.WriteLine(
+                "Tick News. Ticker Id: {0}, Time Stamp: {1}, Provider Code: {2}, Article Id: {3}, headline: {4}, extraData: {5}",
+                tickerId, timeStamp, providerCode, articleId, headline, extraData);
         }
         //! [tickNews]
 
@@ -620,7 +693,8 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
 
             foreach (var item in theMap)
             {
-                sb.AppendFormat("bit number: {0}, exchange: {1}, exchange letter: {2}\n", item.Key, item.Value.Key, item.Value.Value);
+                sb.AppendFormat("bit number: {0}, exchange: {1}, exchange letter: {2}\n", item.Key, item.Value.Key,
+                    item.Value.Value);
             }
 
             sb.AppendFormat("==== Smart Components Begin (total={0}) reqId = {1} ====\n", theMap.Count, reqId);
@@ -632,7 +706,8 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         //! [tickReqParams]
         public void tickReqParams(int tickerId, double minTick, string bboExchange, int snapshotPermissions)
         {
-            Console.WriteLine("id={0} minTick = {1} bboExchange = {2} snapshotPermissions = {3}", tickerId, minTick, bboExchange, snapshotPermissions);
+            Console.WriteLine("id={0} minTick = {1} bboExchange = {2} snapshotPermissions = {3}", tickerId, minTick,
+                bboExchange, snapshotPermissions);
 
             BboExchange = bboExchange;
         }
@@ -655,19 +730,23 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         public void newsArticle(int requestId, int articleType, string articleText)
         {
             Console.WriteLine("News Article. Request Id: {0}, ArticleType: {1}", requestId, articleType);
-            if (articleType == 0) {
+            if (articleType == 0)
+            {
                 Console.WriteLine("News Article Text: {0}", articleText);
             }
-            else if (articleType == 1) {
+            else if (articleType == 1)
+            {
                 Console.WriteLine("News Article Text: article text is binary/pdf and cannot be displayed");
             }
         }
         //! [newsArticle]
-        
+
         //! [historicalNews]
         public void historicalNews(int requestId, string time, string providerCode, string articleId, string headline)
         {
-            Console.WriteLine("Historical News. Request Id: {0}, Time: {1}, Provider Code: {2}, Article Id: {3}, headline: {4}", requestId, time, providerCode, articleId, headline);
+            Console.WriteLine(
+                "Historical News. Request Id: {0}, Time: {1}, Provider Code: {2}, Article Id: {3}, headline: {4}",
+                requestId, time, providerCode, articleId, headline);
         }
         //! [historicalNews]
 
@@ -696,94 +775,115 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         //! [historicalDataUpdate]
         public void historicalDataUpdate(int reqId, Bar bar)
         {
-            Console.WriteLine("HistoricalDataUpdate. " + reqId + " - Time: " + bar.Time + ", Open: " + bar.Open + ", High: " + bar.High + ", Low: " + bar.Low + ", Close: " + bar.Close + ", Volume: " + bar.Volume + ", Count: " + bar.Count + ", WAP: " + bar.WAP);
+            Console.WriteLine("HistoricalDataUpdate. " + reqId + " - Time: " + bar.Time + ", Open: " + bar.Open +
+                              ", High: " + bar.High + ", Low: " + bar.Low + ", Close: " + bar.Close + ", Volume: " +
+                              bar.Volume + ", Count: " + bar.Count + ", WAP: " + bar.WAP);
         }
         //! [historicalDataUpdate]
 
         //! [rerouteMktDataReq]
         public void rerouteMktDataReq(int reqId, int conId, string exchange)
         {
-            Console.WriteLine("Re-route market data request. Req Id: {0}, ConId: {1}, Exchange: {2}", reqId, conId, exchange);
+            Console.WriteLine("Re-route market data request. Req Id: {0}, ConId: {1}, Exchange: {2}", reqId, conId,
+                exchange);
         }
         //! [rerouteMktDataReq]
 
         //! [rerouteMktDepthReq]
         public void rerouteMktDepthReq(int reqId, int conId, string exchange)
         {
-            Console.WriteLine("Re-route market depth request. Req Id: {0}, ConId: {1}, Exchange: {2}", reqId, conId, exchange);
+            Console.WriteLine("Re-route market depth request. Req Id: {0}, ConId: {1}, Exchange: {2}", reqId, conId,
+                exchange);
         }
         //! [rerouteMktDepthReq]
 
         //! [marketRule]
-        public void marketRule(int marketRuleId, PriceIncrement[] priceIncrements) 
+        public void marketRule(int marketRuleId, PriceIncrement[] priceIncrements)
         {
             Console.WriteLine("Market Rule Id: " + marketRuleId);
-            foreach (var priceIncrement in priceIncrements) 
+            foreach (var priceIncrement in priceIncrements)
             {
-                Console.WriteLine("Low Edge: {0}, Increment: {1}", ((decimal)priceIncrement.LowEdge).ToString(), ((decimal)priceIncrement.Increment).ToString());
+                Console.WriteLine("Low Edge: {0}, Increment: {1}", ((decimal) priceIncrement.LowEdge).ToString(),
+                    ((decimal) priceIncrement.Increment).ToString());
             }
         }
         //! [marketRule]
 
-		//! [pnl]
+        //! [pnl]
         public void pnl(int reqId, double dailyPnL, double unrealizedPnL, double realizedPnL)
         {
-            Console.WriteLine("PnL. Request Id: {0}, Daily PnL: {1}, Unrealized PnL: {2}, Realized PnL: {3}", reqId, dailyPnL, unrealizedPnL, realizedPnL);
+            Console.WriteLine("PnL. Request Id: {0}, Daily PnL: {1}, Unrealized PnL: {2}, Realized PnL: {3}", reqId,
+                dailyPnL, unrealizedPnL, realizedPnL);
         }
-		//! [pnl]
+        //! [pnl]
 
-		//! [pnlsingle]
-        public void pnlSingle(int reqId, int pos, double dailyPnL, double unrealizedPnL, double realizedPnL, double value)
+        //! [pnlsingle]
+        public void pnlSingle(int reqId, int pos, double dailyPnL, double unrealizedPnL, double realizedPnL,
+            double value)
         {
-            Console.WriteLine("PnL Single. Request Id: {0}, Pos {1}, Daily PnL {2}, Unrealized PnL {3}, Realized PnL: {4}, Value: {5}", reqId, pos, dailyPnL, unrealizedPnL, realizedPnL, value);
+            Console.WriteLine(
+                "PnL Single. Request Id: {0}, Pos {1}, Daily PnL {2}, Unrealized PnL {3}, Realized PnL: {4}, Value: {5}",
+                reqId, pos, dailyPnL, unrealizedPnL, realizedPnL, value);
         }
-		//! [pnlsingle]
+        //! [pnlsingle]
 
-		//! [historicalticks]
+        //! [historicalticks]
         public void historicalTicks(int reqId, HistoricalTick[] ticks, bool done)
         {
             foreach (var tick in ticks)
             {
-                Console.WriteLine("Historical Tick. Request Id: {0}, Time: {1}, Price: {2}, Size: {3}", reqId, IBApi.Util.UnixSecondsToString(tick.Time, "yyyyMMdd-HH:mm:ss zzz"), tick.Price, tick.Size);
+                Console.WriteLine("Historical Tick. Request Id: {0}, Time: {1}, Price: {2}, Size: {3}", reqId,
+                    IBApi.Util.UnixSecondsToString(tick.Time, "yyyyMMdd-HH:mm:ss zzz"), tick.Price, tick.Size);
             }
         }
-		//! [historicalticks]
+        //! [historicalticks]
 
-		//! [historicalticksbidask]
+        //! [historicalticksbidask]
         public void historicalTicksBidAsk(int reqId, HistoricalTickBidAsk[] ticks, bool done)
         {
             foreach (var tick in ticks)
             {
-                Console.WriteLine("Historical Tick Bid/Ask. Request Id: {0}, Time: {1}, Price Bid: {2}, Price Ask: {3}, Size Bid: {4}, Size Ask: {5}, Bid/Ask Tick Attribs: {6} ",
-                    reqId, IBApi.Util.UnixSecondsToString(tick.Time, "yyyyMMdd-HH:mm:ss zzz"), tick.PriceBid, tick.PriceAsk, tick.SizeBid, tick.SizeAsk, tick.TickAttribBidAsk.toString());
+                Console.WriteLine(
+                    "Historical Tick Bid/Ask. Request Id: {0}, Time: {1}, Price Bid: {2}, Price Ask: {3}, Size Bid: {4}, Size Ask: {5}, Bid/Ask Tick Attribs: {6} ",
+                    reqId, IBApi.Util.UnixSecondsToString(tick.Time, "yyyyMMdd-HH:mm:ss zzz"), tick.PriceBid,
+                    tick.PriceAsk, tick.SizeBid, tick.SizeAsk, tick.TickAttribBidAsk.toString());
             }
         }
-		//! [historicalticksbidask]
+        //! [historicalticksbidask]
 
-		//! [historicaltickslast]
+        //! [historicaltickslast]
         public void historicalTicksLast(int reqId, HistoricalTickLast[] ticks, bool done)
         {
             foreach (var tick in ticks)
             {
-                Console.WriteLine("Historical Tick Last. Request Id: {0}, Time: {1}, Price: {2}, Size: {3}, Exchange: {4}, Special Conditions: {5}, Last Tick Attribs: {6} ",
-                    reqId, IBApi.Util.UnixSecondsToString(tick.Time, "yyyyMMdd-HH:mm:ss zzz"), tick.Price, tick.Size, tick.Exchange, tick.SpecialConditions, tick.TickAttribLast.toString());
+                Console.WriteLine(
+                    "Historical Tick Last. Request Id: {0}, Time: {1}, Price: {2}, Size: {3}, Exchange: {4}, Special Conditions: {5}, Last Tick Attribs: {6} ",
+                    reqId, IBApi.Util.UnixSecondsToString(tick.Time, "yyyyMMdd-HH:mm:ss zzz"), tick.Price, tick.Size,
+                    tick.Exchange, tick.SpecialConditions, tick.TickAttribLast.toString());
             }
         }
-		//! [historicaltickslast]
+        //! [historicaltickslast]
 
         //! [tickbytickalllast]
-        public void tickByTickAllLast(int reqId, int tickType, long time, double price, int size, TickAttribLast tickAttribLast, string exchange, string specialConditions)
+        public void tickByTickAllLast(int reqId, int tickType, long time, double price, int size,
+            TickAttribLast tickAttribLast, string exchange, string specialConditions)
         {
-            Console.WriteLine("Tick-By-Tick. Request Id: {0}, TickType: {1}, Time: {2}, Price: {3}, Size: {4}, Exchange: {5}, Special Conditions: {6}, PastLimit: {7}, Unreported: {8}",
-                reqId, tickType == 1 ? "Last" : "AllLast", IBApi.Util.UnixSecondsToString(time, "yyyyMMdd-HH:mm:ss zzz"), price, size, exchange, specialConditions, tickAttribLast.PastLimit, tickAttribLast.Unreported);
+            Console.WriteLine(
+                "Tick-By-Tick. Request Id: {0}, TickType: {1}, Time: {2}, Price: {3}, Size: {4}, Exchange: {5}, Special Conditions: {6}, PastLimit: {7}, Unreported: {8}",
+                reqId, tickType == 1 ? "Last" : "AllLast",
+                IBApi.Util.UnixSecondsToString(time, "yyyyMMdd-HH:mm:ss zzz"), price, size, exchange, specialConditions,
+                tickAttribLast.PastLimit, tickAttribLast.Unreported);
         }
         //! [tickbytickalllast]
 
         //! [tickbytickbidask]
-        public void tickByTickBidAsk(int reqId, long time, double bidPrice, double askPrice, int bidSize, int askSize, TickAttribBidAsk tickAttribBidAsk)
+        public void tickByTickBidAsk(int reqId, long time, double bidPrice, double askPrice, int bidSize, int askSize,
+            TickAttribBidAsk tickAttribBidAsk)
         {
-            Console.WriteLine("Tick-By-Tick. Request Id: {0}, TickType: BidAsk, Time: {1}, BidPrice: {2}, AskPrice: {3}, BidSize: {4}, AskSize: {5}, BidPastLow: {6}, AskPastHigh: {7}",
-                reqId, IBApi.Util.UnixSecondsToString(time, "yyyyMMdd-HH:mm:ss zzz"), bidPrice, askPrice, bidSize, askSize, tickAttribBidAsk.BidPastLow, tickAttribBidAsk.AskPastHigh);
+            Console.WriteLine(
+                "Tick-By-Tick. Request Id: {0}, TickType: BidAsk, Time: {1}, BidPrice: {2}, AskPrice: {3}, BidSize: {4}, AskSize: {5}, BidPastLow: {6}, AskPastHigh: {7}",
+                reqId, IBApi.Util.UnixSecondsToString(time, "yyyyMMdd-HH:mm:ss zzz"), bidPrice, askPrice, bidSize,
+                askSize, tickAttribBidAsk.BidPastLow, tickAttribBidAsk.AskPastHigh);
         }
         //! [tickbytickbidask]
 
@@ -798,17 +898,23 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         //! [orderbound]
         public void orderBound(long orderId, int apiClientId, int apiOrderId)
         {
-            Console.WriteLine("Order bound. Order Id: {0}, Api Client Id: {1}, Api Order Id: {2}", orderId, apiClientId, apiOrderId);
+            Console.WriteLine("Order bound. Order Id: {0}, Api Client Id: {1}, Api Order Id: {2}", orderId, apiClientId,
+                apiOrderId);
         }
         //! [orderbound]
 
         //! [completedorder]
         public virtual void completedOrder(Contract contract, Order order, OrderState orderState)
         {
-            Console.WriteLine("CompletedOrder. PermID: " + order.PermId + ", ParentPermId: " + IBApi.Util.LongMaxString(order.ParentPermId) + ", Account: " + order.Account + ", Symbol: " + contract.Symbol + ", SecType: " + contract.SecType + 
-                " , Exchange: " + contract.Exchange + ", Action: " + order.Action + ", OrderType: " + order.OrderType + ", TotalQty: " + order.TotalQuantity + 
-                ", CashQty: " + order.CashQty + ", FilledQty: " + order.FilledQuantity + ", LmtPrice: " + order.LmtPrice + ", AuxPrice: " + order.AuxPrice + ", Status: " + orderState.Status +
-                ", CompletedTime: " + orderState.CompletedTime + ", CompletedStatus: " + orderState.CompletedStatus);
+            Console.WriteLine("CompletedOrder. PermID: " + order.PermId + ", ParentPermId: " +
+                              IBApi.Util.LongMaxString(order.ParentPermId) + ", Account: " + order.Account +
+                              ", Symbol: " + contract.Symbol + ", SecType: " + contract.SecType +
+                              " , Exchange: " + contract.Exchange + ", Action: " + order.Action + ", OrderType: " +
+                              order.OrderType + ", TotalQty: " + order.TotalQuantity +
+                              ", CashQty: " + order.CashQty + ", FilledQty: " + order.FilledQuantity + ", LmtPrice: " +
+                              order.LmtPrice + ", AuxPrice: " + order.AuxPrice + ", Status: " + orderState.Status +
+                              ", CompletedTime: " + orderState.CompletedTime + ", CompletedStatus: " +
+                              orderState.CompletedStatus);
         }
         //! [completedorder]
 
@@ -817,6 +923,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         {
             Console.WriteLine("CompletedOrdersEnd");
         }
+
         //! [completedordersend]
     }
 }

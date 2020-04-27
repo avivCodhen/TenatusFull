@@ -1,4 +1,3 @@
-import { TraderSetting } from '../_models/traderSetting';
 import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -11,8 +10,8 @@ export class TraderService {
 
   url = environment.apiUrl + 'trader';
 
-  startTrader(model: TraderSetting) {
-    return this.http.post(this.url + '/start', model);
+  startTrader() {
+    return this.http.post(this.url + '/start', {});
   }
   stopTrader() {
     return this.http.delete(this.url + '/stop');

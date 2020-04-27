@@ -5,18 +5,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using IBApi;
 using Tenatus.API.Components.AlgoTrading.Models;
-using Tenatus.API.EnumTypes;
 using Tenatus.API.Extensions;
+using Tenatus.API.Types;
 using Order = IBApi.Order;
 
 namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.InteractiveBroker
 {
     public class InteractiveBrokerTradingClient : ITradingClient
     {
+        private readonly string _accountName;
         private EWrapperImpl ibClient;
 
         public InteractiveBrokerTradingClient(string accountName)
         {
+            _accountName = accountName;
             ibClient = new EWrapperImpl();
             ibClient.ClientSocket.eConnect("127.0.0.1", 7497, 0);
             var reader = new EReader(ibClient.ClientSocket, ibClient.Signal);
@@ -43,12 +45,9 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
 
             ibClient.ClientSocket.reqMktData(10, contract, "", false, false, mktDataOptions);
             */
-
-            //ibClient.ClientSocket.reqAccountUpdates(true, accountName);
-            //ibClient.ClientSocket.reqAccountUpdates(false, accountName);
         }
 
-        public async Task<OrderModel> Buy(string stock, int quantity, decimal price)
+        public Task<OrderModel> Buy(string stock, int quantity, decimal price)
         {
             var contract = GetDefaultContract(stock);
             var id = ibClient.NextOrderId;
@@ -57,11 +56,11 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
 
             WaitForOrderComplete(id);
             ibClient.NextOrderId++;
-            return new OrderModel
+            return Task.FromResult(new OrderModel
             {
                 Quantity = quantity, BuyingPrice = price, ExternalId = id.ToString(),
                 UserOrderType = UserOrderType.Limit, UserOrderActionType = UserOrderActionType.Buy
-            };
+            });
         }
 
         private void WaitForOrderComplete(int id)
@@ -81,7 +80,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
         }
 
 
-        public async Task<OrderModel> Sell(string stock, int quantity, decimal price)
+        public Task<OrderModel> Sell(string stock, int quantity, decimal price)
         {
             var contract = GetDefaultContract(stock);
             var id = ibClient.NextOrderId;
@@ -91,18 +90,56 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
 
             WaitForOrderComplete(id);
             ibClient.NextOrderId++;
-            return new OrderModel
+            return Task.FromResult(new OrderModel
             {
                 Quantity = quantity, BuyingPrice = price, ExternalId = id.ToString(),
                 UserOrderType = UserOrderType.Limit, UserOrderActionType = UserOrderActionType.Buy
-            };
+            });
         }
 
-        public async Task<OrderModel> LastOrderOrDefault(string stock)
+        public Task<bool> CancelOrder(string lastOrderId)
         {
-            var openOrders = new List<IbOpenOrder>();
+            return Task.FromResult<bool>(false);
+        }
+
+        public Task CancelAllOrders()
+        {
+            ibClient.ClientSocket.reqGlobalCancel();
+            return Task.CompletedTask;
+        }
+
+        public Task<bool> RequestBudget(decimal amount)
+        {
+            var success = false;
+            ibClient.AccountValue += s =>
+            {
+                if (Convert.ToDecimal(s) >= amount)
+                {
+                    success = true;
+                }
+            };
+            ibClient.ClientSocket.reqAccountUpdates(true, _accountName);
+            ibClient.ClientSocket.reqAccountUpdates(false, _accountName);
+            var waitTime = DateTime.Now.AddMinutes(1);
+            while (!success && DateTime.Now < waitTime)
+            {
+                return Task.FromResult<bool>(true);
+            }
+
+            return Task.FromResult(false);
+        }
+
+        public Task<OrderModel> ActiveOrderOrDefault(string stock)
+        {
             ibClient.ClientSocket.reqOpenOrders();
-            ibClient.IbOpenOrder += order => { openOrders.Add(order); };
+            Order openOrder = null;
+            ibClient.IbOpenOrder += order =>
+            {
+                if (order.Contract.Symbol.EqualsIgnoreCase(stock))
+                {
+                    openOrder = order.Order;
+                }
+            };
             var success = false;
             ibClient.IbOpenOrderEnd += () => { success = true; };
 
@@ -111,21 +148,18 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
             {
             }
 
-            var openOrder = openOrders.SingleOrDefault(x => x.Contract.Symbol.EqualsIgnoreCase(stock));
-            if (openOrder != null)
-                return new OrderModel
-                {
-                    BuyingPrice = Convert.ToDecimal(openOrder.Order.LmtPrice),
-                    ExternalId = openOrder.OrderId.ToString(),
-                    Quantity = Convert.ToInt16(openOrder.Order.TotalQuantity - openOrder.Order.FilledQuantity),
-                    UserOrderActionType = openOrder.Order.Action == "BUY"
-                        ? UserOrderActionType.Buy
-                        : UserOrderActionType.Sell
-                };
-            return null;
+            return Task.FromResult(new OrderModel
+            {
+                BuyingPrice = Convert.ToDecimal(openOrder.LmtPrice),
+                ExternalId = openOrder.OrderId.ToString(),
+                Quantity = Convert.ToInt16(openOrder.TotalQuantity - openOrder.FilledQuantity),
+                UserOrderActionType = openOrder.Action == "BUY"
+                    ? UserOrderActionType.Buy
+                    : UserOrderActionType.Sell
+            });
         }
 
-        public async Task<Position> GetCurrentPositionOrDefault(string stock)
+        public Task<Position> CurrentPositionOrDefault(string stock)
         {
             Position pos = null;
             ibClient.IbPositions += position =>
@@ -140,12 +174,12 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
                 }
             };
             ibClient.ClientSocket.reqPositions();
-            var waitTime = DateTime.Now;
+            var waitTime = DateTime.Now.AddMinutes(1);
             while (pos == null && DateTime.Now < waitTime)
             {
             }
 
-            return pos;
+            return Task.FromResult(pos);
         }
 
         private static Order GetOrder(int quantity, decimal price, int id, bool buy)

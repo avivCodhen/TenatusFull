@@ -3,7 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Alpaca.Markets;
 using Tenatus.API.Components.AlgoTrading.Models;
-using Tenatus.API.EnumTypes;
+using Tenatus.API.Extensions;
+using Tenatus.API.Types;
 using Tenatus.API.Util;
 using static Alpaca.Markets.Environments;
 
@@ -39,12 +40,29 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Alpaca
             return await OrderCompletedOrDefault(newOrderId);
         }
 
-        public async Task<OrderModel> LastOrderOrDefault(string lastOrderId)
+        public Task<bool> CancelOrder(string lastOrderId)
         {
-            return await OrderCompletedOrDefault(lastOrderId);
+            throw new NotImplementedException();
         }
 
-        public async Task<Position> GetCurrentPositionOrDefault(string stock)
+        public async Task CancelAllOrders()
+        {
+            await _alpacaTradingClient.DeleteAllOrdersAsync();
+        }
+
+        public async Task<bool> RequestBudget(decimal amount)
+        {
+            var account = await _alpacaTradingClient.GetAccountAsync();
+            var buyingPower = account.BuyingPower;
+            return buyingPower >= amount;
+        }
+
+        public async Task<OrderModel> ActiveOrderOrDefault(string stock)
+        {
+            return await OrderCompletedOrDefault(stock);
+        }
+
+        public async Task<Position> CurrentPositionOrDefault(string stock)
         {
             try
             {
@@ -88,46 +106,54 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Alpaca
             return order.OrderId.ToString();
         }
 
-        private async Task<OrderModel> OrderCompletedOrDefault(string lastTradeId)
+        private async Task<OrderModel> OrderCompletedOrDefault(string stock)
         {
             try
             {
                 while (true)
                 {
-                    var order = await _alpacaTradingClient.GetOrderAsync(lastTradeId);
-                    if (order == null)
-                        return null;
-
-                    var userOrderType = order.OrderType switch
+                    var orders = await _alpacaTradingClient.ListOrdersAsync(
+                        new ListOrdersRequest
+                        {
+                            OrderListSorting = SortDirection.Descending,
+                            LimitOrderNumber = 10,
+                            OrderStatusFilter = OrderStatusFilter.Closed
+                        });
+                    var order = orders.First(x => x.Symbol.EqualsIgnoreCase(stock));
+                    if (order != null)
                     {
-                        OrderType.Market => UserOrderType.Market,
-                        OrderType.Stop => UserOrderType.Stop,
-                        OrderType.Limit => UserOrderType.Limit,
-                        OrderType.StopLimit => UserOrderType.StopLimit,
-                        _ => throw new ArgumentOutOfRangeException()
-                    };
+                        var userOrderType = order.OrderType switch
+                        {
+                            OrderType.Market => UserOrderType.Market,
+                            OrderType.Stop => UserOrderType.Stop,
+                            OrderType.Limit => UserOrderType.Limit,
+                            OrderType.StopLimit => UserOrderType.StopLimit,
+                            _ => throw new ArgumentOutOfRangeException()
+                        };
 
-                    switch (order.OrderStatus)
-                    {
-                        case OrderStatus.Filled:
-                            return new OrderModel()
-                            {
-                                UserOrderActionType = order.OrderSide == OrderSide.Buy
-                                    ? UserOrderActionType.Buy
-                                    : UserOrderActionType.Sell,
-                                BuyingPrice = order.LimitPrice.Value,
-                                Quantity = Convert.ToInt16(order.Quantity),
-                                UserOrderType = userOrderType,
-                                ExternalId = order.OrderId.ToString()
-                            };
-                        case OrderStatus.Suspended:
-                        case OrderStatus.Canceled:
-                        case OrderStatus.Expired:
-                        case OrderStatus.Stopped:
-                        case OrderStatus.Rejected:
-                            return null;
-                        default:
-                            continue;
+                        switch (order.OrderStatus)
+                        {
+                            case OrderStatus.Filled:
+                                return new OrderModel()
+                                {
+                                    UserOrderActionType = order.OrderSide == OrderSide.Buy
+                                        ? UserOrderActionType.Buy
+                                        : UserOrderActionType.Sell,
+                                    BuyingPrice = order.LimitPrice.Value,
+                                    Quantity = Convert.ToInt16(order.Quantity),
+                                    UserOrderType = userOrderType,
+                                    ExternalId = order.OrderId.ToString(),
+                                    Filled = true
+                                };
+                            case OrderStatus.Suspended:
+                            case OrderStatus.Canceled:
+                            case OrderStatus.Expired:
+                            case OrderStatus.Stopped:
+                            case OrderStatus.Rejected:
+                                return null;
+                            default:
+                                continue;
+                        }
                     }
                 }
             }

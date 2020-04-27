@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using IBApi;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Components.AlgoTrading.Services.Scrapping;
 using Tenatus.API.Data;
-using Tenatus.API.Extensions;
 
-namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
+namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
 {
     public class TraderManager
     {
@@ -33,20 +30,18 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
             _logger = logger;
         }
 
-        public async Task StartTrader(ApplicationUser user)
+        public Task StartTrader(ApplicationUser user)
         {
             try
             {
                 if (IsOnForUser(user))
                     throw new Exception("Trader has already started");
 
-                var traderClient = _tradingClientFactory.GetTradingClient(user);
                 var tasks = new List<Task>();
-                foreach (var stock in user.TraderSetting.Stocks)
+                foreach (var strategy in user.Strategies)
                 {
                     var trader =
-                        _traderResources.SingleOrDefault(x =>
-                            x.Stock.EqualsIgnoreCase(stock.Name) && x.UserId == user.Id);
+                        _traderResources.SingleOrDefault(x => x.Strategy.Id == strategy.Id);
 
                     if (trader != null)
                     {
@@ -57,13 +52,9 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
                     }
                     else
                     {
-                        var stockDataReader =
-                            _stockDataReaderManager.GetStockDataReader(user.Id, stock.Name);
-
-                        var newTrader = new Trader(stockDataReader, traderClient, _serviceProvider, user, stock.Name, _logger);
+                        var newTrader = GetTrader(strategy, user);
                         _traderResources.Add(new TraderResource()
                         {
-                            Stock = stock.Name,
                             Trader = newTrader,
                             UserId = user.Id
                         });
@@ -75,39 +66,53 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
             }
             catch (Exception e)
             {
-                foreach (var stock in user.TraderSetting.Stocks)
+                foreach (var strategy in user.Strategies)
                 {
-                    _stockDataReaderManager.RemoveStockDataReader(user.Id, stock.Name);
+                    _stockDataReaderManager.RemoveStockDataReader(user.Id, strategy.Stock);
                 }
 
                 StopTrader(user);
                 Console.WriteLine($"Error: {e.Message}");
                 throw;
             }
+            return Task.CompletedTask;
+        }
+
+        private Trader GetTrader(Strategy strategy, ApplicationUser user)
+        {
+            var stockDataReader = _stockDataReaderManager.GetStockDataReader(user.Id, strategy.Stock);
+            var tradingClient = _tradingClientFactory.GetTradingClient(user);
+            switch (strategy)
+            {
+                case RangeStrategy _:
+                    return new RangeTrader(stockDataReader, tradingClient, _serviceProvider, user, strategy, _logger);
+                case PercentStrategy _:
+                    return new PercentTrader(stockDataReader, tradingClient, _serviceProvider, user, strategy, _logger);
+                default:
+                    throw new Exception($"unknown exception: {strategy.GetType()}");
+            }
         }
 
         public void StopTrader(ApplicationUser user)
         {
-            foreach (var stock in user.TraderSetting.Stocks)
+            foreach (var strategy in user.Strategies)
             {
                 var trader =
-                    _traderResources.SingleOrDefault(x => x.Stock.EqualsIgnoreCase(stock.Name) && x.UserId == user.Id);
+                    _traderResources.SingleOrDefault(x => strategy.Id == x.Strategy.Id);
 
                 if (trader == null) return;
 
                 trader.Trader.IsOn = false;
                 _traderResources.Remove(trader);
-                _stockDataReaderManager.RemoveStockDataReader(user.Id, stock.Name);
+                _stockDataReaderManager.RemoveStockDataReader(user.Id, strategy.Stock);
             }
         }
 
         public bool IsOnForUser(ApplicationUser user)
         {
-            var ts = user.TraderSetting;
             var traders =
-                _traderResources.Where(x => ts.Stocks.Select(s => s.Name).Contains(x.Stock) && x.UserId == user.Id)
-                    .ToList();
-            return _traderResources.Any() && traders.Any();
+                user.Strategies.Select(x => x.Id).Intersect(_traderResources.Select(x => x.Strategy.Id)).Any();
+            return _traderResources.Any() && traders;
         }
     }
 }

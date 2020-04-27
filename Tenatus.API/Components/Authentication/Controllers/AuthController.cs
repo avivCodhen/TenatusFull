@@ -63,7 +63,7 @@ namespace Tenatus.API.Components.Authentication.Controllers
                 if (await _userManager.FindByEmailAsync(model.Email) != null)
                     return BadRequest("Email exists");
                 var user = new ApplicationUser()
-                    {Email = model.Email, UserName = model.Email, TraderSetting = new TraderSetting()};
+                    {Email = model.Email, UserName = model.Email};
                 var results = await _userManager.CreateAsync(user, model.Password);
                 if (!results.Succeeded)
                 {

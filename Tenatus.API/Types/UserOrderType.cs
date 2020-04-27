@@ -1,4 +1,4 @@
-﻿namespace Tenatus.API.EnumTypes
+﻿namespace Tenatus.API.Types
 {
     public enum UserOrderType
     {

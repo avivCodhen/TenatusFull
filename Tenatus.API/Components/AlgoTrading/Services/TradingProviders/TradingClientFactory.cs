@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Alpaca;
 using Tenatus.API.Components.AlgoTrading.Services.TradingProviders.InteractiveBroker;
 using Tenatus.API.Data;
-using Tenatus.API.EnumTypes;
 using Tenatus.API.Util;
 
 namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders
