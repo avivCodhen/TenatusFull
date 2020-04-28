@@ -1,3 +1,4 @@
+import { Strategy } from './../_models/strategy';
 import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -10,6 +11,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
   accountUrl = environment.apiUrl + 'accountSettings';
   dashboardUrl = environment.apiUrl + 'dashboard';
+  strategyUrl = environment.apiUrl + 'strategy';
 
   getAccountSettings() {
     return this.http.get(this.accountUrl);
@@ -21,5 +23,9 @@ export class UserService {
 
   getDashBoardSetting() {
     return this.http.get<Dashboard>(this.dashboardUrl);
+  }
+
+  saveStrategy(model: any) {
+    return this.http.post(this.strategyUrl, model);
   }
 }

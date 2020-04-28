@@ -37,6 +37,7 @@
               <e p="StockDataReaderManager.cs" t="Include" />
               <e p="YahooStockDataReader.cs" t="Include" />
             </e>
+            <e p="StrategyService.cs" t="Include" />
             <e p="TradingProviders" t="Include">
               <e p="Alpaca" t="Include">
                 <e p="AlpacaClient.cs" t="Include" />
@@ -71,6 +72,15 @@
           </e>
         </e>
         <e p="BaseController.cs" t="Include" />
+        <e p="Dashboard" t="Include">
+          <e p="Controllers" t="Include">
+            <e p="DashboardController.cs" t="Include" />
+          </e>
+          <e p="Models" t="Include">
+            <e p="DashboardModel.cs" t="Include" />
+            <e p="UserOrderModel.cs" t="Include" />
+          </e>
+        </e>
       </e>
       <e p="Data" t="Include">
         <e p="ApplicationDbContext.cs" t="Include" />
@@ -103,6 +113,8 @@
         <e p="20200427063738_AddDecimal.Designer.cs" t="Include" />
         <e p="20200427121532_AddUserFees.cs" t="Include" />
         <e p="20200427121532_AddUserFees.Designer.cs" t="Include" />
+        <e p="20200427185837_AddMinimumFee.cs" t="Include" />
+        <e p="20200427185837_AddMinimumFee.Designer.cs" t="Include" />
         <e p="ApplicationDbContextModelSnapshot.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive">

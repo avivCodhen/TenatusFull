@@ -11,5 +11,8 @@ namespace Tenatus.API.Util
         public const string StrategyTypeRange = "Range";
         public const string StrategyTypePercent = "Percent";
         
+        public const string Lmt = "lmt";
+        public const string StopLimit = "stoplimit";
+        
     }
 }

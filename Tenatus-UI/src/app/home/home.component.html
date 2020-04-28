@@ -1,4 +1,5 @@
 <div class="m-4 py-3">
+
   <div class="row">
     <div class="col-2 dash-card">
       <mat-card>
@@ -22,15 +23,77 @@
       </mat-card>
 
     </div>
-    <div class="dash-card col-7">
-      <mat-card>
-        <div class="dash-box bg-second" style="position: absolute;">
-          סה"כ {{dashboard.userOrders.length}} טרנזקציות</div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="dash-card col-10 col-lg-6">
+      <div class="dash-box bg-second" style="position: absolute;">
+        סה"כ {{dashboard.strategies.length}} אסטרטגיות</div>
+      <mat-card style="margin-top: 44px;">
+        <div class="row no-gutters">
+          <p class="ml-auto">אסטרטגיות</p>
+          <button *ngIf="!dashboard.isOn" type="submit" mat-button (click)="openDialog()"
+            class="color-action center">הוסף</button>
+
+        </div>
+        <hr class="mb-3" />
+        <p *ngIf="dashboard.strategies == null || dashboard.strategies.length == 0">לא נמצאו אסטרטגיות.</p>
+
+        <table *ngIf="dashboard.strategies?.length > 0" style="width: 100%;" mat-table
+          [dataSource]="dashboard.strategies">
+
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="Date">
+            <th mat-header-cell *matHeaderCellDef> הפעלה אחרונה </th>
+            <td mat-cell *matCellDef="let element"> {{element.lastUsed}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="OrderType">
+            <th mat-header-cell *matHeaderCellDef> עסקה </th>
+            <td mat-cell *matCellDef="let element"> {{element.userOrderType}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="Stock">
+            <th mat-header-cell *matHeaderCellDef> מניה </th>
+            <td mat-cell *matCellDef="let element"> ${{element.stock}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="Budget">
+            <th mat-header-cell *matHeaderCellDef> תקציב </th>
+            <td mat-cell *matCellDef="let element"> {{element.budget}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="strategyColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: strategyColumns;"></tr>
+
+        </table>
+        <div dir="ltr">
+          <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+
+        </div>
+
+      </mat-card>
+
+    </div>
+    <div class="dash-card col-10 col-lg-6">
+      <div class="dash-box bg-second" style="position: absolute;">
+        סה"כ {{dashboard.userOrders.length}} טרנזקציות</div>
+
+      <mat-card style="margin-top: 44px;">
         <p>טרנזקציות</p>
         <hr class="mb-3" />
         <p *ngIf="dashboard.userOrders == null || dashboard.userOrders.length == 0">לא נמצאו טרנזקציות.</p>
 
-        <table style="width: 100%;" mat-table [dataSource]="dashboard.userOrders">
+        <table class="" *ngIf="dashboard.userOrders?.length > 0" style="width: 100%;" mat-table
+          [dataSource]="dashboard.userOrders">
 
           <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
@@ -90,7 +153,5 @@
 
   </div>
 
-  <div class="row p-2">
 
-  </div>
 </div>

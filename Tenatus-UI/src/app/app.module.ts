@@ -17,6 +17,7 @@ import { AngularMaterialModule } from './material.module';
 import { LoaderComponent } from './loader/loader.component';
 import { LoaderInterceptor } from './loader.interceptor';
 import { LoaderService } from './_services/loader.service';
+import { StrategyDialogComponent } from './strategy-dialog/strategy-dialog.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -30,7 +31,9 @@ export function tokenGetter() {
     SettingsComponent,
     ChipsComponent,
     LoaderComponent,
+    StrategyDialogComponent,
   ],
+  entryComponents: [StrategyDialogComponent],
   imports: [
     AngularMaterialModule,
     BrowserModule,

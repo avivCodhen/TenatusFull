@@ -6,6 +6,9 @@ import { UserService } from './../_services/user.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { Strategy } from '../_models/strategy';
+import { StrategyDialogComponent } from '../strategy-dialog/strategy-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +16,9 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  dataSource: MatTableDataSource<UserOrder>;
   processing: boolean;
   dashboard: Dashboard;
+  dataSource: MatTableDataSource<UserOrder>;
   displayedColumns: string[] = [
     'Id',
     'Date',
@@ -25,38 +28,34 @@ export class HomeComponent implements OnInit {
     'Price',
     'Stock',
   ];
-
+  strategyDataSource: MatTableDataSource<Strategy>;
+  strategyColumns: string[] = ['Date', 'OrderType', 'Stock', 'Budget'];
   constructor(
     private userService: UserService,
     private traderService: TraderService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public dialog: MatDialog
   ) {}
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) strategyPaginator: MatPaginator;
 
   ngOnInit(): void {
     this.getDashboard();
-
-    this.dataSource = new MatTableDataSource<UserOrder>(
-      this.dashboard.userOrders
-    );
-    this.dataSource.paginator = this.paginator;
   }
   getDashboard() {
     this.userService.getDashBoardSetting().subscribe(
       (res) => {
         this.dashboard = res;
-        res.userOrders = [
-          {
-            externalId: '9823-102894-21=',
-            created: '20/3/2020',
-            price: 189,
-            isBuy: false,
-            orderAction: 'LMT',
-            quantity: 1,
-            stock: 'FB',
-          },
-        ];
+        console.log(this.dashboard);
+        this.dataSource = new MatTableDataSource<UserOrder>(
+          this.dashboard.userOrders
+        );
+        this.dataSource.paginator = this.paginator;
+        this.strategyDataSource = new MatTableDataSource<Strategy>(
+          this.dashboard.strategies
+        );
+        this.strategyDataSource.paginator = this.paginator;
       },
       (err) => {}
     );
@@ -68,6 +67,7 @@ export class HomeComponent implements OnInit {
       (res) => {
         this.processing = false;
         console.log(res);
+        this.dashboard.isOn = true;
         this.alertService.success('Trader started successfully');
       },
       (err) => {
@@ -89,5 +89,25 @@ export class HomeComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(StrategyDialogComponent, {
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      if (!!result) {
+        this.userService.saveStrategy(result).subscribe(
+          (res) => {
+            console.log('success!');
+          },
+          (err) => {
+            console.log('failed');
+          }
+        );
+      }
+    });
   }
 }

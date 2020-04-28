@@ -70,8 +70,8 @@ body {
 }
 
 button {
-  font-size: 16px !important;
-  padding: 0px 25px !important;
+  font-size: 14px !important;
+  padding: 0px 20px !important;
 }
 
 .navbar {
@@ -93,13 +93,13 @@ hr {
 }
 
 .dash-box {
-  @include mat-elevation(5);
+  @include mat-elevation(2);
   color: white;
   position: absolute;
-  @extend .p-4;
+  @extend .p-2;
   border-radius: 2px;
-  top: -28px;
-  left: 28px;
+  top: 6px;
+  left: 8px;
 }
 
 table {

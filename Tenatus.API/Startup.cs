@@ -70,6 +70,7 @@ namespace Tenatus.API
             services.AddSingleton<TraderManager>();
             services.AddSingleton<StockDataReaderManager>();
             services.AddSingleton<TradingClientFactory>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tenatus.API.Components.AlgoTrading.Models;
+using Tenatus.API.Components.AlgoTrading.Services;
+using Tenatus.API.Components.AlgoTrading.Services.TradingProviders;
 using Tenatus.API.Data;
 using Tenatus.API.Extensions;
 using Tenatus.API.Util;
@@ -35,7 +37,6 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
                 var user = await _userManager.GetApplicationUserAsync(User);
                 var strategies = await _dbContext.Strategies.Where(x => x.UserId == user.Id).ToListAsync();
                 var response = _mapper.Map<IEnumerable<Strategy>, IEnumerable<StrategyModel>>(strategies);
-
                 return Ok(response);
             }
             catch (Exception e)
@@ -50,24 +51,11 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
             try
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
-                
+                var service = new StrategyService(_dbContext, _mapper);
                 var user = await _userManager.GetApplicationUserAsync(User);
-                Strategy strategy;
-                switch (request.Type)
-                {
-                    case AppConstants.StrategyTypePercent:
-                        strategy = _mapper.Map<StrategyModel, PercentStrategy>(request);
-                        break;
-                    case AppConstants.StrategyTypeRange:
-                        strategy = _mapper.Map<StrategyModel, RangeStrategy>(request);
-                        break;
-                    default:
-                        throw new Exception($"Unknown type: {request.Type}");
-                }
-
-                strategy.UserId = user.Id;
-                _dbContext.Strategies.Add(strategy);
-
+                service.AddStrategy(user, request);
+                await _dbContext.SaveChangesAsync();
+                
                 return Ok();
             }
             catch (Exception e)
