@@ -25,14 +25,18 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
 
             var value = CurrentStockData.CurrentPrice;
             var computedValue = Convert.ToDecimal(value) * strategy.Percent;
-            roofValue = StockValues.Where(x => x.CurrentPrice >= computedValue).Min(x => x.CurrentPrice);
+            var roofValues = StockValues.Where(x => x.CurrentPrice >= computedValue).ToList();
+            if (roofValues.Any())
+            {
+                roofValue = roofValues.Min(x => x.CurrentPrice);
+            }
             if (BuyingPrice == 0 && roofValue > 0)
             {
                 await Buy(value);
             }
 
             var computedBuyingPrice = Convert.ToDecimal(BuyingPrice) * strategy.Percent;
-            if (computedBuyingPrice <= value && Profitable(value))
+            if (BuyingPrice != 0 && computedBuyingPrice <= value && Profitable(value))
             {
                 await Sell(value);
             }

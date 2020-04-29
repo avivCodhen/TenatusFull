@@ -31,7 +31,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Alpaca
         public async Task<OrderModel> Buy(string stock, int quantity, decimal price)
         {
             var newOrderId = await SubmitOrder(stock, quantity, price, OrderSide.Buy);
-            return await OrderCompletedOrDefault(newOrderId.ToString());
+            return await OrderCompletedOrDefault(newOrderId);
         }
 
         public async Task<OrderModel> Sell(string stock, int quantity, decimal price)
@@ -59,7 +59,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Alpaca
 
         public async Task<OrderModel> ActiveOrderOrDefault(string stock)
         {
-            return await OrderCompletedOrDefault(stock);
+            return await OrderCompletedOrDefault(new Guid());
         }
 
         public async Task<Position> CurrentPositionOrDefault(string stock)
@@ -78,7 +78,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Alpaca
                 var order = orders
                     .Where(x => x.OrderStatus != OrderStatus.Canceled &&
                                 string.Equals(stock, x.Symbol, StringComparison.OrdinalIgnoreCase))
-                    .OrderByDescending(x => x.CreatedAt).First();
+                    .OrderByDescending(x => x.CreatedAt).FirstOrDefault();
 
                 if (order.OrderStatus != OrderStatus.Filled)
                     return null;
@@ -94,7 +94,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Alpaca
             return null;
         }
 
-        private async Task<string> SubmitOrder(string stock, int quantity, decimal price, OrderSide side)
+        private async Task<Guid> SubmitOrder(string stock, int quantity, decimal price, OrderSide side)
         {
             Console.WriteLine($"Submitting {side} order for {quantity} shares at ${price}.");
             var order = await _alpacaTradingClient.PostOrderAsync(
@@ -103,10 +103,10 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Alpaca
                 {
                     LimitPrice = price
                 });
-            return order.OrderId.ToString();
+            return order.OrderId;
         }
 
-        private async Task<OrderModel> OrderCompletedOrDefault(string stock)
+        private async Task<OrderModel> OrderCompletedOrDefault(Guid orderId)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Alpaca
                             LimitOrderNumber = 10,
                             OrderStatusFilter = OrderStatusFilter.Closed
                         });
-                    var order = orders.First(x => x.Symbol.EqualsIgnoreCase(stock));
+                    var order = orders.SingleOrDefault(x => x.OrderId == orderId);
                     if (order != null)
                     {
                         var userOrderType = order.OrderType switch

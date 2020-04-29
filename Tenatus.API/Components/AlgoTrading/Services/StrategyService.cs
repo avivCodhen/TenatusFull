@@ -59,7 +59,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services
                     $"Strategy is of type {AppConstants.StrategyTypeRange} and the {nameof(request.Maximum)} is {request.Maximum}");
             
             var strategiesExists =
-                _dbContext.Strategies.Where(x => x.Id != request.Id && request.Stock.EqualsIgnoreCase(x.Stock));
+                _dbContext.Strategies.Where(x => x.Id != request.Id && x.Stock.ToUpper() == request.Stock.ToUpper());
             if(strategiesExists.Any())
                 throw new Exception("Strategy already exists for stock");
         }

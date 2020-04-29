@@ -37,7 +37,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
                 if (IsOnForUser(user))
                     throw new Exception("Trader has already started");
                 
-                if(user.Strategies.Any(x=>x.Active))
+                if(!user.Strategies.Any(x=>x.Active))
                     throw new Exception("No active strategies available.");
                 
                 var tasks = new List<Task>();
@@ -59,7 +59,8 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
                         _traderResources.Add(new TraderResource()
                         {
                             Trader = newTrader,
-                            UserId = user.Id
+                            UserId = user.Id,
+                            Strategy = strategy
                         });
                         tasks.Add(Task.Run(() => newTrader.Start()));
                         strategy.LastActive = DateTimeOffset.Now;
@@ -104,7 +105,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
                 var trader =
                     _traderResources.SingleOrDefault(x => strategy.Id == x.Strategy.Id);
 
-                if (trader == null) return;
+                if (trader == null) continue;
 
                 trader.Trader.IsOn = false;
                 _traderResources.Remove(trader);

@@ -49,7 +49,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
             {
                 using var scope = _serviceProvider.CreateScope();
                 _dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                StockValues = _dbContext.StocksData.Where(x => x.Stock.EqualsIgnoreCase(Strategy.Stock))
+                StockValues = _dbContext.StocksData.Where(x => x.Stock.ToUpper() == Strategy.Stock.ToUpper())
                     .OrderByDescending(x => x.Time).ToList();
 
                 await UpdateBuyingPrice();
@@ -60,9 +60,9 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
                     StockValues.Add(CurrentStockData);
                     _dbContext.StocksData.Add(CurrentStockData);
                     _dbContext.SaveChanges();
-                    
+
                     await Invoke();
-                    
+
                     Thread.Sleep(1000);
                 }
             }
@@ -94,11 +94,11 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
                 var orderModel = await _tradingClient.Buy(Strategy.Stock, quantity, value);
 
                 if (orderModel == null) throw new Exception("failed to buy");
+                BuyingPrice = value;
+                _quantity = quantity;
 
                 _log.LogInformation(
                     $"BOUGHT {_quantity} {Strategy.Stock} share(s). Price: {BuyingPrice}.");
-                BuyingPrice = value;
-                _quantity = quantity;
                 await SaveUserOrder(orderModel);
             }
             catch (Exception e)
@@ -149,12 +149,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
 
         private async Task UpdateBuyingPrice()
         {
-            var activeOrder = await _tradingClient.ActiveOrderOrDefault(Strategy.Stock);
-            if (activeOrder != null)
-            {
-                //await _tradingClient.CancelOrder(activeOrder.ExternalId);
-                await _tradingClient.CancelAllOrders();
-            }
+            await _tradingClient.CancelAllOrders();
 
             var position = await _tradingClient.CurrentPositionOrDefault(Strategy.Stock);
             if (position != null)
@@ -163,7 +158,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
                 _quantity = position.Quantity;
             }
         }
-        
+
         protected bool Profitable(decimal value)
         {
             var results = (value * _quantity) - BuyingPrice * _quantity;
