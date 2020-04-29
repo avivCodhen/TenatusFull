@@ -16,16 +16,22 @@ export class UserService {
   getAccountSettings() {
     return this.http.get(this.accountUrl);
   }
-
   saveAccountSettings(model: any) {
     return this.http.post(this.accountUrl, model);
   }
-
   getDashBoardSetting() {
     return this.http.get<Dashboard>(this.dashboardUrl);
   }
-
+  getAllStrategies() {
+    return this.http.get<Strategy[]>(this.strategyUrl);
+  }
   saveStrategy(model: any) {
     return this.http.post(this.strategyUrl, model);
+  }
+  editStrategy(model: any) {
+    return this.http.put(this.strategyUrl, model);
+  }
+  deleteStrategy(id: number) {
+    return this.http.delete(this.strategyUrl + '/' + id);
   }
 }

@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit {
   dashboard: Dashboard;
   dataSource: MatTableDataSource<UserOrder>;
   displayedColumns: string[] = [
-    'Id',
     'Date',
     'Quantity',
     'Transaction Type',
@@ -29,7 +28,14 @@ export class HomeComponent implements OnInit {
     'Stock',
   ];
   strategyDataSource: MatTableDataSource<Strategy>;
-  strategyColumns: string[] = ['Date', 'OrderType', 'Stock', 'Budget'];
+  strategyColumns: string[] = [
+    'Actions',
+    'Active',
+    'Date',
+    'OrderType',
+    'Budget',
+    'Stock',
+  ];
   constructor(
     private userService: UserService,
     private traderService: TraderService,
@@ -101,13 +107,48 @@ export class HomeComponent implements OnInit {
       if (!!result) {
         this.userService.saveStrategy(result).subscribe(
           (res) => {
-            console.log('success!');
+            this.alertService.success('Strategy Saved');
+            this.getStrategies();
           },
           (err) => {
-            console.log('failed');
+            this.alertService.error('failed to Saved. Error: ' + err);
           }
         );
       }
     });
+  }
+
+  onCheck(data: any) {
+    console.log(data);
+    this.userService.editStrategy(data).subscribe(
+      (res) => {
+        this.alertService.success('Strategy Edited');
+      },
+      (err) => {
+        this.alertService.error('failed to edit');
+      }
+    );
+  }
+
+  deleteStrategy(element: Strategy) {
+    this.userService.deleteStrategy(element.id).subscribe(
+      (res) => {
+        this.alertService.success('Deleted successfully');
+        this.getStrategies();
+      },
+      (err) => {
+        this.alertService.error('Failed to delete');
+      }
+    );
+  }
+  getStrategies() {
+    this.userService.getAllStrategies().subscribe(
+      (res) => {
+        this.dashboard.strategies = res;
+      },
+      (err) => {
+        this.alertService.error('Error updating strategies. Err: ' + err);
+      }
+    );
   }
 }

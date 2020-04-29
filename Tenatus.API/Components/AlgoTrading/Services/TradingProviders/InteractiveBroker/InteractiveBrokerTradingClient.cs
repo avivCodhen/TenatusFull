@@ -7,6 +7,7 @@ using IBApi;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Extensions;
 using Tenatus.API.Types;
+using Tenatus.API.Util;
 using Order = IBApi.Order;
 
 namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.InteractiveBroker
@@ -59,7 +60,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
             return Task.FromResult(new OrderModel
             {
                 Quantity = quantity, BuyingPrice = price, ExternalId = id.ToString(),
-                UserOrderType = UserOrderType.Limit, UserOrderActionType = UserOrderActionType.Buy
+                UserOrderType = AppConstants.Lmt, UserOrderActionType = UserOrderActionType.Buy
             });
         }
 
@@ -93,7 +94,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Interacti
             return Task.FromResult(new OrderModel
             {
                 Quantity = quantity, BuyingPrice = price, ExternalId = id.ToString(),
-                UserOrderType = UserOrderType.Limit, UserOrderActionType = UserOrderActionType.Buy
+                UserOrderType = AppConstants.Lmt, UserOrderActionType = UserOrderActionType.Buy
             });
         }
 

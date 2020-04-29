@@ -124,10 +124,8 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Alpaca
                     {
                         var userOrderType = order.OrderType switch
                         {
-                            OrderType.Market => UserOrderType.Market,
-                            OrderType.Stop => UserOrderType.Stop,
-                            OrderType.Limit => UserOrderType.Limit,
-                            OrderType.StopLimit => UserOrderType.StopLimit,
+                            OrderType.Limit => AppConstants.Lmt,
+                            OrderType.StopLimit => AppConstants.StopLimit,
                             _ => throw new ArgumentOutOfRangeException()
                         };
 

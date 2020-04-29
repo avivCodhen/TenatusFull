@@ -9,7 +9,7 @@ namespace Tenatus.API.Data
         public DateTimeOffset Created { get; set; } = DateTimeOffset.Now;
         public int Id { get; set; }
         public string ExternalId { get; set; }
-        public UserOrderType UserOrderType { get; set; }
+        public string UserOrderType { get; set; }
         public int Quantity { get; set; }
         public decimal BuyingPrice { get; set; }
         public UserOrderActionType UserOrderActionType { get; set; }

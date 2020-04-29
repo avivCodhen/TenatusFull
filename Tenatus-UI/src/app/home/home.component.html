@@ -47,10 +47,25 @@
           <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
 
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="Active">
+            <th mat-header-cell *matHeaderCellDef> פעיל</th>
+            <td mat-cell *matCellDef="let element">
+
+              <div>
+                <mat-slide-toggle [(ngModel)]="element.active" (change)="onCheck(element)" [checked]="element.active">
+                </mat-slide-toggle>
+
+              </div>
+
+            </td>
+
+          </ng-container>
           <!-- Name Column -->
           <ng-container matColumnDef="Date">
             <th mat-header-cell *matHeaderCellDef> הפעלה אחרונה </th>
-            <td mat-cell *matCellDef="let element"> {{element.lastUsed}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.lastActive}} </td>
           </ng-container>
 
           <!-- Weight Column -->
@@ -62,17 +77,25 @@
           <!-- Symbol Column -->
           <ng-container matColumnDef="Stock">
             <th mat-header-cell *matHeaderCellDef> מניה </th>
-            <td mat-cell *matCellDef="let element"> ${{element.stock}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
           </ng-container>
 
           <!-- Symbol Column -->
           <ng-container matColumnDef="Budget">
             <th mat-header-cell *matHeaderCellDef> תקציב </th>
-            <td mat-cell *matCellDef="let element"> {{element.budget}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.budget}}% </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button (click)="deleteStrategy(element)" mat-raised-button class="btn-second">מחק</button>
+            </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="strategyColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: strategyColumns;"></tr>
+
 
         </table>
         <div dir="ltr">
@@ -98,11 +121,6 @@
           <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
 
-          <!-- Position Column -->
-          <ng-container matColumnDef="Id">
-            <th mat-header-cell *matHeaderCellDef> מזהה חיצוני </th>
-            <td mat-cell *matCellDef="let element"> {{element.externalId}} </td>
-          </ng-container>
 
           <!-- Name Column -->
           <ng-container matColumnDef="Date">
@@ -138,6 +156,8 @@
             <th mat-header-cell *matHeaderCellDef>מניה</th>
             <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
           </ng-container>
+
+
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

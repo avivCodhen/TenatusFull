@@ -94,6 +94,7 @@
         <e p="UserOrder.cs" t="Include" />
       </e>
       <e p="Extensions" t="Include">
+        <e p="DateExtensions.cs" t="Include" />
         <e p="StringExtensions.cs" t="Include" />
         <e p="UserManagerExtension.cs" t="Include" />
       </e>
@@ -115,6 +116,12 @@
         <e p="20200427121532_AddUserFees.Designer.cs" t="Include" />
         <e p="20200427185837_AddMinimumFee.cs" t="Include" />
         <e p="20200427185837_AddMinimumFee.Designer.cs" t="Include" />
+        <e p="20200428193535_ChangeOrderTypeToSTring.cs" t="Include" />
+        <e p="20200428193535_ChangeOrderTypeToSTring.Designer.cs" t="Include" />
+        <e p="20200429065034_AddActiveForStrategy.cs" t="Include" />
+        <e p="20200429065034_AddActiveForStrategy.Designer.cs" t="Include" />
+        <e p="20200429075348_AddCreatedStrategy.cs" t="Include" />
+        <e p="20200429075348_AddCreatedStrategy.Designer.cs" t="Include" />
         <e p="ApplicationDbContextModelSnapshot.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive">
@@ -134,7 +141,6 @@
       <e p="Tenatus.API.csproj" t="IncludeRecursive" />
       <e p="Types" t="Include">
         <e p="UserOrderActionType.cs" t="Include" />
-        <e p="UserOrderType.cs" t="Include" />
       </e>
       <e p="Util" t="Include">
         <e p="AppConstants.cs" t="Include" />

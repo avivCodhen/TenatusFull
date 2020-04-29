@@ -6,4 +6,8 @@ export class Strategy {
   maximum: number;
   percent: number;
   type: string;
+  active: boolean;
+  lastActive: string;
+  created: string;
+  id: number;
 }

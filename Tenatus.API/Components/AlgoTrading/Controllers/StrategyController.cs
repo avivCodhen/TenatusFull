@@ -69,8 +69,9 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
         {
             try
             {
-                var user = await _userManager.GetApplicationUserAsync(User);
-
+                var service = new StrategyService(_dbContext, _mapper);
+                service.EditStrategy(request);
+                await _dbContext.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception e)
@@ -84,8 +85,9 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
         {
             try
             {
-                var user = await _userManager.GetApplicationUserAsync(User);
-
+                var strategy = _dbContext.Strategies.Single(x => x.Id == id);
+                _dbContext.Strategies.Remove(strategy);
+                await _dbContext.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception e)
