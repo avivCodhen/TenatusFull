@@ -1,3 +1,4 @@
+import { HomeResolver } from './_resolvers/home.resolver';
 import { appRoutes } from './routes';
 import { AuthService } from './_services/Auth.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -49,6 +50,7 @@ export function tokenGetter() {
     }),
   ],
   providers: [
+    HomeResolver,
     AuthService,
     LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Tenatus.API.Components.AlgoTrading.Models;
+using Tenatus.API.Components.SignalR;
 using Tenatus.API.Util;
 
 namespace Tenatus.API.Components.AlgoTrading.Services.Scrapping
@@ -13,11 +15,13 @@ namespace Tenatus.API.Components.AlgoTrading.Services.Scrapping
     public class YahooStockDataReader : IStockDataReader
     {
         private readonly string _stock;
+        private readonly IHubContext<StockDataHub> _hubContext;
         private ChromeDriver _driver;
 
-        public YahooStockDataReader(string stock)
+        public YahooStockDataReader(string stock, IHubContext<StockDataHub> hubContext)
         {
             _stock = stock;
+            _hubContext = hubContext;
             _driver = new ChromeDriver(AppConstants.FilePath);
             _driver.Navigate().GoToUrl($"https://finance.yahoo.com/quote/{_stock}");
         }
@@ -47,7 +51,9 @@ namespace Tenatus.API.Components.AlgoTrading.Services.Scrapping
             {
                 var stockVal = _driver.FindElementById("quote-header-info")
                     .FindElement(By.CssSelector("span[data-reactid='32']")).Text;
-                return new StockData() {Time = DateTime.Now, CurrentPrice = Convert.ToDecimal(stockVal)};
+                var data = new StockData() {Time = DateTime.Now, CurrentPrice = Convert.ToDecimal(stockVal), Stock = _stock};
+                _hubContext.Clients.All.SendAsync("transferStockData", data);
+                return data;
             }
             catch (Exception e)
             {

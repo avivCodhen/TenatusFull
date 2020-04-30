@@ -40,71 +40,65 @@
         <hr class="mb-3" />
         <p *ngIf="dashboard.strategies == null || dashboard.strategies.length == 0">לא נמצאו אסטרטגיות.</p>
 
-        <table *ngIf="dashboard.strategies?.length > 0" style="width: 100%;" mat-table
-          [dataSource]="dashboard.strategies">
-
-          <!--- Note that these columns can be defined in any order.
-                The actual rendered columns are set as a property on the row definition" -->
+        <div style="overflow-y: scroll;
+        height: 250px;">
+          <table style="width: 100%;" mat-table [dataSource]="dashboard.strategies">
 
 
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="Active">
-            <th mat-header-cell *matHeaderCellDef> פעיל</th>
-            <td mat-cell *matCellDef="let element">
+            <ng-container matColumnDef="Active">
+              <th mat-header-cell *matHeaderCellDef> פעיל</th>
+              <td mat-cell *matCellDef="let element">
 
-              <div>
-                <mat-slide-toggle [(ngModel)]="element.active" (change)="onCheck(element)" [checked]="element.active">
-                </mat-slide-toggle>
+                <div>
+                  <mat-slide-toggle [(ngModel)]="element.active" (change)="onCheck(element)" [checked]="element.active">
+                  </mat-slide-toggle>
 
-              </div>
+                </div>
 
-            </td>
+              </td>
 
-          </ng-container>
-          <!-- Name Column -->
-          <ng-container matColumnDef="Date">
-            <th mat-header-cell *matHeaderCellDef> הפעלה אחרונה </th>
-            <td mat-cell *matCellDef="let element"> {{element.lastActive}} </td>
-          </ng-container>
+            </ng-container>
+            <ng-container matColumnDef="Date">
+              <th mat-header-cell *matHeaderCellDef> הפעלה אחרונה </th>
+              <td mat-cell *matCellDef="let element"> {{element.lastActive}} </td>
+            </ng-container>
 
-          <!-- Weight Column -->
-          <ng-container matColumnDef="OrderType">
-            <th mat-header-cell *matHeaderCellDef> עסקה </th>
-            <td mat-cell *matCellDef="let element"> {{element.userOrderType}} </td>
-          </ng-container>
+            <ng-container matColumnDef="OrderType">
+              <th mat-header-cell *matHeaderCellDef> עסקה </th>
+              <td mat-cell *matCellDef="let element"> {{element.userOrderType}} </td>
+            </ng-container>
 
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="Stock">
-            <th mat-header-cell *matHeaderCellDef> מניה </th>
-            <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
-          </ng-container>
+            <ng-container matColumnDef="Stock">
+              <th mat-header-cell *matHeaderCellDef> מניה </th>
+              <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+            </ng-container>
 
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="Budget">
-            <th mat-header-cell *matHeaderCellDef> תקציב </th>
-            <td mat-cell *matCellDef="let element"> {{element.budget}}% </td>
-          </ng-container>
+            <ng-container matColumnDef="Budget">
+              <th mat-header-cell *matHeaderCellDef> תקציב </th>
+              <td mat-cell *matCellDef="let element"> {{element.budget}}% </td>
+            </ng-container>
 
-          <ng-container matColumnDef="Actions">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element">
-              <button (click)="deleteStrategy(element)" mat-raised-button class="btn-second">מחק</button>
-            </td>
-          </ng-container>
+            <ng-container matColumnDef="Actions">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element">
+                <button (click)="deleteStrategy(element)" mat-raised-button class="btn-second">מחק</button>
+              </td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="strategyColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: strategyColumns;"></tr>
+            <tr mat-header-row *matHeaderRowDef="strategyColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: strategyColumns;"></tr>
 
 
-        </table>
-        <div dir="ltr">
-          <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
-
+          </table>
         </div>
+
+
 
       </mat-card>
 
     </div>
+
+
     <div class="dash-card col-10 col-lg-6">
       <div class="dash-box bg-second" style="position: absolute;">
         סה"כ {{dashboard.userOrders.length}} טרנזקציות</div>
@@ -113,57 +107,55 @@
         <p>טרנזקציות</p>
         <hr class="mb-3" />
         <p *ngIf="dashboard.userOrders == null || dashboard.userOrders.length == 0">לא נמצאו טרנזקציות.</p>
+        <div style="overflow-y: scroll;
+        height: 250px;">
+          <table class="" style="width: 100%;  height: 200px;" mat-table [dataSource]="dashboard.userOrders">
 
-        <table class="" *ngIf="dashboard.userOrders?.length > 0" style="width: 100%;" mat-table
-          [dataSource]="dashboard.userOrders">
-
-          <!--- Note that these columns can be defined in any order.
-                The actual rendered columns are set as a property on the row definition" -->
-
-
-          <!-- Name Column -->
-          <ng-container matColumnDef="Date">
-            <th mat-header-cell *matHeaderCellDef> תאריך </th>
-            <td mat-cell *matCellDef="let element"> {{element.created}} </td>
-          </ng-container>
-
-          <!-- Weight Column -->
-          <ng-container matColumnDef="Quantity">
-            <th mat-header-cell *matHeaderCellDef> כמות </th>
-            <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
-          </ng-container>
-
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="Price">
-            <th mat-header-cell *matHeaderCellDef> מחיר </th>
-            <td mat-cell *matCellDef="let element"> ${{element.price}} </td>
-          </ng-container>
-
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="Transaction Type">
-            <th mat-header-cell *matHeaderCellDef> סוג עסקה </th>
-            <td mat-cell *matCellDef="let element"> {{element.orderAction}} </td>
-          </ng-container>
-
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="Buy/Sell">
-            <th mat-header-cell *matHeaderCellDef>קניה\מכירה </th>
-            <td mat-cell *matCellDef="let element"> {{element.isBuy ? "מכירה" : "קניה"}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="Stock">
-            <th mat-header-cell *matHeaderCellDef>מניה</th>
-            <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
-          </ng-container>
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
 
 
+            <!-- Name Column -->
+            <ng-container matColumnDef="Date">
+              <th mat-header-cell *matHeaderCellDef> תאריך </th>
+              <td mat-cell *matCellDef="let element"> {{element.created}} </td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Quantity">
+              <th mat-header-cell *matHeaderCellDef> כמות </th>
+              <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+            </ng-container>
 
-        </table>
-        <div dir="ltr">
-          <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="Price">
+              <th mat-header-cell *matHeaderCellDef> מחיר </th>
+              <td mat-cell *matCellDef="let element"> ${{element.buyingPrice}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="Transaction Type">
+              <th mat-header-cell *matHeaderCellDef> סוג עסקה </th>
+              <td mat-cell *matCellDef="let element"> {{element.userOrderType}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="Buy/Sell">
+              <th mat-header-cell *matHeaderCellDef>קניה\מכירה </th>
+              <td mat-cell *matCellDef="let element"> {{element.isBuy ? "מכירה" : "קניה"}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Stock">
+              <th mat-header-cell *matHeaderCellDef>מניה</th>
+              <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+            </ng-container>
+
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          </table>
 
         </div>
 

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Tenatus.API.Components.AlgoTrading.Services.Scrapping;
+using Tenatus.API.Components.SignalR;
 using Tenatus.API.Data;
 
 namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
@@ -12,8 +14,8 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
 
         public HftTrader(IStockDataReader stockDataReader, ITradingClient tradingClient,
             IServiceProvider serviceProvider,
-            ApplicationUser user, Strategy strategy, ILogger log) : base(stockDataReader, tradingClient, serviceProvider,
-            user, strategy, log)
+            ApplicationUser user, Strategy strategy, ILogger log, IHubContext<StockDataHub> hubContext) : base(stockDataReader, tradingClient, serviceProvider,
+            user, strategy, log, hubContext)
         {
         }
 

@@ -31,7 +31,7 @@ namespace Tenatus.API.Components.Dashboard.Controllers
         public async Task<IActionResult> GetDashboard()
         {
             var user = await _userManager.GetApplicationUserAsync(User);
-            var userOrders = _dbContext.UserOrders.Where(x => x.UserId == user.Id).ToList();
+            var userOrders = _dbContext.UserOrders.Where(x => x.UserId == user.Id).OrderByDescending(x=>x.Created).ToList();
             var userStrategies = _dbContext.Strategies.Where(x => x.UserId == user.Id).ToList();
             var isOn = _traderManager.IsOnForUser(user);
             var response = new DashboardModel()

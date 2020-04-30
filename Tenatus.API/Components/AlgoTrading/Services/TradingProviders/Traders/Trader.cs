@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Components.AlgoTrading.Services.Scrapping;
+using Tenatus.API.Components.SignalR;
 using Tenatus.API.Data;
 using Tenatus.API.Extensions;
 using Tenatus.API.Types;
@@ -22,6 +24,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
         private readonly ApplicationUser _user;
         private ApplicationDbContext _dbContext;
         private readonly ILogger _log;
+        private readonly IHubContext<StockDataHub> _hubContext;
         private int _quantity = 1;
         private decimal _budget = new decimal(0.0);
         private readonly IStockDataReader _stockDataReader;
@@ -33,7 +36,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
 
         protected Trader(IStockDataReader stockDataReader, ITradingClient tradingClient,
             IServiceProvider serviceProvider,
-            ApplicationUser user, Strategy strategy, ILogger log)
+            ApplicationUser user, Strategy strategy, ILogger log, IHubContext<StockDataHub> hubContext)
         {
             _stockDataReader = stockDataReader;
             _tradingClient = tradingClient;
@@ -41,6 +44,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
             _user = user;
             Strategy = strategy;
             _log = log;
+            _hubContext = hubContext;
         }
 
         public async Task Start()
@@ -119,7 +123,8 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
                 UserOrderActionType = orderModel.UserOrderActionType,
                 TradingClient = _user.TradingClientType,
                 UserOrderType = orderModel.UserOrderType,
-                Stock = Strategy.Stock
+                Stock = Strategy.Stock,
+                Quantity = _quantity
             });
             await _dbContext.SaveChangesAsync();
         }

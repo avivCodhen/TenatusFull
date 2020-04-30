@@ -3,12 +3,20 @@ import { UserOrder } from './../_models/userOrder';
 import { AlertService } from './../_services/alert.service';
 import { TraderService } from './../_services/trader.service';
 import { UserService } from './../_services/user.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ViewChildren,
+  QueryList,
+} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Strategy } from '../_models/strategy';
 import { StrategyDialogComponent } from '../strategy-dialog/strategy-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SignalRService } from '../_services/signalR.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -40,31 +48,34 @@ export class HomeComponent implements OnInit {
     private userService: UserService,
     private traderService: TraderService,
     private alertService: AlertService,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    private signalRService: SignalRService,
+    private route: ActivatedRoute
+  ) {
+    this.signalRService.startConnection();
+    this.signalRService.addTransferChartDataListener();
+    this.signalRService.start();
+  }
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatPaginator, { static: true }) strategyPaginator: MatPaginator;
+  @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
 
   ngOnInit(): void {
+    this.dataSource = new MatTableDataSource<UserOrder>();
+    this.strategyDataSource = new MatTableDataSource<Strategy>();
     this.getDashboard();
   }
+
+  ngAfterViewInit() {
+    this.strategyDataSource.paginator = this.paginator.toArray()[0];
+    this.dataSource.paginator = this.paginator.toArray()[1];
+  }
   getDashboard() {
-    this.userService.getDashBoardSetting().subscribe(
-      (res) => {
-        this.dashboard = res;
-        console.log(this.dashboard);
-        this.dataSource = new MatTableDataSource<UserOrder>(
-          this.dashboard.userOrders
-        );
-        this.dataSource.paginator = this.paginator;
-        this.strategyDataSource = new MatTableDataSource<Strategy>(
-          this.dashboard.strategies
-        );
-        this.strategyDataSource.paginator = this.paginator;
-      },
-      (err) => {}
-    );
+    this.route.data.subscribe((data) => {
+      this.dashboard = data['dashboard'];
+      console.log(this.dashboard);
+      this.strategyDataSource.data = this.dashboard.strategies;
+      this.dataSource.data = this.dashboard.userOrders;
+    });
   }
 
   start() {

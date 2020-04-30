@@ -18,6 +18,8 @@ using Microsoft.IdentityModel.Tokens;
 using Tenatus.API.Components.AlgoTrading.Services.Scrapping;
 using Tenatus.API.Components.AlgoTrading.Services.TradingProviders;
 using Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders;
+using Tenatus.API.Components.SignalR;
+using Tenatus.API.Components.SignalR.Models;
 using Tenatus.API.Data;
 
 namespace Tenatus.API
@@ -66,6 +68,8 @@ namespace Tenatus.API
             });
 
             services.AddCors();
+            services.AddSignalR();
+            
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<TraderManager>();
             services.AddSingleton<StockDataReaderManager>();
@@ -85,12 +89,15 @@ namespace Tenatus.API
 
             app.UseRouting();
 
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(x => x.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
             app.UseAuthentication();
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints => { 
+                endpoints.MapControllers();
+                endpoints.MapHub<StockDataHub>("/stockData");
+            });
         }
     }
 }

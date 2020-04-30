@@ -30,7 +30,7 @@ namespace Tenatus.API.MappingProfiles
                 dest => dest.MapFrom(x => AppConstants.StrategyTypeRange));
             CreateMap<StrategyModel, RangeStrategy>().ForMember(dest => dest.Created, src => src.Ignore())
                 .ForMember(dest => dest.LastActive, src => src.Ignore());
-            CreateMap<UserOrder, UserOrderModel>().ForMember(dest => dest.Created, src=> src.MapFrom(x=>x.Created.FormatDate()));
+            CreateMap<UserOrder, UserOrderModel>().ForMember(dest => dest.Created, src=> src.MapFrom(x=>x.Created.FormatDateTime()));
         }
     }
 }

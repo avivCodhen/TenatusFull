@@ -81,6 +81,12 @@
             <e p="UserOrderModel.cs" t="Include" />
           </e>
         </e>
+        <e p="SignalR" t="Include">
+          <e p="Models" t="Include">
+            <e p="StockDataModel.cs" t="Include" />
+          </e>
+          <e p="StockDataHub.cs" t="Include" />
+        </e>
       </e>
       <e p="Data" t="Include">
         <e p="ApplicationDbContext.cs" t="Include" />
