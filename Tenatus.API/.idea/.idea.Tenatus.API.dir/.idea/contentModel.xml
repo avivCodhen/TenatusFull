@@ -84,8 +84,13 @@
         <e p="SignalR" t="Include">
           <e p="Models" t="Include">
             <e p="StockDataModel.cs" t="Include" />
+            <e p="TraderMessage.cs" t="Include" />
+          </e>
+          <e p="Services" t="Include">
+            <e p="SignalRService.cs" t="Include" />
           </e>
           <e p="StockDataHub.cs" t="Include" />
+          <e p="UserIdProvider.cs" t="Include" />
         </e>
       </e>
       <e p="Data" t="Include">
@@ -128,6 +133,8 @@
         <e p="20200429065034_AddActiveForStrategy.Designer.cs" t="Include" />
         <e p="20200429075348_AddCreatedStrategy.cs" t="Include" />
         <e p="20200429075348_AddCreatedStrategy.Designer.cs" t="Include" />
+        <e p="20200502054953_AddIsTraderOnForUser.cs" t="Include" />
+        <e p="20200502054953_AddIsTraderOnForUser.Designer.cs" t="Include" />
         <e p="ApplicationDbContextModelSnapshot.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive">
@@ -143,6 +150,9 @@
       <e p="Properties" t="Include">
         <e p="launchSettings.json" t="Include" />
       </e>
+      <e p="Services" t="Include">
+        <e p="SystemTraderService.cs" t="Include" />
+      </e>
       <e p="Startup.cs" t="Include" />
       <e p="Tenatus.API.csproj" t="IncludeRecursive" />
       <e p="Types" t="Include">
@@ -150,6 +160,7 @@
       </e>
       <e p="Util" t="Include">
         <e p="AppConstants.cs" t="Include" />
+        <e p="MarketHelper.cs" t="Include" />
       </e>
     </e>
     <e p="C:\Users\aviv\.Rider2019.3\system\extResources" t="IncludeRecursive" />

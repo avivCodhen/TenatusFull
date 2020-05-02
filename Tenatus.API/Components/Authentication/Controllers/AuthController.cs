@@ -103,8 +103,8 @@ namespace Tenatus.API.Components.Authentication.Controllers
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 var claims = new[]
                 {
-                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                    new Claim(JwtRegisteredClaimNames.Jti, user.Id),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id),
                 };
                 var keyBytes = Encoding.UTF8.GetBytes(key);
                 var theKey = new SymmetricSecurityKey(keyBytes);

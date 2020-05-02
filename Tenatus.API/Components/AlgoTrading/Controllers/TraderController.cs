@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -10,8 +11,11 @@ using Microsoft.AspNetCore.Routing;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Components.AlgoTrading.Services.TradingProviders;
 using Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders;
+using Tenatus.API.Components.SignalR.Models;
+using Tenatus.API.Components.SignalR.Services;
 using Tenatus.API.Data;
 using Tenatus.API.Extensions;
+using Tenatus.API.Util;
 
 namespace Tenatus.API.Components.AlgoTrading.Controllers
 {
@@ -20,13 +24,15 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly TraderManager _traderManager;
         private readonly ApplicationDbContext _dbContext;
+        private readonly SignalRService _signalRService;
 
         public TraderController(UserManager<ApplicationUser> userManager, TraderManager traderManager,
-            ApplicationDbContext dbContext)
+            ApplicationDbContext dbContext, SignalRService signalRService)
         {
             _userManager = userManager;
             _traderManager = traderManager;
             _dbContext = dbContext;
+            _signalRService = signalRService;
         }
 
         [Route("start")]
@@ -36,11 +42,21 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
             try
             {
                 var user = await _userManager.GetApplicationUserAsync(User);
-               
-                await _traderManager.StartTrader(user);
-                await _dbContext.SaveChangesAsync();
+                user.IsTraderOn = true;
+                var marketOpen = MarketHelper.IsMarketOpen(); 
+                // if (marketOpen)
+                    await _traderManager.StartTrader(user);
                 
-                return Ok();
+                    new Thread(() =>
+                    {
+                        while (true)
+                        {
+                        }
+                        
+                    }){IsBackground = true}.Start();
+                await _dbContext.SaveChangesAsync();
+
+                return Ok(new{marketOpen, user.IsTraderOn});
             }
             catch (Exception e)
             {
@@ -55,8 +71,9 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
             try
             {
                 var user = await _userManager.GetApplicationUserAsync(User);
+                user.IsTraderOn = false;
                 _traderManager.StopTrader(user);
-
+                await _dbContext.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception e)

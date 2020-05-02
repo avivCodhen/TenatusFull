@@ -17,5 +17,6 @@ namespace Tenatus.API.Data
         public virtual ICollection<UserOrder> UserOrders { get; set; } = new List<UserOrder>();
         public virtual ICollection<Strategy> Strategies { get; set; } = new List<Strategy>();
         public decimal MinimumFee { get; set; }
+        public bool IsTraderOn { get; set; }
     }
 }

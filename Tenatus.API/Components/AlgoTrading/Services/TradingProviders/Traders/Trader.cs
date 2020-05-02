@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Components.AlgoTrading.Services.Scrapping;
-using Tenatus.API.Components.SignalR;
+using Tenatus.API.Components.SignalR.Models;
+using Tenatus.API.Components.SignalR.Services;
 using Tenatus.API.Data;
 using Tenatus.API.Extensions;
 using Tenatus.API.Types;
+using Tenatus.API.Util;
 
 namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
 {
@@ -24,7 +25,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
         private readonly ApplicationUser _user;
         private ApplicationDbContext _dbContext;
         private readonly ILogger _log;
-        private readonly IHubContext<StockDataHub> _hubContext;
+        private readonly SignalRService _signalRService;
         private int _quantity = 1;
         private decimal _budget = new decimal(0.0);
         private readonly IStockDataReader _stockDataReader;
@@ -36,7 +37,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
 
         protected Trader(IStockDataReader stockDataReader, ITradingClient tradingClient,
             IServiceProvider serviceProvider,
-            ApplicationUser user, Strategy strategy, ILogger log, IHubContext<StockDataHub> hubContext)
+            ApplicationUser user, Strategy strategy, ILogger log, SignalRService signalRService)
         {
             _stockDataReader = stockDataReader;
             _tradingClient = tradingClient;
@@ -44,7 +45,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
             _user = user;
             Strategy = strategy;
             _log = log;
-            _hubContext = hubContext;
+            _signalRService = signalRService;
         }
 
         public async Task Start()
@@ -60,7 +61,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
                 await UpdateBudget();
                 while (IsOn)
                 {
-                    CurrentStockData = _stockDataReader.ReadStockValue();
+                    CurrentStockData = await _stockDataReader.ReadStockValue();
                     StockValues.Add(CurrentStockData);
                     _dbContext.StocksData.Add(CurrentStockData);
                     _dbContext.SaveChanges();
@@ -91,18 +92,25 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
         {
             try
             {
+                if (!await _tradingClient.RequestBudget(Strategy.Budget))
+                    throw new Exception($"not enough budget. required: {_budget}");
+
                 var quantity = (int) (_budget / value);
                 if (quantity <= 0) throw new Exception($"Quantity is less or equals to zero.");
 
-                _log.LogInformation($"Buying {_quantity} {Strategy.Stock} share(s). Price: {BuyingPrice}.");
+                var buyingStr = $"Buying {_quantity} {Strategy.Stock} share(s). Price: {value}.";
+                _log.LogInformation(buyingStr);
+                SendMessage(buyingStr);
                 var orderModel = await _tradingClient.Buy(Strategy.Stock, quantity, value);
 
                 if (orderModel == null) throw new Exception("failed to buy");
                 BuyingPrice = value;
                 _quantity = quantity;
+                var bought = $"BOUGHT {_quantity} {Strategy.Stock} share(s). Price: {value}.";
+                _log.LogInformation(bought);
 
-                _log.LogInformation(
-                    $"BOUGHT {_quantity} {Strategy.Stock} share(s). Price: {BuyingPrice}.");
+                SendMessage(bought);
+
                 await SaveUserOrder(orderModel);
             }
             catch (Exception e)
@@ -131,11 +139,22 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
 
         protected async Task Sell(decimal value)
         {
-            _log.LogInformation($"Selling {_quantity} {Strategy.Stock} share(s). Price: {value}...");
+            var position = await _tradingClient.CurrentPositionOrDefault(Strategy.Stock);
+            if (position == null) return;
+
+            _quantity = position.Quantity;
+            
+            var sellingStr = $"Selling {_quantity} {Strategy.Stock} share(s). Price: {value}...";
+            _log.LogInformation(sellingStr);
+            SendMessage(sellingStr);
+
             var orderModel = await _tradingClient.Sell(Strategy.Stock, _quantity, value);
             if (orderModel != null)
             {
-                _log.LogInformation($"SOLD {_quantity} {Strategy.Stock} share(s). Price: {value}");
+                var soldStr = $"SOLD {_quantity} {Strategy.Stock} share(s). Price: {value}";
+                _log.LogInformation(soldStr);
+                SendMessage(soldStr);
+
                 BuyingPrice = 0;
                 await SaveUserOrder(orderModel);
             }
@@ -168,6 +187,12 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
         {
             var results = (value * _quantity) - BuyingPrice * _quantity;
             return results > _user.MinimumFee;
+        }
+
+        private void SendMessage(string message)
+        {
+            _signalRService.SendMessageToUser(_user.Id, AppConstants.ConsoleChannel,
+                new TraderMessage() {Date = DateTimeOffset.Now.FormatDateTime(), Message = message});
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Components.AlgoTrading.Services.Scrapping;
 using Tenatus.API.Components.SignalR;
+using Tenatus.API.Components.SignalR.Services;
 using Tenatus.API.Data;
 
 namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
@@ -16,8 +17,8 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
         decimal roofValue = new decimal(0.0);
 
         public PercentTrader(IStockDataReader stockDataReader, ITradingClient tradingClient,
-            IServiceProvider serviceProvider, ApplicationUser user, Strategy strategy, ILogger log,IHubContext<StockDataHub> hubContext)
-            : base(stockDataReader, tradingClient, serviceProvider, user, strategy, log, hubContext)
+            IServiceProvider serviceProvider, ApplicationUser user, Strategy strategy, ILogger log, SignalRService signalRService)
+            : base(stockDataReader, tradingClient, serviceProvider, user, strategy, log, signalRService)
         {
         }
 

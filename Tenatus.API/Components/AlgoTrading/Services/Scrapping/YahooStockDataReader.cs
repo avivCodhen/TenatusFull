@@ -8,6 +8,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Components.SignalR;
+using Tenatus.API.Components.SignalR.Services;
 using Tenatus.API.Util;
 
 namespace Tenatus.API.Components.AlgoTrading.Services.Scrapping
@@ -15,13 +16,13 @@ namespace Tenatus.API.Components.AlgoTrading.Services.Scrapping
     public class YahooStockDataReader : IStockDataReader
     {
         private readonly string _stock;
-        private readonly IHubContext<StockDataHub> _hubContext;
+        private readonly SignalRService _signalRService;
         private ChromeDriver _driver;
 
-        public YahooStockDataReader(string stock, IHubContext<StockDataHub> hubContext)
+        public YahooStockDataReader(string stock, SignalRService signalRService)
         {
             _stock = stock;
-            _hubContext = hubContext;
+            _signalRService = signalRService;
             _driver = new ChromeDriver(AppConstants.FilePath);
             _driver.Navigate().GoToUrl($"https://finance.yahoo.com/quote/{_stock}");
         }
@@ -45,14 +46,15 @@ namespace Tenatus.API.Components.AlgoTrading.Services.Scrapping
             return Task.FromResult(stocksData);
         }
 
-        public StockData ReadStockValue()
+        public async Task<StockData> ReadStockValue()
         {
             try
             {
                 var stockVal = _driver.FindElementById("quote-header-info")
                     .FindElement(By.CssSelector("span[data-reactid='32']")).Text;
-                var data = new StockData() {Time = DateTime.Now, CurrentPrice = Convert.ToDecimal(stockVal), Stock = _stock};
-                _hubContext.Clients.All.SendAsync("transferStockData", data);
+                var data = new StockData()
+                    {Time = DateTime.Now, CurrentPrice = Convert.ToDecimal(stockVal), Stock = _stock};
+                await _signalRService.SendMessageToAll("transferStockData", data);
                 return data;
             }
             catch (Exception e)

@@ -23,6 +23,11 @@ $main-bg: #EBEEF2;
   background-color: $c-a !important;
 }
 
+.center-ver {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .bg-main {
   background-color: $c-m;
 }
@@ -83,7 +88,15 @@ hr {
   background-color: $c-m;
 }
 
+
 /* CSS for main component */
+.dash-card .title {
+  color: $c-m;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0;
+}
+
 .dash-card {
   @extend .p-2;
 }
@@ -92,23 +105,24 @@ hr {
   color: #999;
 }
 
-.dash-box {
-  @include mat-elevation(2);
-  color: white;
-  position: absolute;
-  @extend .p-2;
-  border-radius: 2px;
-  top: 6px;
-  left: 8px;
+
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-table {
-  direction: ltr;
+/* Track */
+::-webkit-scrollbar-track {
+  background: white;
 }
 
-.mat-header-cell {
-  flex-direction: column;
-  justify-content: center;
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $c-m-l;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $c-m;
 }
 
 /* end */

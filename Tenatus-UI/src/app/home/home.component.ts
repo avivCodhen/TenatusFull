@@ -1,3 +1,5 @@
+import { TraderMessage } from './../_models/traderMessage';
+import { StockData } from './../_models/stockData';
 import { Dashboard } from './../_models/dashboard';
 import { UserOrder } from './../_models/userOrder';
 import { AlertService } from './../_services/alert.service';
@@ -24,6 +26,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  traderMessages: TraderMessage[] = [];
   processing: boolean;
   dashboard: Dashboard;
   dataSource: MatTableDataSource<UserOrder>;
@@ -44,6 +47,8 @@ export class HomeComponent implements OnInit {
     'Budget',
     'Stock',
   ];
+  stockDataSource: MatTableDataSource<StockData>;
+  stockColumns: string[] = ['Open', 'Close', 'High', 'Low', 'Price', 'Name'];
   constructor(
     private userService: UserService,
     private traderService: TraderService,
@@ -53,8 +58,7 @@ export class HomeComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.signalRService.startConnection();
-    this.signalRService.addTransferChartDataListener();
-    this.signalRService.start();
+    this.signalRService.addStockDataListener().addTraderMessageListener();
   }
 
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
@@ -62,6 +66,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource<UserOrder>();
     this.strategyDataSource = new MatTableDataSource<Strategy>();
+    this.stockDataSource = new MatTableDataSource<StockData>();
     this.getDashboard();
   }
 
@@ -75,6 +80,23 @@ export class HomeComponent implements OnInit {
       console.log(this.dashboard);
       this.strategyDataSource.data = this.dashboard.strategies;
       this.dataSource.data = this.dashboard.userOrders;
+      this.stockDataSource.data = this.dashboard.stocks;
+
+      this.signalRService.stockDataReceived.subscribe((data) => {
+        console.log('signalR data:' + data.toString());
+        this.dashboard.stocks.forEach((stock) => {
+          if (data.stock.toUpperCase() == stock.stock.toUpperCase()) {
+            stock.currentPrice = data.currentPrice;
+          }
+        });
+      });
+
+      this.signalRService.traderMessageReceived.subscribe(
+        (data: TraderMessage) => {
+          console.log('traderMessage: ' + data);
+          this.traderMessages.unshift(data);
+        }
+      );
     });
   }
 
@@ -84,8 +106,9 @@ export class HomeComponent implements OnInit {
       (res) => {
         this.processing = false;
         console.log(res);
-        this.dashboard.isOn = true;
+        this.dashboard.isTraderOn = true;
         this.alertService.success('Trader started successfully');
+        this.dashboard.isTraderOn = true;
       },
       (err) => {
         this.processing = false;
@@ -100,6 +123,7 @@ export class HomeComponent implements OnInit {
       (res) => {
         console.log(res);
         this.alertService.success('Trader stopped successfully');
+        this.dashboard.isTraderOn = false;
       },
       (err) => {
         this.alertService.error('Error: ' + err);

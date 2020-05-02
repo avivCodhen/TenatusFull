@@ -13,6 +13,7 @@ namespace Tenatus.API.Util
         
         public const string Lmt = "lmt";
         public const string StopLimit = "stoplimit";
+        public const string ConsoleChannel = "consoleChannel";
         
     }
 }

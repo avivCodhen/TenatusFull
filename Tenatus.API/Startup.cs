@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +22,9 @@ using Tenatus.API.Components.AlgoTrading.Services.TradingProviders;
 using Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders;
 using Tenatus.API.Components.SignalR;
 using Tenatus.API.Components.SignalR.Models;
+using Tenatus.API.Components.SignalR.Services;
 using Tenatus.API.Data;
+using Tenatus.API.Services;
 
 namespace Tenatus.API
 {
@@ -65,16 +69,37 @@ namespace Tenatus.API
                     ValidAudience = Configuration["Token:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"]))
                 };
+                opt.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        // If the request is for our hub...
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) &&
+                            (path.StartsWithSegments("/stockData")))
+                        {
+                            // Read the token out of the query string
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
             services.AddCors();
             services.AddSignalR();
-            
+            services.AddSingleton<IUserIdProvider, UserIdProvider>();
+
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<TraderManager>();
             services.AddSingleton<StockDataReaderManager>();
             services.AddSingleton<TradingClientFactory>();
-            
+            //services.AddHostedService<SystemTraderService>();
+            services.AddSingleton<SignalRService>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

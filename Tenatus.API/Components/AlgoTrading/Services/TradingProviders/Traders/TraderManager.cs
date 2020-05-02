@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Components.AlgoTrading.Services.Scrapping;
 using Tenatus.API.Components.SignalR;
+using Tenatus.API.Components.SignalR.Services;
 using Tenatus.API.Data;
 
 namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
@@ -19,19 +20,19 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
         private readonly IServiceProvider _serviceProvider;
         private readonly TradingClientFactory _tradingClientFactory;
         private readonly ILogger<TraderManager> _logger;
-        private readonly IHubContext<StockDataHub> _hubContext;
+        private readonly SignalRService _signalRService;
         private List<TraderResource> _traderResources = new List<TraderResource>();
 
         public TraderManager(StockDataReaderManager stockDataReaderManager, IConfiguration configuration,
             IServiceProvider serviceProvider, TradingClientFactory tradingClientFactory,
-            ILogger<TraderManager> logger, IHubContext<StockDataHub> hubContext)
+            ILogger<TraderManager> logger, SignalRService signalRService)
         {
             _stockDataReaderManager = stockDataReaderManager;
             _configuration = configuration;
             _serviceProvider = serviceProvider;
             _tradingClientFactory = tradingClientFactory;
             _logger = logger;
-            _hubContext = hubContext;
+            _signalRService = signalRService;
         }
 
         public Task StartTrader(ApplicationUser user)
@@ -94,9 +95,9 @@ namespace Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders
             switch (strategy)
             {
                 case RangeStrategy _:
-                    return new RangeTrader(stockDataReader, tradingClient, _serviceProvider, user, strategy, _logger, _hubContext);
+                    return new RangeTrader(stockDataReader, tradingClient, _serviceProvider, user, strategy, _logger, _signalRService);
                 case PercentStrategy _:
-                    return new PercentTrader(stockDataReader, tradingClient, _serviceProvider, user, strategy, _logger, _hubContext);
+                    return new PercentTrader(stockDataReader, tradingClient, _serviceProvider, user, strategy, _logger, _signalRService);
                 default:
                     throw new Exception($"unknown exception: {strategy.GetType()}");
             }

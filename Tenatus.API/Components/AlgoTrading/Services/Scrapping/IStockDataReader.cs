@@ -7,7 +7,7 @@ namespace Tenatus.API.Components.AlgoTrading.Services.Scrapping
     public interface IStockDataReader
     {
      Task<List<StockData>> WriteStocksValue();
-     StockData ReadStockValue();
+      Task<StockData> ReadStockValue();
      void Dispose();
     }
 }

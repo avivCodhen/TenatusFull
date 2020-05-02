@@ -3,6 +3,7 @@ using System.Linq;
 using AutoMapper;
 using Tenatus.API.Components.AlgoTrading.Models;
 using Tenatus.API.Components.Dashboard.Models;
+using Tenatus.API.Components.SignalR.Models;
 using Tenatus.API.Data;
 using Tenatus.API.Extensions;
 using Tenatus.API.Util;
@@ -31,6 +32,8 @@ namespace Tenatus.API.MappingProfiles
             CreateMap<StrategyModel, RangeStrategy>().ForMember(dest => dest.Created, src => src.Ignore())
                 .ForMember(dest => dest.LastActive, src => src.Ignore());
             CreateMap<UserOrder, UserOrderModel>().ForMember(dest => dest.Created, src=> src.MapFrom(x=>x.Created.FormatDateTime()));
+
+            CreateMap<StockData, StockDataModel>();
         }
     }
 }
