@@ -3,7 +3,7 @@ export interface UserOrder {
   created: string;
   quantity: number;
   buyingPrice: number;
-  isBuy: boolean;
+  userOrderActionType: string;
   orderAction: string;
   stock: string;
   userOrderType: string;

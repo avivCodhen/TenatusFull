@@ -18,7 +18,15 @@
     </div>
     <div class="col-4 dash-card">
       <div class="bg-white">
-        <p class="title  p-3"> קונסול</p>
+        <div class="row no-gutters p-3 bg-white">
+          <p class=" ml-auto title">קונסול</p>
+          <button *ngIf="signalRConnection == false" mat-raised-button (click)="startSignalRConnection()"
+            class="btn-main center">
+            התחבר
+          </button>
+          <p *ngIf="signalRConnection == true" class="text-success" style="font-size: 12px;"> מחובר</p>
+
+        </div>
         <div style="overflow-y: auto;
         height: 250px;">
           <div class="px-2" *ngFor="let message of traderMessages">
@@ -34,16 +42,19 @@
 
         <div style="overflow-y: auto;
         height: 250px;">
-          <table style="width: 100%;" mat-table [dataSource]="dashboard.stocks">
+          <table #stockPriceTable style="width: 100%;" mat-table [dataSource]="dashboard.stocks">
 
             <ng-container matColumnDef="Name">
               <th mat-header-cell *matHeaderCellDef>מניה </th>
-              <td class="font-weight-bold" mat-cell *matCellDef="let element"> {{element.stock.toUpperCase()}} </td>
+              <td class="font-weight-bold" mat-cell *matCellDef="let element">
+                {{element.stock.toUpperCase()}} </td>
             </ng-container>
 
             <ng-container matColumnDef="Price">
               <th mat-header-cell *matHeaderCellDef> שווי אחרון </th>
-              <td mat-cell *matCellDef="let element"> {{element.currentPrice}} </td>
+              <td mat-cell *matCellDef="let element" style="font-weight: 500;"
+                [ngClass]="element.trend? 'text-success' : 'text-danger'">
+                {{element.currentPrice}} </td>
             </ng-container>
 
             <ng-container matColumnDef="Open">
@@ -196,7 +207,7 @@
             <!-- Symbol Column -->
             <ng-container matColumnDef="Buy/Sell">
               <th mat-header-cell *matHeaderCellDef>קניה\מכירה </th>
-              <td mat-cell *matCellDef="let element"> {{element.isBuy ? "מכירה" : "קניה"}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.userOrderActionType == "Buy" ? "מכירה" : "קניה"}} </td>
             </ng-container>
 
             <ng-container matColumnDef="Stock">

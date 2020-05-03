@@ -5,4 +5,5 @@ export interface StockData {
   close: number;
   high: number;
   low: number;
+  trend: boolean;
 }

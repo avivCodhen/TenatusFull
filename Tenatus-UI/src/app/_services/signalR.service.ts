@@ -13,6 +13,8 @@ export class SignalRService {
   url = environment.apiUrl + 'stockdata';
   stockDataReceived = new Subject<any>();
   traderMessageReceived = new Subject<any>();
+  onClose = new Subject<any>();
+  onStart = new Subject<any>();
   constructor(private http: HttpClient) {}
 
   startConnection = () => {
@@ -24,8 +26,19 @@ export class SignalRService {
 
     this.hubConnection
       .start()
-      .then(() => console.log('connection started'))
-      .catch((err) => console.log('error: ' + err));
+      .then(() => {
+        console.log('connection started');
+        this.onStart.next(true);
+      })
+      .catch((err) => {
+        console.log('error: ' + err);
+        this.onClose.next(err);
+      });
+    this.hubConnection.onclose((err) => {
+      console.log('connection lost');
+      this.onClose.next(err);
+    });
+    return this;
   };
 
   addStockDataListener() {
@@ -39,8 +52,6 @@ export class SignalRService {
       console.log('traderMEssage: ' + data);
       this.traderMessageReceived.next(data);
     });
-  }
-  addOnCloseListener() {
-    this.hubConnection.onclose((err) => {});
+    return this;
   }
 }

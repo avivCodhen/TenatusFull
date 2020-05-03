@@ -15,5 +15,6 @@ namespace Tenatus.API.Components.Dashboard.Models
         public string UserOrderActionType { get; set; }
         public bool Filled { get; set; }
         public string Stock { get; set; }
+        public bool Trend { get; set; }
     }
 }

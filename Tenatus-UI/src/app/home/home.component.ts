@@ -19,6 +19,7 @@ import { StrategyDialogComponent } from '../strategy-dialog/strategy-dialog.comp
 import { MatDialog } from '@angular/material/dialog';
 import { SignalRService } from '../_services/signalR.service';
 import { ActivatedRoute } from '@angular/router';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +27,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  signalRConnection: boolean = false;
   traderMessages: TraderMessage[] = [];
   processing: boolean;
   dashboard: Dashboard;
@@ -56,12 +58,10 @@ export class HomeComponent implements OnInit {
     public dialog: MatDialog,
     private signalRService: SignalRService,
     private route: ActivatedRoute
-  ) {
-    this.signalRService.startConnection();
-    this.signalRService.addStockDataListener().addTraderMessageListener();
-  }
+  ) {}
 
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
+  @ViewChildren('stockPriceTable') stockPriceTable;
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource<UserOrder>();
@@ -81,22 +81,7 @@ export class HomeComponent implements OnInit {
       this.strategyDataSource.data = this.dashboard.strategies;
       this.dataSource.data = this.dashboard.userOrders;
       this.stockDataSource.data = this.dashboard.stocks;
-
-      this.signalRService.stockDataReceived.subscribe((data) => {
-        console.log('signalR data:' + data.toString());
-        this.dashboard.stocks.forEach((stock) => {
-          if (data.stock.toUpperCase() == stock.stock.toUpperCase()) {
-            stock.currentPrice = data.currentPrice;
-          }
-        });
-      });
-
-      this.signalRService.traderMessageReceived.subscribe(
-        (data: TraderMessage) => {
-          console.log('traderMessage: ' + data);
-          this.traderMessages.unshift(data);
-        }
-      );
+      this.startSignalRConnection();
     });
   }
 
@@ -183,6 +168,40 @@ export class HomeComponent implements OnInit {
       },
       (err) => {
         this.alertService.error('Error updating strategies. Err: ' + err);
+      }
+    );
+  }
+
+  startSignalRConnection() {
+    this.signalRService.onClose.subscribe((err) => {
+      this.signalRConnection = false;
+    });
+    this.signalRService.onStart.subscribe((data) => {
+      this.signalRConnection = true;
+    });
+    this.signalRService
+      .startConnection()
+      .addStockDataListener()
+      .addTraderMessageListener();
+
+    this.signalRService.stockDataReceived.subscribe((data) => {
+      console.log('signalR data:' + data.toString());
+      this.dashboard.stocks.forEach((stock) => {
+        if (data.stock.toUpperCase() == stock.stock.toUpperCase()) {
+          if (stock.currentPrice > data.currentPrice) {
+            stock.trend = true;
+          } else if (stock.currentPrice < data.currentPrice) {
+            stock.trend = false;
+          }
+          stock.currentPrice = data.currentPrice;
+        }
+      });
+    });
+
+    this.signalRService.traderMessageReceived.subscribe(
+      (data: TraderMessage) => {
+        console.log('traderMessage: ' + data);
+        this.traderMessages.unshift(data);
       }
     );
   }
