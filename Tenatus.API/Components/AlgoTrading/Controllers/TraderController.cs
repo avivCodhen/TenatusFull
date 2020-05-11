@@ -44,8 +44,8 @@ namespace Tenatus.API.Components.AlgoTrading.Controllers
                 var user = await _userManager.GetApplicationUserAsync(User);
                 user.IsTraderOn = true;
                 var marketOpen = MarketHelper.IsMarketOpen();
-                if (marketOpen)
-                    await _traderManager.StartTrader(user);
+                //if (marketOpen)
+                    await _traderManager.ManageTrader(user);
                 await _dbContext.SaveChangesAsync();
 
                 return Ok(new {marketOpen, user.IsTraderOn});

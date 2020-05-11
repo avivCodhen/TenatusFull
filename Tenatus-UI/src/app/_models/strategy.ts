@@ -1,7 +1,7 @@
 export class Strategy {
   stock: string;
   budget: number;
-  userOrderType: number;
+  userOrderType: string;
   minimum: number;
   maximum: number;
   percent: number;

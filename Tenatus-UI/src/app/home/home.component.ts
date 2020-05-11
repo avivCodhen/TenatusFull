@@ -117,34 +117,49 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  openDialog(): void {
+  openDialog(data): void {
     const dialogRef = this.dialog.open(StrategyDialogComponent, {
-      data: {},
+      data: data,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result);
       if (!!result) {
-        this.userService.saveStrategy(result).subscribe(
-          (res) => {
-            this.alertService.success('Strategy Saved');
-            this.getStrategies();
-          },
-          (err) => {
-            this.alertService.error('failed to Saved. Error: ' + err);
-          }
-        );
+        if (result.id > 0) {
+          this.userService.editStrategy(result).subscribe(
+            (rest) => {
+              this.alertService.success('Strategy Saved');
+              this.getStrategies();
+            },
+            (err) => {
+              this.alertService.error('failed to Saved. Error: ' + err);
+              this.getStrategies();
+            }
+          );
+        } else {
+          this.userService.saveStrategy(result).subscribe(
+            (res) => {
+              this.alertService.success('Strategy Saved');
+              this.getStrategies();
+            },
+            (err) => {
+              this.alertService.error('failed to Saved. Error: ' + err);
+              this.getStrategies();
+            }
+          );
+        }
       }
     });
   }
 
-  onCheck(data: any) {
+  onCheck(data: Strategy) {
     console.log(data);
     this.userService.editStrategy(data).subscribe(
       (res) => {
         this.alertService.success('Strategy Edited');
       },
       (err) => {
+        data.active = !data.active;
         this.alertService.error('failed to edit');
       }
     );

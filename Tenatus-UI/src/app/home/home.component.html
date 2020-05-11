@@ -99,7 +99,7 @@
       <div class="p-0">
         <div class="row no-gutters p-3 bg-white">
           <p class=" ml-auto title">אסטרטגיות</p>
-          <button mat-mini-fab (click)="openDialog()" class="color-action center">
+          <button mat-icon-button (click)="openDialog({})" class="color-action center">
             <mat-icon>add</mat-icon>
           </button>
 
@@ -149,6 +149,9 @@
               <td mat-cell *matCellDef="let element">
                 <button (click)="deleteStrategy(element)" mat-icon-button class="color-action">
                   <mat-icon>delete</mat-icon>
+                </button>
+                <button (click)="openDialog(element)" mat-icon-button class="color-action">
+                  <mat-icon>edit</mat-icon>
                 </button>
               </td>
             </ng-container>

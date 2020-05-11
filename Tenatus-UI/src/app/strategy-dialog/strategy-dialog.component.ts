@@ -10,8 +10,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class StrategyDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<StrategyDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: Strategy
+  ) {
+    this.strategyType = this.data.type;
+    this.data.userOrderType = 'lmt';
+  }
 
   strategyType: string;
 

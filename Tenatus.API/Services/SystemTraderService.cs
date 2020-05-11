@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Tenatus.API.Components.AlgoTrading.Services.TradingProviders.Traders;
 using Tenatus.API.Data;
 using Tenatus.API.Util;
@@ -16,12 +17,15 @@ namespace Tenatus.API.Services
     {
         private readonly TraderManager _traderManager;
         private readonly IServiceProvider _serviceProvider;
+        private readonly ILogger<SystemTraderService> _logger;
         private Thread _workThread;
 
-        public SystemTraderService(TraderManager traderManager, IServiceProvider serviceProvider)
+        public SystemTraderService(TraderManager traderManager, IServiceProvider serviceProvider,
+            ILogger<SystemTraderService> logger)
         {
             _traderManager = traderManager;
             _serviceProvider = serviceProvider;
+            _logger = logger;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -35,11 +39,17 @@ namespace Tenatus.API.Services
         {
             while (true)
             {
-                if (MarketHelper.IsMarketOpen())
-                    StartTraders();
-                else
-                    StopTraders();
-                Sleep();
+                try
+                {
+                    if (MarketHelper.IsMarketOpen())
+                        StartTraders();
+                    else
+                        StopTraders();
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e.Message);
+                }
             }
         }
 
@@ -61,11 +71,12 @@ namespace Tenatus.API.Services
         {
             using var scope = _serviceProvider.CreateScope();
             var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
-            var usersWithActiveStrategies = dbContext.ApplicationUsers.Where(x => x.Strategies.Any(s => s.Active));
+            var usersWithActiveStrategies =
+                dbContext.ApplicationUsers.Where(x => x.IsTraderOn && x.Strategies.Any(s => s.Active));
             foreach (var user in usersWithActiveStrategies)
             {
                 if (!_traderManager.IsOnForUser(user))
-                     _traderManager.StartTrader(user);
+                    _traderManager.ManageTrader(user);
             }
 
             dbContext.SaveChanges();

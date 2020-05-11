@@ -23,7 +23,11 @@ namespace Tenatus.API.Components.AlgoTrading.Services.Scrapping
         {
             _stock = stock;
             _signalRService = signalRService;
-            _driver = new ChromeDriver(AppConstants.FilePath);
+            var chromeOptions = new ChromeOptions();
+            chromeOptions.AddArguments("--headless");
+
+            _driver = new ChromeDriver(AppConstants.FilePath, chromeOptions);
+            
             _driver.Navigate().GoToUrl($"https://finance.yahoo.com/quote/{_stock}");
         }
 
